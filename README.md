@@ -34,7 +34,7 @@ Comme dans le paquetage précédent, il faut utiliser la bonne version.
 Pour angular 7 on utilisera la commande : 
 
 ```
-  npm -i -s  @angular/flex-layout@7.0.0-beta.24
+  npm i -s  @angular/flex-layout@7.0.0-beta.24
 ```
 
 ### Paquetages complémentaires
