@@ -5,16 +5,7 @@
 </div>
 
 <div class="ecran">
-  <ng-container *ngIf="!initialize">
-    <img src="../assets/logo.png" class="App-logo" alt="logo" />
-    <div (click)="initializeGame()" class="flex">
-      <a href="javascript:void(0)" class="bttn"> JOUER </a>
-    </div>
-  </ng-container>
-  <ion-phaser [game]="game" [initialize]="initialize"></ion-phaser>
-  <div *ngIf="initialize" (click)="changeAngle()" class="flex bottom-button">
-    <a href="javascript:void(0)" class="bttn">Set Angle</a>
-  </div>
+  <app-game></app-game>
 </div>
 
 <router-outlet></router-outlet>
