@@ -13,7 +13,7 @@ class Game extends Phaser.Scene {
     this.helloWorld = this.add.text(
       this.cameras.main.centerX,
       this.cameras.main.centerY,
-      'ALED', {
+      'Hello World', {
         font: '40px Arial',
         fill: '#ffffff'
       }
@@ -36,15 +36,15 @@ interface GameInstance extends Phaser.Types.Core.GameConfig {
 }
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-game',
+  templateUrl: './game.component.html',
+  styleUrls: ['./game.component.css']
 })
-export class AppComponent {
+export class GameComponent {
   initialize = false;
   game: GameInstance = {
     width: '100%',
-    height: '75%',
+    height: '100%',
     type: Phaser.AUTO,
     scene: Game,
     instance: null
@@ -67,4 +67,3 @@ export class AppComponent {
     });
   }
 }
-
