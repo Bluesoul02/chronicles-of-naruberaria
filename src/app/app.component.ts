@@ -13,7 +13,7 @@ class Game extends Phaser.Scene {
     this.helloWorld = this.add.text(
       this.cameras.main.centerX,
       this.cameras.main.centerY,
-      'Hello World', {
+      'ALED', {
         font: '40px Arial',
         fill: '#ffffff'
       }
@@ -44,7 +44,7 @@ export class AppComponent {
   initialize = false;
   game: GameInstance = {
     width: '100%',
-    height: '100%',
+    height: '75%',
     type: Phaser.AUTO,
     scene: Game,
     instance: null
