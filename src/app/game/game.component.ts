@@ -7,6 +7,8 @@ class Game extends Phaser.Scene {
   cursors;
   weapon;
   fireButton;
+  bullets;
+  lastFired =0;
 
   init() {
   }
@@ -18,9 +20,49 @@ class Game extends Phaser.Scene {
   }
 
   create() {
-    this.cameras.add(0, 0, 200, 320, true, 'main');
+
+    var Bullet = new Phaser.Class({
+
+      Extends: Phaser.GameObjects.Image,
+
+      initialize:
+
+      function Bullet (scene)
+      {
+          Phaser.GameObjects.Image.call(this, scene, 0, 0, 'bullet');
+
+          this.speed = Phaser.Math.GetSpeed(400, 1);
+      },
+
+      fire: function (x, y)
+      {
+          this.setPosition(x, y - 50);
+
+          this.setActive(true);
+          this.setVisible(true);
+      },
+
+      update: function (time, delta)
+      {
+          this.y -= this.speed * delta;
+
+          if (this.y < -50)
+          {
+              this.setActive(false);
+              this.setVisible(false);
+          }
+      }
+    });
+
+    this.bullets = this.add.group({
+      classType: Bullet,
+      maxSize: 10,
+      runChildUpdate: true
+  });
+
+    // this.cameras.add(0, 0, 200, 320, true, 'main');
     this.add.tileSprite(725, 400, 1443, 320, 'map');
-    //this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
+    // this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
     this.cursors = this.input.keyboard.createCursorKeys();
     this.player = this.physics.add.sprite(
       50,
@@ -32,9 +74,11 @@ class Game extends Phaser.Scene {
     this.player.setSize(100, 50);
     this.player.setDisplaySize(100, 50);
     this.player.enableBody(true, 50, 400, true, true);
-    this.cameras.getCamera('main').startFollow(this.player, false, 0, 0, 200, 320);
-    //this.matter.world.setBounds(0, 0, 1143, 320);
+    // this.cameras.getCamera('main').startFollow(this.player, false, 0, 0, 200, 320);
+    // this.matter.world.setBounds(0, 0, 1143, 320);
     this.player.setCollideWorldBounds(true, 1, 1);
+
+    //this.fireButton = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
   }
 
   update() {
@@ -53,17 +97,13 @@ class Game extends Phaser.Scene {
     }
 
     if(this.fireButton.isDown){
-      this.weapon.fire();
+      var bullet = this.bullets.get();
+      if(bullet){
+        bullet.fire(this.player.x,this.player.y);
+        this.lastFired += 30;
+      }
     }
     
-  }
-
-  render(){
-    this.weapon.debug();
-  }
-
-  setAngle(angle: number) {
-    this.player.angle = angle;
   }
 }
 
