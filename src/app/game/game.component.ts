@@ -6,13 +6,14 @@ class Game extends Phaser.Scene {
   helloWorld: Phaser.GameObjects.Text;
 
   init() {
-    this.cameras.main.setBackgroundColor('#24252A');
   }
 
   preload() {
+    this.load.image('map', 'assets/map.png');
   }
 
   create() {
+    this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
     this.helloWorld = this.add.text(
       this.cameras.main.centerX,
       this.cameras.main.centerY,
