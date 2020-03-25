@@ -9,6 +9,9 @@ class Game extends Phaser.Scene {
     this.cameras.main.setBackgroundColor('#24252A');
   }
 
+  preload() {
+  }
+
   create() {
     this.helloWorld = this.add.text(
       this.cameras.main.centerX,
@@ -43,7 +46,7 @@ interface GameInstance extends Phaser.Types.Core.GameConfig {
 export class GameComponent {
   initialize = false;
   game: GameInstance = {
-    width: '100%',
+    width: '95%',
     height: '100%',
     type: Phaser.AUTO,
     scene: Game,
