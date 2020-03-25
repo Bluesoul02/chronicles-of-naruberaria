@@ -3,15 +3,16 @@ import { Routes, RouterModule } from '@angular/router';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {GameComponent} from './game/game.component';
 import {HomeComponent} from './home/home.component';
-import { LoginComponent } from './auth/login/login.component';
+import {NavComponent} from './layout/nav/nav.component';
+import {LoginComponent} from './auth/login/login.component';
+import {RegisterComponent} from './auth/register/register.component';
 
 
-const routes: Routes = [
-  { path: 'home', component: HomeComponent},
-  { path: '',   redirectTo: '/home', pathMatch: 'full' },
-  { path: 'game', component: GameComponent},
-  { path: 'login', component: LoginComponent},
-  { path: '**', component: PageNotFoundComponent }
+export const routes: Routes = [
+  {path: 'home', component: HomeComponent},
+  {path: '',   redirectTo: '/home', pathMatch: 'full' },
+  {path: 'game', component: GameComponent},
+  {path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({
