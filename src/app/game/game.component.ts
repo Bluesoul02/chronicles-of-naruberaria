@@ -18,28 +18,23 @@ class Game extends Phaser.Scene {
   }
 
   create() {
-
-    this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
-
-    this.player = this.add.sprite(
-      100,
+    this.cameras.add(0, 0, 200, 320, true, 'main');
+    this.add.tileSprite(725, 400, 1443, 320, 'map');
+    //this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
+    this.cursors = this.input.keyboard.createCursorKeys();
+    this.player = this.physics.add.sprite(
+      50,
       400,
       'ship'
     );
 
     this.player.setOrigin(0.5);
-    
-    this.weapon = game.add.weapon(30, 'bullet');
-    this.weapon.bulletKillType = Phaser.Weapon.KILL_LIFESPAN;
-    this.weapon.bulletLifespan = 2000;
-    this.weapon.bulletSpeed = 600;
-    this.weapon.fireRate = 100;
-    this.weapon.bulletWorldWrap = true;
-    this.weapon.trackSprite(this.player, 0, 0, true);
-
-
-    this.cursors = this.input.keyboard.createCursorKeys();
-    this.fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+    this.player.setSize(100, 50);
+    this.player.setDisplaySize(100, 50);
+    this.player.enableBody(true, 50, 400, true, true);
+    this.cameras.getCamera('main').startFollow(this.player, false, 0, 0, 200, 320);
+    //this.matter.world.setBounds(0, 0, 1143, 320);
+    this.player.setCollideWorldBounds(true, 1, 1);
   }
 
   update() {
