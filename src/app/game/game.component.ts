@@ -21,29 +21,29 @@ class Game extends Phaser.Scene {
     this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY,
       this.scale.width * 4, 320,
       'map');
-    //this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
+    // this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
     this.cursors = this.input.keyboard.createCursorKeys();
     this.player = this.physics.add.sprite(
       50, 400,
       'ship'
     );
-    this.player.setSize(100, 50);
-    this.player.setDisplaySize(100, 50);
+    this.player.setSize(120, 100);
+    this.player.setDisplaySize(120, 100);
     this.player.enableBody(true, 50, 400, true, true);
     this.cameras.main.setSize(this.scale.width, this.scale.height);
     this.cameras.main.centerToSize();
     this.cameras.main.setBounds(0, 160, this.map.width * 0.7, this.map.height);
     this.cameras.main.centerOn(this.player.x, this.player.y);
     this.game.scale.displayScale = this.cameras.main.scaleManager.displayScale;
-    //this.matter.world.setBounds(0, 160, this.map.width, 320);
-    //this.player.setCollideWorldBounds(true, 1, 1);
-    //this.cameras.main.startFollow(this.player);
+    // this.matter.world.setBounds(0, 160, this.map.width, 320);
+    // this.player.setCollideWorldBounds(true, 1, 1);
+    // this.cameras.main.startFollow(this.player);
   }
 
   update() {
     console.log(this.scale.height);
     this.cameras.main.setScroll(this.cameras.main.scrollX + 0.2);
-    //this.cameras.main.setPosition(this.cameras.main.x + 1, this.cameras.main.y);
+    // this.cameras.main.setPosition(this.cameras.main.x + 1, this.cameras.main.y);
     this.player.setVelocityX(0);
     this.player.setVelocityY(0);
 
