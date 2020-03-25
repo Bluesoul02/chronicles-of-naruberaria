@@ -9,6 +9,9 @@ class Game extends Phaser.Scene {
     this.cameras.main.setBackgroundColor('#24252A');
   }
 
+  preload() {
+  }
+
   create() {
     this.helloWorld = this.add.text(
       this.cameras.main.centerX,
