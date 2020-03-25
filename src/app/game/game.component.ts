@@ -3,7 +3,7 @@ import * as Phaser from 'phaser';
 
 
 class Game extends Phaser.Scene {
-  helloWorld: Phaser.GameObjects.Text;
+  player: Phaser.Physics.Arcade.Sprite;
   cursors;
 
   init() {
@@ -11,34 +11,37 @@ class Game extends Phaser.Scene {
 
   preload() {
     this.load.image('map', 'assets/map.png');
+    this.load.image('ship', 'assets/ship.png');
   }
 
   create() {
     this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.helloWorld = this.add.text(
-      this.cameras.main.centerX,
-      this.cameras.main.centerY,
-      'Hello World', {
-        font: '40px Arial',
-        fill: '#ffffff'
-      }
+    this.player = this.physics.add.sprite(
+      100,
+      400,
+      'ship'
     );
-    this.helloWorld.setOrigin(0.5);
-
+    this.player.setOrigin(0.5);
   }
 
   update() {
-    this.helloWorld.angle += 1;
     if (this.cursors.left.isDown) {
-      console.log('left');
+      this.player.setVelocityX(-160);
     } else if (this.cursors.right.isDown) {
-      console.log('right');
+      this.player.setVelocityX(160);
+    } else if (this.cursors.up.isDown) {
+      this.player.setVelocityY(-160);
+    } else if (this.cursors.down.isDown) {
+      this.player.setVelocityY(160);
+    } else {
+      this.player.setVelocityX(0);
+      this.player.setVelocityY(0);
     }
   }
 
   setAngle(angle: number) {
-    this.helloWorld.angle = angle;
+    this.player.angle = angle;
   }
 }
 
@@ -56,6 +59,7 @@ export class GameComponent {
   game: GameInstance = {
     width: '95%',
     height: '100%',
+    physics: {default: 'arcade'},
     type: Phaser.AUTO,
     scene: Game,
     instance: null
