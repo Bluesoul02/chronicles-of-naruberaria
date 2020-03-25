@@ -4,7 +4,9 @@ import * as Phaser from 'phaser';
 
 class Game extends Phaser.Scene {
   player: Phaser.Physics.Arcade.Sprite;
-  cursors;
+  cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+  map: Phaser.GameObjects.TileSprite;
+
 
   init() {
   }
@@ -15,8 +17,7 @@ class Game extends Phaser.Scene {
   }
 
   create() {
-    this.cameras.add(0, 0, 200, 320, true, 'main');
-    this.add.tileSprite(725, 400, 1443, 320, 'map');
+    this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY, 1443, 320, 'map');
     //this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
     this.cursors = this.input.keyboard.createCursorKeys();
     this.player = this.physics.add.sprite(
@@ -28,7 +29,10 @@ class Game extends Phaser.Scene {
     this.player.setSize(100, 50);
     this.player.setDisplaySize(100, 50);
     this.player.enableBody(true, 50, 400, true, true);
-    this.cameras.getCamera('main').startFollow(this.player, false, 0, 0, 200, 320);
+    this.cameras.main.setSize(500, 320);
+    this.cameras.main.centerToSize();
+    this.cameras.main.setBounds(0, 160, 1443, 320);
+    this.cameras.main.startFollow(this.player);
     //this.matter.world.setBounds(0, 0, 1143, 320);
     this.player.setCollideWorldBounds(true, 1, 1);
   }
