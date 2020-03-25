@@ -32,26 +32,28 @@ class Game extends Phaser.Scene {
     this.cameras.main.setSize(500, 320);
     this.cameras.main.centerToSize();
     this.cameras.main.setBounds(0, 160, 1443, 320);
-    this.cameras.main.startFollow(this.player);
+    this.cameras.main.centerOn(this.player.x, this.player.y);
     //this.matter.world.setBounds(0, 0, 1143, 320);
     this.player.setCollideWorldBounds(true, 1, 1);
-    this.cameras.main.startFollow(this.player);
+    //this.cameras.main.startFollow(this.player);
   }
 
   update() {
-      this.player.setVelocityX(0);
-      this.player.setVelocityY(0);
+    this.cameras.main.setScroll(this.cameras.main.scrollX + 1);
+    //this.cameras.main.setPosition(this.cameras.main.x + 1, this.cameras.main.y);
+    this.player.setVelocityX(0);
+    this.player.setVelocityY(0);
 
-      if (this.cursors.up.isDown) {
-        this.player.setVelocityY(-160);
-      } else if (this.cursors.down.isDown) {
-        this.player.setVelocityY(160);
-      }
-      if (this.cursors.left.isDown) {
-        this.player.setVelocityX(-160);
-      } else if (this.cursors.right.isDown) {
-        this.player.setVelocityX(160);
-      }
+    if (this.cursors.up.isDown) {
+      this.player.setVelocityY(-160);
+    } else if (this.cursors.down.isDown) {
+      this.player.setVelocityY(160);
+    }
+    if (this.cursors.left.isDown) {
+      this.player.setVelocityX(-160);
+    } else if (this.cursors.right.isDown) {
+      this.player.setVelocityX(160);
+    }
   }
 
   setAngle(angle: number) {
