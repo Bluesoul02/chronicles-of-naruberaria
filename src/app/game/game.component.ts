@@ -26,15 +26,16 @@ class Game extends Phaser.Scene {
       400,
       'ship'
     );
+
     this.player.setOrigin(0.5);
     
-    this.weapon = this.add.weapon(30, bullet);
+    this.weapon = game.add.weapon(30, 'bullet');
     this.weapon.bulletKillType = Phaser.Weapon.KILL_LIFESPAN;
     this.weapon.bulletLifespan = 2000;
     this.weapon.bulletSpeed = 600;
     this.weapon.fireRate = 100;
     this.weapon.bulletWorldWrap = true;
-    this.weapon.trackSprite(player, 0, 0, true);
+    this.weapon.trackSprite(this.player, 0, 0, true);
 
 
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -42,6 +43,7 @@ class Game extends Phaser.Scene {
   }
 
   update() {
+
     if (this.cursors.left.isDown) {
       this.player.setVelocityX(-160);
     } else if (this.cursors.right.isDown) {
@@ -54,10 +56,15 @@ class Game extends Phaser.Scene {
       this.player.setVelocityX(0);
       this.player.setVelocityY(0);
     }
-    if(fireButton.isDown){
-      weapon.fire();
+
+    if(this.fireButton.isDown){
+      this.weapon.fire();
     }
     
+  }
+
+  render(){
+    this.weapon.debug();
   }
 
   setAngle(angle: number) {
