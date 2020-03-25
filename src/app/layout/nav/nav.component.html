@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between">
-    <h1>Chronicles of naruberaria</h1>
+  <a mat-button routerLink="/"><h1>Chronicles of naruberaria</h1></a>
   <div><a routerLink="/"></a></div>
   <span class="nav-tool-items">
     <div *ngIf="currentUser; else noconnected">
@@ -17,9 +17,9 @@
       </mat-menu>
     </div>
     <ng-template #noconnected>
-    <a mat-button routerLink="/login">Connexion</a>
-    <a mat-button routerLink="/register">Enregistrement</a>
       <a mat-button routerLink="/game">Jeu</a>
+      <a mat-button routerLink="/login">Connexion</a>
+      <a mat-button routerLink="/register">Enregistrement</a>
     </ng-template>
   </span>
 </mat-toolbar>

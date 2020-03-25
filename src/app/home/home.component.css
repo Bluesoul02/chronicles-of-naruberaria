@@ -1,3 +1,15 @@
 .home-card {
-  max-width: 400px;
+  max-width: 700px;
+}
+
+.mat-card-avatar {
+  height: 80px;
+}
+
+.logo {
+  width: 100px;
+}
+
+.title {
+  margin: 20px 35px;
 }

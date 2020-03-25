@@ -3,50 +3,65 @@ import * as Phaser from 'phaser';
 
 
 class Game extends Phaser.Scene {
-  platforms;
-  player;
+  player: Phaser.Physics.Arcade.Sprite;
+  cursors;
+  weapon;
+  fireButton;
 
   init() {
-    this.cameras.main.setBackgroundColor('#24252A');
   }
 
   preload() {
-    this.load.spritesheet('dude','../assets/dude.png',{framWidth:32, frameHeight:48});
+    this.load.image('map', 'assets/map.png');
+    this.load.image('ship', 'assets/ship.png');
+    this.load.image('bullet','assets/shmup-bullet.png')
   }
 
   create() {
 
-    this.player = this.physics.add.sprite(100, 450, 'dude');
+    this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
 
-    this.player.setBounce(0.2);
-    this.player.setCollideWorldBounds(true);
+    this.player = this.add.sprite(
+      100,
+      400,
+      'ship'
+    );
+    this.player.setOrigin(0.5);
+    
+    this.weapon = this.add.weapon(30, bullet);
+    this.weapon.bulletKillType = Phaser.Weapon.KILL_LIFESPAN;
+    this.weapon.bulletLifespan = 2000;
+    this.weapon.bulletSpeed = 600;
+    this.weapon.fireRate = 100;
+    this.weapon.bulletWorldWrap = true;
+    this.weapon.trackSprite(player, 0, 0, true);
 
-    this.anims.create({
-      key: 'left',
-      frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
-      frameRate: 10,
-      repeat: -1
-    });
 
-    this.anims.create({
-      key: 'turn',
-      frames: [ { key: 'dude', frame: 4 } ],
-      frameRate: 20
-    });
-
-    this.anims.create({
-      key: 'right',
-      frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-      frameRate: 10,
-      repeat: -1
-    });
-
+    this.cursors = this.input.keyboard.createCursorKeys();
+    this.fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
   }
 
   update() {
+    if (this.cursors.left.isDown) {
+      this.player.setVelocityX(-160);
+    } else if (this.cursors.right.isDown) {
+      this.player.setVelocityX(160);
+    } else if (this.cursors.up.isDown) {
+      this.player.setVelocityY(-160);
+    } else if (this.cursors.down.isDown) {
+      this.player.setVelocityY(160);
+    } else {
+      this.player.setVelocityX(0);
+      this.player.setVelocityY(0);
+    }
+    if(fireButton.isDown){
+      weapon.fire();
+    }
+    
   }
 
   setAngle(angle: number) {
+    this.player.angle = angle;
   }
 }
 
@@ -60,10 +75,11 @@ interface GameInstance extends Phaser.Types.Core.GameConfig {
   styleUrls: ['./game.component.css']
 })
 export class GameComponent {
-  initialize = false;
+  initialize = true;
   game: GameInstance = {
     width: '85%',
     height: '100%',
+    physics: {default: 'arcade'},
     type: Phaser.AUTO,
     scene: Game,
     instance: null

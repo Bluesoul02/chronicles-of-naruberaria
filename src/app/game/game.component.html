@@ -1,10 +1,9 @@
-<div class="App">
-  <header class="App-header">
-    <ion-phaser [game]="game" [initialize]="initialize"></ion-phaser>
-    <div *ngIf="initialize" (click)="changeAngle()" class="flex bottom-button">
-      <a href="javascript:void(0)" class="bttn">Set Angle</a>
-    </div>
-  </header>
+<div class="ecran">
+  <div class="App">
+    <header class="App-header">
+      <ion-phaser [game]="game" [initialize]="initialize"></ion-phaser>
+    </header>
+  </div>
 </div>
 
 <router-outlet></router-outlet>
