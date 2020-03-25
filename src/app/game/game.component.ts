@@ -35,6 +35,7 @@ class Game extends Phaser.Scene {
     this.cameras.main.startFollow(this.player);
     //this.matter.world.setBounds(0, 0, 1143, 320);
     this.player.setCollideWorldBounds(true, 1, 1);
+    this.cameras.main.startFollow(this.player);
   }
 
   update() {
