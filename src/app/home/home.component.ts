@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  image = './assets/deluxe-pacman.jpg';
-  imageIcon = './assets/pacman.png';
+  image = './assets/moodboard.png';
+  imageIcon = './assets/logo.png';
 
   constructor() { }
 
