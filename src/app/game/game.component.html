@@ -1,11 +1,5 @@
 <div class="App">
   <header class="App-header">
-    <ng-container *ngIf="!initialize">
-      <img src="../assets/logo.png" class="App-logo" alt="Chronicles of naruberaria" />
-      <div (click)="initializeGame()" class="flex">
-        <a href="javascript:void(0)" class="bttn">Jouer</a>
-      </div>
-    </ng-container>
     <ion-phaser [game]="game" [initialize]="initialize"></ion-phaser>
     <div *ngIf="initialize" (click)="changeAngle()" class="flex bottom-button">
       <a href="javascript:void(0)" class="bttn">Set Angle</a>
