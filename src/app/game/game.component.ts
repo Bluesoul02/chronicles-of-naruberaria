@@ -21,7 +21,7 @@ class Game extends Phaser.Scene {
 
   create() {
 
-    var Bullet = new Phaser.Class({
+    var Bullet = new Phaser.({
 
       Extends: Phaser.GameObjects.Image,
 
