@@ -55,7 +55,7 @@ interface GameInstance extends Phaser.Types.Core.GameConfig {
   styleUrls: ['./game.component.css']
 })
 export class GameComponent {
-  initialize = false;
+  initialize = true;
   game: GameInstance = {
     width: '95%',
     height: '100%',
