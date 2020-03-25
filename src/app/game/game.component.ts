@@ -34,18 +34,19 @@ class Game extends Phaser.Scene {
   }
 
   update() {
-    if (this.cursors.left.isDown) {
-      this.player.setVelocityX(-160);
-    } else if (this.cursors.right.isDown) {
-      this.player.setVelocityX(160);
-    } else if (this.cursors.up.isDown) {
-      this.player.setVelocityY(-160);
-    } else if (this.cursors.down.isDown) {
-      this.player.setVelocityY(160);
-    } else {
       this.player.setVelocityX(0);
       this.player.setVelocityY(0);
-    }
+
+      if (this.cursors.up.isDown) {
+        this.player.setVelocityY(-160);
+      } else if (this.cursors.down.isDown) {
+        this.player.setVelocityY(160);
+      }
+      if (this.cursors.left.isDown) {
+        this.player.setVelocityX(-160);
+      } else if (this.cursors.right.isDown) {
+        this.player.setVelocityX(160);
+      }
   }
 
   setAngle(angle: number) {
