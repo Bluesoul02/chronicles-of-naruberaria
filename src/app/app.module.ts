@@ -15,6 +15,7 @@ import {PersonnesModule} from './personnes/personnes.module';
 import {AuthService} from './shared/auth.service';
 import {HttpErrorInterceptorService} from './shared/http-error-interceptor.service';
 import {TokenInterceptorService} from './shared/token-interceptor.service';
+import {routes} from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import {TokenInterceptorService} from './shared/token-interceptor.service';
     PageNotFoundComponent,
   ],
   imports: [BrowserModule, BrowserAnimationsModule,
-    RouterModule.forRoot([]), MatMenuModule,
+    RouterModule.forRoot(routes), MatMenuModule,
     HttpClientModule, AngularMaterialModule,
     HomeModule, AuthModule,
     PersonnesModule],

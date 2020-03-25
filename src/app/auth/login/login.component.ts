@@ -19,12 +19,13 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
+  // tslint:disable-next-line:max-line-length
   constructor(private authService: AuthService/*, private toastr: ToastrService*/, private router: Router, private route: ActivatedRoute) { }
 
   createForm() {
     this.loginForm = new FormGroup({
       email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
-      password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4)])),
+      password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)])),
     });
   }
 

@@ -1,22 +1,20 @@
 <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between">
   <a mat-button routerLink="/"><h1>Chronicles of naruberaria</h1></a>
     <div *ngIf="currentUser; else noconnected">
-      <a mat-button routerLink="/"><mat-icon>home</mat-icon> Home</a>
-      <a mat-button routerLink="/taches">Tâches</a>
-      <a mat-button routerLink="/personnes">Personnes</a>
-      <button mat-icon-button [mat-menu-trigger-for]="menu">
-        <mat-icon>account_circle</mat-icon>
-        <mat-icon>more_vert</mat-icon>
-      </button>
+      <a mat-button routerLink="/home"><mat-icon>home</mat-icon> Accueil</a>
+      <a mat-button routerLink="/game"><mat-icon>videogame_asset</mat-icon> Jeu</a>
+      <span class="flex"> </span>
+      <a mat-button [mat-menu-trigger-for]="menu" ><mat-icon>account_circle</mat-icon> Mon compte </a>
       <mat-menu x-position="before" #menu="matMenu">
-        <button mat-menu-item
-                [routerLink]="['/profil', currentUser.id] ">{{currentUser.prenom}} {{currentUser.nom}}</button>
-        <button mat-menu-item routerLink="/login" (click)="logout()">Deconnexion</button>
+        <button mat-menu-item [routerLink]="['/profil', currentUser.id] ">
+          {{currentUser.prenom}} {{currentUser.nom}}
+        </button>
+        <button mat-menu-item routerLink="/login" (click)="logout()">Déconnexion</button>
       </mat-menu>
     </div>
     <ng-template #noconnected>
-      <a mat-button routerLink="/">Accueil</a>
-      <a mat-button routerLink="/game">Jeu</a>
+      <a mat-button routerLink="/"><mat-icon>home</mat-icon> Accueil</a>
+      <a mat-button routerLink="/game"><mat-icon>videogame_asset</mat-icon> Jeu</a>
       <span class="flex"> </span>
       <a mat-button routerLink="/login">Connexion</a>
       <a mat-button routerLink="/register">Enregistrement</a>
