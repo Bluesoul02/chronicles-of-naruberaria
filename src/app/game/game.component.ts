@@ -17,29 +17,32 @@ class Game extends Phaser.Scene {
   }
 
   create() {
-    this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY, 1443, 320, 'map');
+    this.scale.displayScale.setFromObject(this.cameras.main.scaleManager.displayScale);
+    this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY,
+      this.scale.width * 4, 320,
+      'map');
     //this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
     this.cursors = this.input.keyboard.createCursorKeys();
     this.player = this.physics.add.sprite(
-      50,
-      400,
+      50, 400,
       'ship'
     );
-    this.player.setOrigin(0.5);
     this.player.setSize(100, 50);
     this.player.setDisplaySize(100, 50);
     this.player.enableBody(true, 50, 400, true, true);
-    this.cameras.main.setSize(500, 320);
+    this.cameras.main.setSize(this.scale.width, this.scale.height);
     this.cameras.main.centerToSize();
-    this.cameras.main.setBounds(0, 160, 1443, 320);
+    this.cameras.main.setBounds(0, 160, this.map.width * 0.7, this.map.height);
     this.cameras.main.centerOn(this.player.x, this.player.y);
-    //this.matter.world.setBounds(0, 0, 1143, 320);
-    this.player.setCollideWorldBounds(true, 1, 1);
+    this.game.scale.displayScale = this.cameras.main.scaleManager.displayScale;
+    //this.matter.world.setBounds(0, 160, this.map.width, 320);
+    //this.player.setCollideWorldBounds(true, 1, 1);
     //this.cameras.main.startFollow(this.player);
   }
 
   update() {
-    this.cameras.main.setScroll(this.cameras.main.scrollX + 1);
+    console.log(this.scale.height);
+    this.cameras.main.setScroll(this.cameras.main.scrollX + 0.2);
     //this.cameras.main.setPosition(this.cameras.main.x + 1, this.cameras.main.y);
     this.player.setVelocityX(0);
     this.player.setVelocityY(0);
@@ -75,6 +78,10 @@ export class GameComponent {
   game: GameInstance = {
     width: '95%',
     height: '100%',
+    scale: {
+      mode: Phaser.Scale.ENVELOP,
+      autoCenter: Phaser.Scale.CENTER_BOTH
+    },
     physics: {default: 'arcade'},
     type: Phaser.AUTO,
     scene: Game,
