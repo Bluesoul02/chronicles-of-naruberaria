@@ -4,6 +4,7 @@ import * as Phaser from 'phaser';
 
 class Game extends Phaser.Scene {
   helloWorld: Phaser.GameObjects.Text;
+  cursors;
 
   init() {
   }
@@ -14,6 +15,7 @@ class Game extends Phaser.Scene {
 
   create() {
     this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
+    this.cursors = this.input.keyboard.createCursorKeys();
     this.helloWorld = this.add.text(
       this.cameras.main.centerX,
       this.cameras.main.centerY,
@@ -28,6 +30,11 @@ class Game extends Phaser.Scene {
 
   update() {
     this.helloWorld.angle += 1;
+    if (this.cursors.left.isDown) {
+      console.log('left');
+    } else if (this.cursors.right.isDown) {
+      console.log('right');
+    }
   }
 
   setAngle(angle: number) {
