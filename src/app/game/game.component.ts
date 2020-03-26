@@ -111,7 +111,7 @@ class Game extends Phaser.Scene {
     this.cameras.main.centerOn(this.player.x, this.player.y);
     // scenes
     this.scene.add('menu', Menu, false);
-    this.scene.add('win', Win, false);
+    this.scene.add('win', Win, true);
     // création de l'arme
     this.bullets = new Bullets(this);
 
@@ -135,6 +135,7 @@ class Game extends Phaser.Scene {
 
   update() {
     // win
+    console.log(this.time.now);
     if (this.win()) {
       this.scene.start('win');
       this.scene.setVisible(true, 'win');
@@ -173,7 +174,7 @@ class Game extends Phaser.Scene {
   }
 
   win() {
-    return this.time.now >= 240000;
+    return this.time.now >= 120000;
   }
 }
 
@@ -220,8 +221,7 @@ class Win extends Phaser.Scene {
     this.load.image('win', 'assets/win.png');
   }
   create(data)  {
-    this.add.tileSprite(this.cameras.main.scrollX + this.scale.width / 2, this.cameras.main.y + this.scale.height / 2,
-      this.scale.width, this.scale.height, 'win');
+    this.add.image(this.scale.width / 2, this.scale.height / 1.5, 'win');
   }
   update(time, delta) {}
 
