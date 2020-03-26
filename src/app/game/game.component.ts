@@ -6,6 +6,7 @@ class Game extends Phaser.Scene {
   player: Phaser.Physics.Arcade.Sprite;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   map: Phaser.GameObjects.TileSprite;
+  scrollSpeed = 0.2;
 
 
   init() {
@@ -19,9 +20,8 @@ class Game extends Phaser.Scene {
   create() {
     this.scale.displayScale.setFromObject(this.cameras.main.scaleManager.displayScale);
     this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY,
-      this.scale.width * 4, this.scale.height,
+      this.scale.width * 2, this.scale.height,
       'map');
-    // this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
     this.cursors = this.input.keyboard.createCursorKeys();
     this.player = this.physics.add.sprite(
       50, 400,
@@ -32,30 +32,29 @@ class Game extends Phaser.Scene {
     this.player.enableBody(true, 50, 400, true, true);
     this.cameras.main.setSize(this.scale.width, this.scale.height);
     this.cameras.main.centerToSize();
-    this.cameras.main.setBounds(0, 160, this.map.width * 0.7, this.map.height);
+    this.cameras.main.setBounds(0, 0, this.map.width, this.map.height);
     this.cameras.main.centerOn(this.player.x, this.player.y);
     this.game.scale.displayScale = this.cameras.main.scaleManager.displayScale;
-    // this.matter.world.setBounds(0, 160, this.map.width, 320);
-    // this.player.setCollideWorldBounds(true, 1, 1);
-    // this.cameras.main.startFollow(this.player);
+    this.player.setCollideWorldBounds(true, 1, 1);
   }
 
   update() {
     console.log(this.scale.height);
-    this.cameras.main.setScroll(this.cameras.main.scrollX + 0.2);
-    // this.cameras.main.setPosition(this.cameras.main.x + 1, this.cameras.main.y);
+    let x = 0;
+    this.cameras.main.setScroll(this.cameras.main.scrollX + this.scrollSpeed);
+    this.physics.world.setBounds(this.cameras.main.scrollX, this.cameras.main.y, this.scale.width, this.scale.height, true, true, true, true);
     this.player.setVelocityX(0);
     this.player.setVelocityY(0);
-
+    x += this.scrollSpeed;
     if (this.cursors.up.isDown) {
       this.player.setVelocityY(-160);
     } else if (this.cursors.down.isDown) {
       this.player.setVelocityY(160);
     }
     if (this.cursors.left.isDown) {
-      this.player.setVelocityX(-160);
+      this.player.setVelocityX(-150);
     } else if (this.cursors.right.isDown) {
-      this.player.setVelocityX(160);
+      this.player.setVelocityX(150);
     }
   }
 
@@ -79,7 +78,7 @@ export class GameComponent {
     width: '95%',
     height: '100%',
     scale: {
-      mode: Phaser.Scale.ENVELOP,
+      mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH
     },
     physics: {default: 'arcade'},
