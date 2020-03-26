@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import * as Phaser from 'phaser';
+import RandomDataGenerator = Phaser.Math.RandomDataGenerator;
 
 class Bullet extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
@@ -142,6 +143,7 @@ class Game extends Phaser.Scene {
     this.cameras.main.setScroll(this.cameras.main.scrollX + this.scrollSpeed);
     this.physics.world.setBounds(this.cameras.main.scrollX, this.cameras.main.y, this.scale.width, this.scale.height);
     // déplacements
+    // player
     this.player.setVelocityX(0);
     this.player.setVelocityY(0);
 
@@ -159,6 +161,15 @@ class Game extends Phaser.Scene {
     if (this.cursors.space.isDown) {
       this.bullets.fireBullet(this.player.x + 55, this.player.y + 10);
     }
+    // enemies
+    const random = new RandomDataGenerator();
+    this.enemies.forEach(enemy => {
+      if (random.integerInRange(1, 8) >= 5) {
+        enemy.setVelocityY(-100); // monte
+      } else {
+        enemy.setVelocityY(100); // descend
+      }
+    });
   }
 
   win() {
