@@ -11,24 +11,21 @@
   </mat-card>
 </div>
 
-<div fxLayout="row" fxLayoutAlign="space-around center" *ngIf="personne">
+<div fxLayout="row" fxLayoutAlign="space-around center" *ngIf="player">
   <mat-card fxFlex="80">
     <mat-card-header>
       <mat-card-title>
-        {{personne.prenom}} {{personne.nom}}
+        {{player.name}}
       </mat-card-title>
-      <mat-card-subtitle>{{personne.specialite | uppercase }}</mat-card-subtitle>
+      <mat-card-subtitle>{{player.bestScore }} {{player.totalPlayTime }} </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <div fxLayoutAlign="center center">
-        <img mat-card-image [src]="personne.avatar" class="img-avatar">
-      </div>
-      <div>
-        {{personne.cv}}
+        <img mat-card-image [src]="player.avatar" class="img-avatar">
       </div>
     </mat-card-content>
     <mat-card-actions fxLayout="row" fxLayoutAlign="center space-around">
-      <button mat-raised-button (click)="editPersonne()">
+      <button mat-raised-button (click)="editPlayer()">
         <mat-icon>edit</mat-icon>
       </button>
 <!--      <button mat-raised-button>

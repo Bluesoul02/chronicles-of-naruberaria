@@ -2,20 +2,20 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PersonnesService} from '../personnes.service';
+import {PlayersService} from '../players.service';
 import {FileInput, FileValidator} from 'ngx-material-file-input';
-import {Personne} from '../../models/personne.model';
+import {Player} from '../../models/player.model';
 import {AuthService} from '../../shared/auth.service';
-import {PersonneValidators} from '../personne.validators';
+import {PlayerValidators} from '../player.validators';
 
 @Component({
-  selector: 'app-form-personne',
-  templateUrl: './form-personne.component.html',
-  styleUrls: ['./form-personne.component.css']
+  selector: 'app-form-player',
+  templateUrl: './form-player.component.html',
+  styleUrls: ['./form-player.component.css']
 })
-export class FormPersonneComponent implements OnInit {
-  @Input() personne: Personne;
-  @Output() updatedPersonne: EventEmitter<{personne: Personne, avatar: FileInput, pwd: string}>;
+export class FormPlayerComponent implements OnInit {
+  @Input() player: Player;
+  @Output() updatedPlayer: EventEmitter<{player: Player, avatar: FileInput, pwd: string}>;
   aAccept = '.png, .jpg, .jpeg';
   editForm: FormGroup;
   maxSize = 300000;
@@ -25,21 +25,20 @@ export class FormPersonneComponent implements OnInit {
   avatarFile: any = undefined;
 
   constructor(private authService: AuthService, private toastr: ToastrService,
-              private router: Router, private route: ActivatedRoute, private service: PersonnesService) {
-    this.updatedPersonne = new EventEmitter<{personne: Personne, avatar: FileInput, pwd: string}>();
+              private router: Router, private route: ActivatedRoute, private service: PlayersService) {
+    this.updatedPlayer = new EventEmitter<{player: Player, avatar: FileInput, pwd: string}>();
   }
 
 
   createForm() {
     this.editForm = new FormGroup({
-      nom: new FormControl('', [Validators.required, Validators.minLength(4)]),
-      prenom: new FormControl('', [Validators.required, Validators.minLength(4)]),
-      cv: new FormControl('', [Validators.required, Validators.minLength(4)]),
+      name: new FormControl('', [Validators.required, Validators.minLength(4)]),
+      bestScore: new FormControl('', [Validators.required, Validators.minLength(4)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       pwd: new FormGroup({
-          password: new FormControl(undefined, Validators.compose([Validators.minLength(4)])),
+          password: new FormControl(undefined, Validators.compose([Validators.minLength(6)])),
           confirmPassword: new FormControl(undefined)
-        }, PersonneValidators.passwordConfirming
+        }, PlayerValidators.passwordConfirming
       ),
       image: new FormControl(null, [FileValidator.maxContentSize(this.maxSize)])
     });
@@ -61,16 +60,12 @@ export class FormPersonneComponent implements OnInit {
     return this.editForm.get('image');
   }
 
-  get nom() {
-    return this.editForm.get('nom');
+  get name() {
+    return this.editForm.get('name');
   }
 
-  get prenom() {
-    return this.editForm.get('prenom');
-  }
-
-  get cv() {
-    return this.editForm.get('cv');
+  get bestScore() {
+    return this.editForm.get('bestScore');
   }
 
   get email() {
@@ -80,13 +75,13 @@ export class FormPersonneComponent implements OnInit {
   ngOnInit() {
     this.createForm();
 
-    const id = this.personne.id;
+    const id = this.player.id;
     if (id === -1) {
-      this.pageTitle = 'Enregistrement d\'une personne';
+      this.pageTitle = 'Enregistrement d\'un joueur';
       this.action = 'create';
     } else {
       this.action = 'edit';
-      this.pageTitle = 'Edition d\'une personne';
+      this.pageTitle = 'Edition d\'un joueur';
       this.fillForm();
     }
 
@@ -105,20 +100,18 @@ export class FormPersonneComponent implements OnInit {
 
   fillForm() {
     this.editForm.patchValue({
-      nom: this.personne.nom,
-      prenom: this.personne.prenom,
-      cv: this.personne.cv,
-      email: this.personne.user.email,
+      name: this.player.name,
+      bestScore: this.player.bestScore,
+      email: this.player.user.email,
     });
   }
 
   onSubmit() {
     let pwd;
     let avatar: FileInput;
-    this.personne.nom = this.nom.value;
-    this.personne.prenom = this.prenom.value;
-    this.personne.cv = this.cv.value;
-    this.personne.user.email = this.email.value;
+    this.player.name = this.name.value;
+    this.player.bestScore = this.bestScore.value;
+    this.player.user.email = this.email.value;
     if (this.password.value) {
       pwd = this.password.value;
     }
@@ -128,8 +121,8 @@ export class FormPersonneComponent implements OnInit {
     if (this.image) {
       avatar = this.image.value;
     }
-    this.updatedPersonne.emit({
-      personne: this.personne,
+    this.updatedPlayer.emit({
+      player: this.player,
       avatar,
       pwd
     });

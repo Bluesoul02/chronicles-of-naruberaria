@@ -7,11 +7,7 @@
     <form fxLayoutAlign="stretch" fxLayout="column" [formGroup]="editForm" (ngSubmit)="onSubmit()">
       <mat-card-content fxLayout="row row-wrap" fxLayoutGap="15">
         <mat-form-field fxFlex="50">
-          <input matInput formControlName="nom" placeholder="Nom">
-        </mat-form-field>
-
-        <mat-form-field fxFlex="50">
-          <input matInput formControlName="prenom" placeholder="Prénom">
+          <input matInput formControlName="name" placeholder="Nom">
         </mat-form-field>
 
         <mat-form-field fxFlex="100">
@@ -19,7 +15,7 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="100">
-          <textarea matInput formControlName="cv" placeholder="CV"></textarea>
+          <textarea matInput formControlName="bestScore" placeholder="Meilleur score"></textarea>
         </mat-form-field>
 
         <div formGroupName="pwd" fxFlex="100">
@@ -33,7 +29,7 @@
           <div *ngIf="(password.invalid || password.value != confirmPassword.value) && (confirmPassword.touched)"
                class="mat-error" fxFlex="100">
             <div *ngIf="password.invalid; else nomatch">
-              Le mot de passe doit contenir au moins 4 caractères.
+              Le mot de passe doit contenir au moins 6 caractères.
             </div>
             <ng-template #nomatch>
               Les mots de passe saisis ne correspondent pas.
@@ -51,7 +47,7 @@
             </div>
           </mat-form-field>
           <div fxLayoutAlign="center center" fxFlexFill>
-            <img *ngIf="personne.avatar && !avatar.value" [src]="personne.avatar"
+            <img *ngIf="player.avatar && !avatar.value" [src]="player.avatar"
                  class="image-preview" alt="">
             <img *ngIf="avatarFile" [src]="avatarFile" class="image-preview">
           </div>

@@ -1,0 +1,34 @@
+import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {PlayersService} from '../players.service';
+import {Player} from '../../models/player.model';
+import {FileInput} from 'ngx-material-file-input';
+
+
+@Component({
+  selector: 'app-edit-player',
+  templateUrl: './edit-player.component.html',
+  styleUrls: ['./edit-player.component.css']
+})
+export class EditPlayerComponent implements OnInit {
+  loading = false;
+  player: Player = null;
+
+  constructor(private route: ActivatedRoute, private router: Router, private service: PlayersService) {
+  }
+
+  ngOnInit(): void {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.loading = true;
+    this.service.getPlayer(id).subscribe(legume => {
+      this.player = legume;
+      this.loading = false;
+    });
+  }
+
+  update($event: {player: Player, avatar: FileInput, pwd: string}) {
+    this.service.updatePlayer($event.player, $event.avatar, $event.pwd).subscribe(legume => {
+      this.router.navigate(['./player', this.player.id]);
+    });
+  }
+}

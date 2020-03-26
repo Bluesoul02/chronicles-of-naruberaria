@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import * as Phaser from 'phaser';
 import RandomDataGenerator = Phaser.Math.RandomDataGenerator;
-import { runInThisContext } from 'vm';
+// import { runInThisContext } from 'vm';
 
 class Bullet extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
@@ -110,7 +110,7 @@ class Game extends Phaser.Scene {
     // scenes
     // this.scene.add('menu', Menu, false);
     this.scene.add('win', Win, false);
-    
+
     // création de l'arme
     this.bullets = new Bullets(this);
 
@@ -167,7 +167,7 @@ class Game extends Phaser.Scene {
       this.player.setVelocityX(300);
     }
 
-    // pour tirer 
+    // pour tirer
     if (this.cursors.space.isDown) {
       this.bullets.fireBullet(this.player.x + 55, this.player.y + 10);
     }
@@ -231,7 +231,7 @@ class Game extends Phaser.Scene {
     this.time.delayedCall(250, function() {
       this.cameras.main.fade(250);
     }, [], this);
- 
+
     // recommence une partie automatiquement
     this.time.delayedCall(500, function() {
       this.scene.remove('menu');

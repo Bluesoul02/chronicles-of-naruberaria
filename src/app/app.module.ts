@@ -11,7 +11,7 @@ import {GameComponent} from './game/game.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {HomeModule} from './home/home.module';
 import {AuthModule} from './auth/auth.module';
-import {PersonnesModule} from './personnes/personnes.module';
+import {PlayersModule} from './player/players.module';
 import {AuthService} from './shared/auth.service';
 import {HttpErrorInterceptorService} from './shared/http-error-interceptor.service';
 import {TokenInterceptorService} from './shared/token-interceptor.service';
@@ -28,7 +28,7 @@ import {routes} from './app-routing.module';
     RouterModule.forRoot(routes), MatMenuModule,
     HttpClientModule, AngularMaterialModule,
     HomeModule, AuthModule,
-    PersonnesModule],
+    PlayersModule],
   providers: [AuthService,
     {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true},

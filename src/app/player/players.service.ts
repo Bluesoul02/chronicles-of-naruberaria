@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Personne} from '../models/personne.model';
+import {Player} from '../models/player.model';
 import {map, tap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 import {FileInput} from 'ngx-material-file-input';
@@ -9,42 +9,41 @@ import {FileInput} from 'ngx-material-file-input';
 @Injectable({
   providedIn: 'root'
 })
-export class PersonnesService {
+export class PlayersService {
   private readonly apiUrl = environment.apiUrl;
-  private personneUrl = this.apiUrl + 'personnes';
+  private playerUrl = this.apiUrl + 'player';
 
   constructor(private http: HttpClient) {
   }
 
-  // Retourne toutes les personnes
-  getPersonnes(): Observable<Personne[]> {
-    return this.http.get<Observable<any>>(this.personneUrl)
+  // Retourne toutes les players
+  getPlayers(): Observable<Player[]> {
+    return this.http.get<Observable<any>>(this.playerUrl)
       .pipe(
         tap((rep: any) => console.log(rep.data)),
         map(rep => {
-          return rep.data.map(x => Personne.parse(x));
+          return rep.data.map(x => Player.parse(x));
         })
       );
   }
 
 
-  getPersonne(id: number): Observable<Personne> {
-    const url = `${this.personneUrl}/${id} `;
+  getPlayer(id: number): Observable<Player> {
+    const url = `${this.playerUrl}/${id} `;
     return this.http.get<Observable<{}>>(url)
       .pipe(
         tap((rep: any) => console.log(rep)),
-        map(p => Personne.parse(p.data)),
+        map(p => Player.parse(p.data)),
       );
   }
 
 
-  updatePersonne(personne: Personne, file: FileInput, pwd: string): Observable<Personne> {
-    const url = `${this.personneUrl}/${personne.id} `;
+  updatePlayer(player: Player, file: FileInput, pwd: string): Observable<Player> {
+    const url = `${this.playerUrl}/${player.id} `;
     const formData: FormData = new FormData();
-    formData.append('nom', personne.nom);
-    formData.append('prenom', personne.prenom);
-    formData.append('cv', personne.cv);
-    formData.append('email', personne.user.email);
+    formData.append('name', player.name);
+    formData.append('bestScore', player.totalPlayTime);
+    formData.append('email', player.user.email);
     if (pwd) {
       formData.append('password', pwd);
     }
@@ -53,10 +52,10 @@ export class PersonnesService {
       console.log('fichier avatar : ', file.fileNames);
       formData.append('avatar', file.files[0], file.fileNames);
     }
-    return this.http.post<Observable<Personne>>(url, formData)
+    return this.http.post<Observable<Player>>(url, formData)
       .pipe(
         tap((rep: any) => console.log(rep)),
-        map(p => Personne.parse(p.data)),
+        map(p => Player.parse(p.data)),
       );
   }
 }
