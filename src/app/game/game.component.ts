@@ -53,6 +53,7 @@ class Game extends Phaser.Scene {
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   map: Phaser.GameObjects.TileSprite;
   bullets;
+  enemies;
 
 
   init() {
@@ -90,6 +91,17 @@ class Game extends Phaser.Scene {
     // this.cameras.main.startFollow(this.player);
 
     this.bullets= new Bullets(this);
+
+    this.enemies = this.add.group({
+      key: 'enemy',
+      repeat: 5,
+      setXY: {
+        x: 1000,
+        y: 200,
+        stepX: 0,
+        stepY: 100
+      }
+    });
   }
 
   update() {
