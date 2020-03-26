@@ -74,6 +74,7 @@ class Game extends Phaser.Scene {
     this.load.image('bullet', 'assets/shmup-bullet.png');
     this.load.image('enemy', 'assets/enemy.png');
     this.load.audio('music', 'assets/music.mp3');
+    this.load.audio('crash','assets/music.mp3')
   }
 
   create() {
@@ -97,7 +98,7 @@ class Game extends Phaser.Scene {
       'ship'
     );
     this.player.setSize(800, 250);
-    this.player.setDisplaySize(120, 100);
+    this.player.setDisplaySize(180, 160);
     this.player.enableBody(true, 50, 400, true, true);
     this.player.setCollideWorldBounds(true, 0, 0);
 
@@ -225,19 +226,22 @@ class Game extends Phaser.Scene {
 
   gameOver(){
 
+    this.sound.stopAll();
+
     // secouer la caméra pour un effet accident
     this.cameras.main.shake(500);
 
     this.time.delayedCall(250, function() {
-      this.cameras.main.fade(250);
+      this.cameras.main.fade(1000);
     }, [], this);
  
     // recommence une partie automatiquement
-    this.time.delayedCall(500, function() {
+    this.time.delayedCall(1000, function() {
       this.scene.remove('menu');
       this.scene.remove('win');
       this.scene.restart();
     }, [], this);
+
   }
 }
 
