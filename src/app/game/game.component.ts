@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import * as Phaser from 'phaser';
+import TimerEvent = Phaser.Time.TimerEvent;
 
 class Bullet extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
@@ -55,6 +56,7 @@ class Game extends Phaser.Scene {
   scrollSpeed = 0.25;
   mapSize = 6;
   bullets;
+  music: Phaser.Loader.FileTypes.AudioFile;
 
   init() {
   }
@@ -63,14 +65,23 @@ class Game extends Phaser.Scene {
     this.load.image('map', 'assets/map.png');
     this.load.image('ship', 'assets/ship.png');
     this.load.image('bullet', 'assets/shmup-bullet.png');
+    this.load.audio('music', 'assets/music.mp3');
   }
 
   create() {
-    this.scale.displayScale.setFromObject(this.cameras.main.scaleManager.displayScale);
+    // music
+    this.sound.play('music');
+    this.sound.volume = 0.3;
+    // this.music.addToCache();
+    // this.music.on('loop', this);
+    // this.music.setLoop(true);
+    // map
     this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY,
       this.scale.width * this.mapSize, this.scale.height,
       'map');
+    // cursors
     this.cursors = this.input.keyboard.createCursorKeys();
+    // player
     this.player = this.physics.add.sprite(
       50, 400,
       'ship'
@@ -78,14 +89,15 @@ class Game extends Phaser.Scene {
     this.player.setSize(800, 250);
     this.player.setDisplaySize(120, 100);
     this.player.enableBody(true, 50, 400, true, true);
+    this.player.setCollideWorldBounds(true, 0, 0);
+    // camera
     this.cameras.main.setSize(this.scale.width, this.scale.height);
     this.cameras.main.centerToSize();
     this.cameras.main.setBounds(0, 0, this.map.width - this.scale.width * (this.mapSize / 2), this.map.height);
     this.cameras.main.centerOn(this.player.x, this.player.y);
-    this.game.scale.displayScale = this.cameras.main.scaleManager.displayScale;
-    this.player.setCollideWorldBounds(true, 0, 0);
-
+    // bullets
     this.bullets = new Bullets(this);
+
   }
 
   update() {
@@ -108,10 +120,6 @@ class Game extends Phaser.Scene {
     if (this.cursors.space.isDown) {
       this.bullets.fireBullet(this.player.x + 55, this.player.y + 10);
     }
-  }
-
-  setAngle(angle: number) {
-    this.player.angle = angle;
   }
 }
 
@@ -145,14 +153,5 @@ export class GameComponent {
 
   initializeGame() {
     this.initialize = true;
-  }
-
-  changeAngle() {
-    const instance = this.getInstance();
-    instance.scene.scenes.forEach(scene => {
-      if (scene.sys.isActive() && scene instanceof Game) {
-        scene.setAngle(0);
-      }
-    });
   }
 }
