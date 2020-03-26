@@ -13,13 +13,13 @@ class LaserGroup extends Phaser.Physics.Arcade.Group{
           active: false,
           visible: false,
           key: 'laser'
-      })
+      });
   }
 
-  fireLaser(x,y){
+  fireLaser(x, y) {
     const laser = this.getFirstDead(false);
-    if(laser){
-      laser.fire(x,y);
+    if (laser) {
+      laser.fire(x, y);
     }
   }
 
@@ -30,8 +30,8 @@ class Laser extends Phaser.Physics.Arcade.Sprite {
       super(scene, x, y, 'laser');
   }
 
-  fire(x,y){
-    this.body.reset(x,y);
+  fire(x, y) {
+    this.body.reset(x, y);
     this.setActive(true);
     this.setVisible(true);
     this.setVelocityX(500);
@@ -61,7 +61,7 @@ class Game extends Phaser.Scene {
   preload() {
     this.load.image('map', 'assets/map.png');
     this.load.image('ship', 'assets/ship.png');
-    this.load.image('laser','assets/shmup-bullet.png')
+    this.load.image('laser', 'assets/shmup-bullet.png');
   }
 
   create() {
