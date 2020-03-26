@@ -55,7 +55,7 @@ class Game extends Phaser.Scene {
   scrollSpeed = 0.25;
   mapSize = 6;
   bullets;
-  enemies = [];
+  enemies: Array<Phaser.Physics.Arcade.Sprite>;
   enemyMaxY: number;
   enemyMinY: number;
 
@@ -64,6 +64,7 @@ class Game extends Phaser.Scene {
   init() {
     this.enemyMaxY = 850;
     this.enemyMinY = 100;
+    this.enemies = new Array();
   }
 
   preload() {
@@ -85,10 +86,10 @@ class Game extends Phaser.Scene {
 
     // map
     this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY,
-      this.sys.canvas.width * this.mapSize, this.sys.canvas.height,
+      this.scale.width * this.mapSize, this.scale.height,
       'map');
-
     this.cursors = this.input.keyboard.createCursorKeys();
+
     // player
     this.player = this.physics.add.sprite(
       50, 400,
@@ -104,9 +105,11 @@ class Game extends Phaser.Scene {
     this.cameras.main.centerToSize();
     this.cameras.main.setBounds(0, 0, this.map.width - this.scale.width * (this.mapSize / 2), this.map.height);
     this.cameras.main.centerOn(this.player.x, this.player.y);
+
     // scenes
     this.scene.add('menu', Menu, false);
     this.scene.add('win', Win, false);
+    
     // création de l'arme
     this.bullets = new Bullets(this);
 
@@ -135,15 +138,20 @@ class Game extends Phaser.Scene {
   }
 
   update() {
+
     // win
-    console.log(this.time.now);
     if (this.win()) {
       this.scene.start('win');
       this.scene.setVisible(true, 'win');
     }
+
     // scrolling
     this.cameras.main.setScroll(this.cameras.main.scrollX + this.scrollSpeed);
+
+    console.log('scrollX = '+this.cameras.main.scrollX);
+
     this.physics.world.setBounds(this.cameras.main.scrollX, this.cameras.main.y, this.scale.width, this.scale.height);
+
     // déplacements
     // player
     this.player.setVelocityX(0);
@@ -160,6 +168,9 @@ class Game extends Phaser.Scene {
       this.player.setVelocityX(300);
     }
 
+    console.log('player.x = '+this.player.x);
+
+    // pour tirer 
     if (this.cursors.space.isDown) {
       this.bullets.fireBullet(this.player.x + 55, this.player.y + 10);
     }
@@ -167,47 +178,43 @@ class Game extends Phaser.Scene {
     for (let i = 0; i <this.enemies.length; i++) {
 
       let enemy = this.enemies[i];
-      console.log(enemy.y+" "+this.physics.world.bounds.height);
-      // reverse movement if reached the edges
+
+      // inverse la direction si atteinte des "bords" de sa ligne
       if (enemy.y >= this.enemyMaxY) {
         enemy.setVelocityY(-200);
       } else if (enemy.y <= this.enemyMinY) {
         enemy.setVelocityY(200);
       }
-      }
+    }
+
 
     for(let i = 0;i<this.bullets.getChildren().length;i++){
       let bullet = this.bullets.getChildren()[i];
-      if(bullet.x >= this.physics.world.bounds.width){
-        bullet.disableBody(true,true);
+
+      // vérification de si la bullet est enore dans l'écran
+      if(bullet.x >= this.scale.width+this.cameras.main.scrollX){
+        bullet.destroy();
         this.bullets.remove(bullet);
         continue;
       }
       for(let j = 0;j<this.enemies.length;j++){
         let enemy = this.enemies[j];
-        this.physics.add.collider(enemy,bullet);
+        // vérification de la collision entre bullet et ennemi
         if (Phaser.Geom.Intersects.RectangleToRectangle(bullet.getBounds(), this.enemies[j].getBounds())) {
-          enemy.disableBody(true,true);
-          this.physics.world.remove(enemy);
-          bullet.disableBody(true,true);
+          // destruction du vaisseau touché et de la bullet
+          this.enemies.slice(j);
+          enemy.destroy();
+          this.bullets.remove(bullet);
+          bullet.destroy();
+          console.log('kill réussi');
           break;
         }
       }
     }
-
-
-
-    this.enemies.forEach(enemy => {
-      enemy.update();
-    });
-
-    this.bullets.getChildren().forEach(bullet => {
-      bullet.preUpdate();
-    });
   }
 
   win() {
-    return this.time.now >= 120000;
+    return this.time.now >= 240000;
   }
 }
 
@@ -251,11 +258,11 @@ class Win extends Phaser.Scene {
 
   init(data) {}
   preload() {
-    this.load.image('win', 'assets/win.png');
+    this.load.image('win', 'assets/win.jpg');
   }
   create(data)  {
-    this.add.image(this.scale.width / 2, this.scale.height / 1.5, 'win');
-    this.cameras.main.setZoom(0.75);
+    this.add.tileSprite(this.cameras.main.scrollX + this.scale.width / 2, this.cameras.main.y + this.scale.height / 2,
+      this.scale.width, this.scale.height, 'win');
   }
   update(time, delta) {}
 
