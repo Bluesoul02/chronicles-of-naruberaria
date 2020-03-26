@@ -124,9 +124,9 @@ class Game extends Phaser.Scene {
       this.enemies.push(enemy);
     }
 
-    // déplacement des ennemis et collisions entre eux
+    // collisions des ennemis entre eux
     for(let i =0; i<this.enemies.length;i++){
-      this.enemies[i].setVelocityY(200);
+      // this.enemies[i].setVelocityY(200);
       for(let j = i; j<this.enemies.length; j++){
         this.physics.add.collider(this.enemies[i],this.enemies[j]);
       }
@@ -153,15 +153,6 @@ class Game extends Phaser.Scene {
 
     if(this.cursors.space.isDown){
       this.bullets.fireBullet(this.player.x+55, this.player.y+10);
-    }
-
-    for (let i = 0; i < this.enemies.length; i++) {
-      console.log(this.enemies[i].y);
-      if (this.enemies[i].y >= this.enemyMaxY && this.enemies[i].speed > 0) {
-        this.enemies[i].speed *= -1;
-      } else if (this.enemies[i].y <= this.enemyMinY && this.enemies[i].speed < 0) {
-        this.enemies[i].speed *= -1;
-      }
     }
   }
 }
