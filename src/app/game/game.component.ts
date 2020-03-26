@@ -111,7 +111,7 @@ class Game extends Phaser.Scene {
     this.cameras.main.centerOn(this.player.x, this.player.y);
     // scenes
     this.scene.add('menu', Menu, false);
-    this.scene.add('win', Win, true);
+    this.scene.add('win', Win, false);
     // création de l'arme
     this.bullets = new Bullets(this);
 
