@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import * as Phaser from 'phaser';
 import RandomDataGenerator = Phaser.Math.RandomDataGenerator;
+import { runInThisContext } from 'vm';
 
 class Bullet extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
@@ -52,7 +53,7 @@ class Game extends Phaser.Scene {
   player: Phaser.Physics.Arcade.Sprite;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   map: Phaser.GameObjects.TileSprite;
-  scrollSpeed = 0.25;
+  scrollSpeed = 2;
   mapSize = 6;
   bullets;
   enemies: Array<Phaser.Physics.Arcade.Sprite>;
@@ -107,7 +108,7 @@ class Game extends Phaser.Scene {
     this.cameras.main.centerOn(this.player.x, this.player.y);
 
     // scenes
-    this.scene.add('menu', Menu, false);
+    // this.scene.add('menu', Menu, false);
     this.scene.add('win', Win, false);
     
     // création de l'arme
@@ -115,26 +116,27 @@ class Game extends Phaser.Scene {
 
     // création des ennemis et des collisions avec le joueur
     for (let i = 0; i < 5; i++) {
-      const enemy = this.physics.add.sprite(500 * (i + 1), 400, 'enemy');
+      const enemy = this.physics.add.sprite(600 * (i + 1), 400, 'enemy');
       enemy.setSize(800, 250);
       enemy.setDisplaySize(120, 100);
       enemy.enableBody(true, 500 * (i + 1), 400, true, true);
-      this.physics.add.collider(enemy, this.player);
       this.enemies.push(enemy);
     }
 
-    // collisions des ennemis entre eux
+    // démarrage des moteurs des ennemis et collisions des ennemis entre eux
     for (let i = 0; i < this.enemies.length; i++) {
       const random = new RandomDataGenerator();
       if(random.integerInRange(1,2)==1){
-        this.enemies[i].setVelocityY(200);
+        this.enemies[i].setVelocityY(300);
       }else{
-        this.enemies[i].setVelocityY(-200);
+        this.enemies[i].setVelocityY(-300);
       }
       for (let j = i; j < this.enemies.length; j++) {
         this.physics.add.collider(this.enemies[i], this.enemies[j]);
       }
     }
+
+    this.cameras.main.resetFX();
   }
 
   update() {
@@ -147,9 +149,6 @@ class Game extends Phaser.Scene {
 
     // scrolling
     this.cameras.main.setScroll(this.cameras.main.scrollX + this.scrollSpeed);
-
-    console.log('scrollX = '+this.cameras.main.scrollX);
-
     this.physics.world.setBounds(this.cameras.main.scrollX, this.cameras.main.y, this.scale.width, this.scale.height);
 
     // déplacements
@@ -168,8 +167,6 @@ class Game extends Phaser.Scene {
       this.player.setVelocityX(300);
     }
 
-    console.log('player.x = '+this.player.x);
-
     // pour tirer 
     if (this.cursors.space.isDown) {
       this.bullets.fireBullet(this.player.x + 55, this.player.y + 10);
@@ -179,11 +176,18 @@ class Game extends Phaser.Scene {
 
       let enemy = this.enemies[i];
 
+      // vérification collision entre joueur et ennemi
+      if (Phaser.Geom.Intersects.RectangleToRectangle(this.player.getBounds(), enemy.getBounds())){
+        // si oui alors game over
+        this.gameOver();
+        break;
+      }
+
       // inverse la direction si atteinte des "bords" de sa ligne
       if (enemy.y >= this.enemyMaxY) {
-        enemy.setVelocityY(-200);
+        enemy.setVelocityY(-300);
       } else if (enemy.y <= this.enemyMinY) {
-        enemy.setVelocityY(200);
+        enemy.setVelocityY(300);
       }
     }
 
@@ -191,8 +195,9 @@ class Game extends Phaser.Scene {
     for(let i = 0;i<this.bullets.getChildren().length;i++){
       let bullet = this.bullets.getChildren()[i];
 
-      // vérification de si la bullet est enore dans l'écran
+      // vérification de si la bullet est enore à une distance raisonnable du joueur
       if(bullet.x >= this.scale.width+this.cameras.main.scrollX){
+        // destruction de la bullet si trop éloignée du joueur
         bullet.destroy();
         this.bullets.remove(bullet);
         continue;
@@ -214,7 +219,25 @@ class Game extends Phaser.Scene {
   }
 
   win() {
-    return this.time.now >= 240000;
+      return this.player.x>=3300;
+    // return this.time.now >= 5000;
+  }
+
+  gameOver(){
+
+    // secouer la caméra pour un effet accident
+    this.cameras.main.shake(500);
+
+    this.time.delayedCall(250, function() {
+      this.cameras.main.fade(250);
+    }, [], this);
+ 
+    // recommence une partie automatiquement
+    this.time.delayedCall(500, function() {
+      this.scene.remove('menu');
+      this.scene.remove('win');
+      this.scene.restart();
+    }, [], this);
   }
 }
 
