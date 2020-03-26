@@ -48,6 +48,10 @@ class Bullets extends Phaser.Physics.Arcade.Group {
   }
 }
 
+function win() {
+  return false;
+}
+
 class Game extends Phaser.Scene {
 
   player: Phaser.Physics.Arcade.Sprite;
@@ -97,13 +101,21 @@ class Game extends Phaser.Scene {
     this.cameras.main.centerOn(this.player.x, this.player.y);
     // bullets
     this.bullets = new Bullets(this);
-
+    // scenes
+    this.scene.add('menu', Menu, false);
+    this.scene.add('win', Win, false);
   }
 
   update() {
+    // win
+    if (this.win()) {
+      this.scene.start('win');
+      this.scene.setVisible(true, 'win');
+    }
+    // scrolling
     this.cameras.main.setScroll(this.cameras.main.scrollX + this.scrollSpeed);
     this.physics.world.setBounds(this.cameras.main.scrollX, this.cameras.main.y, this.scale.width, this.scale.height);
-
+    // déplacements
     this.player.setVelocityX(0);
     this.player.setVelocityY(0);
     if (this.cursors.up.isDown) {
@@ -120,6 +132,10 @@ class Game extends Phaser.Scene {
     if (this.cursors.space.isDown) {
       this.bullets.fireBullet(this.player.x + 55, this.player.y + 10);
     }
+  }
+
+  win() {
+    return this.time.now >= 240000;
   }
 }
 
@@ -154,4 +170,36 @@ export class GameComponent {
   initializeGame() {
     this.initialize = true;
   }
+}
+class Win extends Phaser.Scene {
+
+  constructor(config) {
+    super(config);
+  }
+
+  init(data) {}
+  preload() {
+    this.load.image('win', 'assets/win.jpg');
+  }
+  create(data)  {
+    this.add.tileSprite(this.cameras.main.scrollX + this.scale.width / 2, this.cameras.main.y + this.scale.height / 2,
+      this.scale.width, this.scale.height, 'win');
+  }
+  update(time, delta) {}
+
+}
+
+class Menu extends Phaser.Scene {
+
+  constructor(config) {
+    super(config);
+  }
+
+  init(data) {}
+  preload() {
+  }
+  create(data)  {
+  }
+  update(time, delta) {}
+
 }
