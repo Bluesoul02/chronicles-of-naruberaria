@@ -56,14 +56,11 @@ class Game extends Phaser.Scene {
   scrollSpeed = 0.25;
   mapSize = 6;
   bullets;
-<<<<<<< HEAD
   enemies = [];
   enemyMaxY = 800;
   enemyMinY = 0;
 
-=======
   music: Phaser.Loader.FileTypes.AudioFile;
->>>>>>> 89be5af5b86eaebb41f4bb256cfe8e8dd421b6ed
 
   init() {
   }
@@ -71,13 +68,9 @@ class Game extends Phaser.Scene {
   preload() {
     this.load.image('map', 'assets/map.png');
     this.load.image('ship', 'assets/ship.png');
-<<<<<<< HEAD
     this.load.image('bullet','assets/shmup-bullet.png')
     this.load.image('enemy','assets/enemy.png');
-=======
-    this.load.image('bullet', 'assets/shmup-bullet.png');
     this.load.audio('music', 'assets/music.mp3');
->>>>>>> 89be5af5b86eaebb41f4bb256cfe8e8dd421b6ed
   }
 
   create() {
@@ -91,11 +84,7 @@ class Game extends Phaser.Scene {
     this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY,
       this.scale.width * this.mapSize, this.scale.height,
       'map');
-<<<<<<< HEAD
     // this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
-=======
-    // cursors
->>>>>>> 89be5af5b86eaebb41f4bb256cfe8e8dd421b6ed
     this.cursors = this.input.keyboard.createCursorKeys();
     // player
     this.player = this.physics.add.sprite(
@@ -111,7 +100,6 @@ class Game extends Phaser.Scene {
     this.cameras.main.centerToSize();
     this.cameras.main.setBounds(0, 0, this.map.width - this.scale.width * (this.mapSize / 2), this.map.height);
     this.cameras.main.centerOn(this.player.x, this.player.y);
-<<<<<<< HEAD
     this.game.scale.displayScale = this.cameras.main.scaleManager.displayScale;
     // this.matter.world.setBounds(0, 160, this.map.width, 320);
     this.player.setCollideWorldBounds(true);
@@ -133,10 +121,6 @@ class Game extends Phaser.Scene {
         this.physics.add.collider(this.enemies[i],this.enemies[j]);
       }
     }
-=======
-    // bullets
-    this.bullets = new Bullets(this);
->>>>>>> 89be5af5b86eaebb41f4bb256cfe8e8dd421b6ed
 
   }
 
@@ -161,7 +145,6 @@ class Game extends Phaser.Scene {
     if(this.cursors.space.isDown){
       this.bullets.fireBullet(this.player.x+55, this.player.y+10);
     }
-<<<<<<< HEAD
 
     /*
   for (let i = 0; i < this.enemies.length; i++) {
@@ -177,8 +160,6 @@ class Game extends Phaser.Scene {
     }
   }
   */
-=======
->>>>>>> 89be5af5b86eaebb41f4bb256cfe8e8dd421b6ed
   }
 }
 
