@@ -52,8 +52,12 @@ class Game extends Phaser.Scene {
   player: Phaser.Physics.Arcade.Sprite;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   map: Phaser.GameObjects.TileSprite;
+  scrollSpeed = 0.25;
+  mapSize = 6;
   bullets;
-  enemies;
+  enemies = [];
+  enemyMaxY = 800;
+  enemyMinY = 0;
 
 
   init() {
@@ -67,10 +71,9 @@ class Game extends Phaser.Scene {
   }
 
   create() {
-
     this.scale.displayScale.setFromObject(this.cameras.main.scaleManager.displayScale);
     this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY,
-      this.scale.width * 3, this.scale.height,
+      this.scale.width * this.mapSize, this.scale.height,
       'map');
     // this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -78,30 +81,35 @@ class Game extends Phaser.Scene {
       50, 400,
       'ship'
     );
-    this.player.setSize(120, 100);
+    this.player.setSize(800, 250);
     this.player.setDisplaySize(120, 100);
     this.player.enableBody(true, 50, 400, true, true);
     this.cameras.main.setSize(this.scale.width, this.scale.height);
     this.cameras.main.centerToSize();
-    this.cameras.main.setBounds(0, 160, this.map.width * 0.7, this.map.height);
+    this.cameras.main.setBounds(0, 0, this.map.width - this.scale.width * (this.mapSize / 2), this.map.height);
     this.cameras.main.centerOn(this.player.x, this.player.y);
     this.game.scale.displayScale = this.cameras.main.scaleManager.displayScale;
     // this.matter.world.setBounds(0, 160, this.map.width, 320);
-    // this.player.setCollideWorldBounds(true, 1, 1);
+    this.player.setCollideWorldBounds(true);
     // this.cameras.main.startFollow(this.player);
 
     this.bullets= new Bullets(this);
 
-    this.enemies = this.add.group({
-      key: 'enemy',
-      repeat: 5,
-      setXY: {
-        x: 1000,
-        y: 200,
-        stepX: 0,
-        stepY: 100
+    for(let i=0; i<5; i++){
+      let enemy = this.physics.add.sprite(500*(i+1), 400, 'enemy');
+      enemy.setSize(800, 250);
+      enemy.setDisplaySize(120, 100);
+      enemy.enableBody(true, 500*(i+1), 400, true, true);
+      this.physics.add.collider(enemy,this.player);
+      this.enemies.push(enemy);
+    }
+
+    for(let i =0; i<this.enemies.length;i++){
+      for(let j = i; j<this.enemies.length; j++){
+        this.physics.add.collider(this.enemies[i],this.enemies[j]);
       }
-    });
+    }
+
   }
 
   update() {
@@ -125,10 +133,21 @@ class Game extends Phaser.Scene {
     if(this.cursors.space.isDown){
       this.bullets.fireBullet(this.player.x+55, this.player.y+10);
     }
-  }
 
-  setAngle(angle: number) {
-    this.player.angle = angle;
+    /*
+  for (let i = 0; i < this.enemies.length; i++) {
+ 
+    // move enemies
+    this.enemies[i].y += this.enemies[i].speed;
+ 
+    // reverse movement if reached the edges
+    if (this.enemies[i].y >= this.enemyMaxY && this.enemies[i].speed > 0) {
+      this.enemies[i].speed *= -1;
+    } else if (this.enemies[i].y <= this.enemyMinY && this.enemies[i].speed < 0) {
+      this.enemies[i].speed *= -1;
+    }
+  }
+  */
   }
 }
 
