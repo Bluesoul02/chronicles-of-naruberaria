@@ -155,6 +155,18 @@ class Game extends Phaser.Scene {
     if(this.cursors.space.isDown){
       this.bullets.fireBullet(this.player.x+55, this.player.y+10);
     }
+
+    for(let i = 0;i<this.bullets.getChildren().length;i++){
+      let bullet = this.bullets.getChildren()[i];
+      for(let j = 0;j<this.enemies.length;j++){
+        this.physics.add.collider(this.enemies[j],bullet);
+        if (Phaser.Geom.Intersects.RectangleToRectangle(bullet.getBounds(), this.enemies[j].getBounds())) {
+          this.enemies[j].disableBody(true,true);
+          bullet.disableBody(true,true);
+          break;
+        }
+      }
+    }
   }
 }
 
