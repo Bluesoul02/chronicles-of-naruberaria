@@ -53,7 +53,8 @@ class Game extends Phaser.Scene {
   player: Phaser.Physics.Arcade.Sprite;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   map: Phaser.GameObjects.TileSprite;
-  scrollSpeed = 0.2;
+  scrollSpeed = 0.25;
+  mapSize = 6;
   bullets;
 
   init() {
@@ -66,22 +67,21 @@ class Game extends Phaser.Scene {
   }
 
   create() {
-
     this.scale.displayScale.setFromObject(this.cameras.main.scaleManager.displayScale);
     this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY,
-      this.scale.width * 3, this.scale.height,
+      this.scale.width * this.mapSize, this.scale.height,
       'map');
     this.cursors = this.input.keyboard.createCursorKeys();
     this.player = this.physics.add.sprite(
       50, 400,
       'ship'
     );
-    this.player.setSize(120, 100);
+    this.player.setSize(800, 250);
     this.player.setDisplaySize(120, 100);
     this.player.enableBody(true, 50, 400, true, true);
     this.cameras.main.setSize(this.scale.width, this.scale.height);
     this.cameras.main.centerToSize();
-    this.cameras.main.setBounds(0, 0, this.map.width, this.map.height);
+    this.cameras.main.setBounds(0, 0, this.map.width - this.scale.width * (this.mapSize / 2), this.map.height);
     this.cameras.main.centerOn(this.player.x, this.player.y);
     this.game.scale.displayScale = this.cameras.main.scaleManager.displayScale;
     this.player.setCollideWorldBounds(true, 0, 0);
