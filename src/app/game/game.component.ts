@@ -1,14 +1,13 @@
 import {Component} from '@angular/core';
 import * as Phaser from 'phaser';
-import TimerEvent = Phaser.Time.TimerEvent;
-
+import RandomDataGenerator = Phaser.Math.RandomDataGenerator;
 
 class Bullet extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
       super(scene, x, y, 'bullet');
   }
 
-  fire (x, y){
+  fire(x, y) {
     this.body.reset(x, y);
 
     this.setActive(true);
@@ -17,18 +16,13 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     this.setVelocityX(500);
   }
 
-  preUpdate (time, delta){
+  preUpdate(time, delta) {
     super.preUpdate(time, delta);
-
-    if (this.y <= -32){
-      this.setActive(false);
-      this.setVisible(false);
-    }
   }
 }
 
-class Bullets extends Phaser.Physics.Arcade.Group{
-  constructor (scene){
+class Bullets extends Phaser.Physics.Arcade.Group {
+  constructor(scene) {
     super(scene.physics.world, scene);
 
     this.createMultiple({
@@ -40,13 +34,17 @@ class Bullets extends Phaser.Physics.Arcade.Group{
       });
   }
 
-  fireBullet (x, y){
-    let bullet = this.getFirstDead(true);
+  fireBullet(x, y) {
+    const bullet = this.getFirstDead(true);
 
-    if (bullet){
+    if (bullet) {
         bullet.fire(x, y);
     }
   }
+}
+
+function win() {
+  return false;
 }
 
 class Game extends Phaser.Scene {
@@ -58,21 +56,21 @@ class Game extends Phaser.Scene {
   mapSize = 6;
   bullets;
   enemies = [];
-  enemyMaxY;
-  enemyMinY;
+  enemyMaxY: number;
+  enemyMinY: number;
 
   music: Phaser.Loader.FileTypes.AudioFile;
 
   init() {
-    this.enemyMaxY = 600;
-    this.enemyMinY = 0;
+    this.enemyMaxY = 850;
+    this.enemyMinY = 100;
   }
 
   preload() {
     this.load.image('map', 'assets/map.png');
     this.load.image('ship', 'assets/ship.png');
-    this.load.image('bullet','assets/shmup-bullet.png')
-    this.load.image('enemy','assets/enemy.png');
+    this.load.image('bullet', 'assets/shmup-bullet.png');
+    this.load.image('enemy', 'assets/enemy.png');
     this.load.audio('music', 'assets/music.mp3');
   }
 
@@ -89,7 +87,6 @@ class Game extends Phaser.Scene {
     this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY,
       this.scale.width * this.mapSize, this.scale.height,
       'map');
-    // this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
     this.cursors = this.input.keyboard.createCursorKeys();
 
     // player
@@ -107,37 +104,47 @@ class Game extends Phaser.Scene {
     this.cameras.main.centerToSize();
     this.cameras.main.setBounds(0, 0, this.map.width - this.scale.width * (this.mapSize / 2), this.map.height);
     this.cameras.main.centerOn(this.player.x, this.player.y);
-    this.game.scale.displayScale = this.cameras.main.scaleManager.displayScale;
-    // this.matter.world.setBounds(0, 160, this.map.width, 320);
-    this.player.setCollideWorldBounds(true);
-    // this.cameras.main.startFollow(this.player);
-
+    // scenes
+    this.scene.add('menu', Menu, false);
+    this.scene.add('win', Win, false);
     // création de l'arme
-    this.bullets= new Bullets(this);
+    this.bullets = new Bullets(this);
 
     // création des ennemis et des collisions avec le joueur
-    for(let i=0; i<5; i++){
-      let enemy = this.physics.add.sprite(500*(i+1), 400, 'enemy');
+    for (let i = 0; i < 5; i++) {
+      const enemy = this.physics.add.sprite(500 * (i + 1), 400, 'enemy');
       enemy.setSize(800, 250);
       enemy.setDisplaySize(120, 100);
-      enemy.enableBody(true, 500*(i+1), 400, true, true);
-      this.physics.add.collider(enemy,this.player);
+      enemy.enableBody(true, 500 * (i + 1), 400, true, true);
+      this.physics.add.collider(enemy, this.player);
       this.enemies.push(enemy);
     }
 
     // collisions des ennemis entre eux
-    for(let i =0; i<this.enemies.length;i++){
-      // this.enemies[i].setVelocityY(200);
-      for(let j = i; j<this.enemies.length; j++){
-        this.physics.add.collider(this.enemies[i],this.enemies[j]);
+    for (let i = 0; i < this.enemies.length; i++) {
+      const random = new RandomDataGenerator();
+      if(random.integerInRange(1,2)==1){
+        this.enemies[i].setVelocityY(200);
+      }else{
+        this.enemies[i].setVelocityY(-200);
+      }
+      for (let j = i; j < this.enemies.length; j++) {
+        this.physics.add.collider(this.enemies[i], this.enemies[j]);
       }
     }
   }
 
   update() {
+    // win
+    if (this.win()) {
+      this.scene.start('win');
+      this.scene.setVisible(true, 'win');
+    }
+    // scrolling
     this.cameras.main.setScroll(this.cameras.main.scrollX + this.scrollSpeed);
     this.physics.world.setBounds(this.cameras.main.scrollX, this.cameras.main.y, this.scale.width, this.scale.height);
-
+    // déplacements
+    // player
     this.player.setVelocityX(0);
     this.player.setVelocityY(0);
 
@@ -152,21 +159,54 @@ class Game extends Phaser.Scene {
       this.player.setVelocityX(300);
     }
 
-    if(this.cursors.space.isDown){
-      this.bullets.fireBullet(this.player.x+55, this.player.y+10);
+    if (this.cursors.space.isDown) {
+      this.bullets.fireBullet(this.player.x + 55, this.player.y + 10);
     }
+
+    for (let i = 0; i <this.enemies.length; i++) {
+
+      let enemy = this.enemies[i];
+      console.log(enemy.y+" "+this.physics.world.bounds.height);
+      // reverse movement if reached the edges
+      if (enemy.y >= this.enemyMaxY) {
+        enemy.setVelocityY(-200);
+      } else if (enemy.y <= this.enemyMinY) {
+        enemy.setVelocityY(200);
+      }
+      }
 
     for(let i = 0;i<this.bullets.getChildren().length;i++){
       let bullet = this.bullets.getChildren()[i];
+      if(bullet.x >= this.physics.world.bounds.width){
+        bullet.disableBody(true,true);
+        this.bullets.remove(bullet);
+        continue;
+      }
       for(let j = 0;j<this.enemies.length;j++){
-        this.physics.add.collider(this.enemies[j],bullet);
+        let enemy = this.enemies[j];
+        this.physics.add.collider(enemy,bullet);
         if (Phaser.Geom.Intersects.RectangleToRectangle(bullet.getBounds(), this.enemies[j].getBounds())) {
-          this.enemies[j].disableBody(true,true);
+          enemy.disableBody(true,true);
+          this.physics.world.remove(enemy);
           bullet.disableBody(true,true);
           break;
         }
       }
     }
+
+
+
+    this.enemies.forEach(enemy => {
+      enemy.update();
+    });
+
+    this.bullets.getChildren().forEach(bullet => {
+      bullet.preUpdate();
+    });
+  }
+
+  win() {
+    return this.time.now >= 240000;
   }
 }
 
@@ -201,4 +241,41 @@ export class GameComponent {
   initializeGame() {
     this.initialize = true;
   }
+}
+class Win extends Phaser.Scene {
+
+  constructor(config) {
+    super(config);
+  }
+
+  init(data) {}
+  preload() {
+    this.load.image('win', 'assets/win.jpg');
+  }
+  create(data)  {
+    this.add.tileSprite(this.cameras.main.scrollX + this.scale.width / 2, this.cameras.main.y + this.scale.height / 2,
+      this.scale.width, this.scale.height, 'win');
+  }
+  update(time, delta) {}
+
+}
+
+class Menu extends Phaser.Scene {
+
+  constructor(config) {
+    super(config);
+  }
+
+  init(data) {
+  }
+
+  preload() {
+  }
+
+  create(data) {
+  }
+
+  update(time, delta) {
+  }
+
 }
