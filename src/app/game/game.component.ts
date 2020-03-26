@@ -83,7 +83,7 @@ class Game extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, this.map.width, this.map.height);
     this.cameras.main.centerOn(this.player.x, this.player.y);
     this.game.scale.displayScale = this.cameras.main.scaleManager.displayScale;
-    this.player.setCollideWorldBounds(true, 1, 1);
+    this.player.setCollideWorldBounds(true, 0, 0);
 
     this.bullets = new Bullets(this);
   }
