@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import * as Phaser from 'phaser';
 
-class Bullet extends Phaser.Physics.Arcade.Sprite{
+class Bullet extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
       super(scene, x, y, 'bullet');
   }
 
-  fire (x, y){
+  fire(x, y) {
     this.body.reset(x, y);
 
     this.setActive(true);
@@ -25,7 +25,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite{
   }
 }
 
-class Bullets extends Phaser.Physics.Arcade.Group{
+class Bullets extends Phaser.Physics.Arcade.Group {
   constructor(scene) {
     super(scene.physics.world, scene);
 
@@ -39,7 +39,7 @@ class Bullets extends Phaser.Physics.Arcade.Group{
   }
 
   fireBullet(x, y) {
-    let bullet = this.getFirstDead(true);
+    const bullet = this.getFirstDead(true);
 
     if (bullet) {
         bullet.fire(x, y);
@@ -61,7 +61,7 @@ class Game extends Phaser.Scene {
   preload() {
     this.load.image('map', 'assets/map.png');
     this.load.image('ship', 'assets/ship.png');
-    this.load.image('bullet','assets/shmup-bullet.png')
+    this.load.image('bullet', 'assets/shmup-bullet.png');
   }
 
   create() {
@@ -89,8 +89,9 @@ class Game extends Phaser.Scene {
   }
 
   update() {
-    console.log(this.scale.height);
     this.cameras.main.setScroll(this.cameras.main.scrollX + this.scrollSpeed);
+    this.physics.world.setBounds(this.cameras.main.scrollX, this.cameras.main.scrollY, this.scale.width, this.scale.height);
+
     this.player.setVelocityX(0);
     this.player.setVelocityY(0);
     if (this.cursors.up.isDown) {
@@ -104,7 +105,7 @@ class Game extends Phaser.Scene {
       this.player.setVelocityX(150);
     }
 
-    if(this.cursors.space.isDown) {
+    if (this.cursors.space.isDown) {
       this.bullets.fireBullet(this.player.x + 55, this.player.y + 10);
     }
   }
@@ -126,7 +127,7 @@ interface GameInstance extends Phaser.Types.Core.GameConfig {
 export class GameComponent {
   initialize = true;
   game: GameInstance = {
-    width: '85%',
+    width: '95%',
     height: '100%',
     scale: {
       mode: Phaser.Scale.FIT,
