@@ -1,34 +1,3 @@
 body {
-  background-color: rgb(37, 36, 41);
-  color: white;
-}
-
-h1 {
-  font-size: 10rem;
-}
-
-p {
-  font-size: 1.5rem;
-}
-
-.wrapper {
-  display: grid;
-  grid-template-columns: repeat(3, 2fr);
-  grid-template-areas:
-    ". . ."
-    ". a ."
-    ". . ."
-    ". b .";
-}
-
-.text {
-  grid-area: a;
-  align-self: end;
-  text-align: center;
-}
-
-.button {
-  grid-area: b;
-  align-self: center;
-  justify-self: center;
+  background-image: url("../../assets/404.png");
 }

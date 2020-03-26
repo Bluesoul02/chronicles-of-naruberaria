@@ -2,8 +2,9 @@ import {Component} from '@angular/core';
 import * as Phaser from 'phaser';
 import TimerEvent = Phaser.Time.TimerEvent;
 
-class Bullet extends Phaser.Physics.Arcade.Sprite{
-  constructor (scene, x, y){
+
+class Bullet extends Phaser.Physics.Arcade.Sprite {
+  constructor(scene, x, y) {
       super(scene, x, y, 'bullet');
   }
 
@@ -15,7 +16,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite{
 
     this.setVelocityX(500);
   }
-  
+
   preUpdate (time, delta){
     super.preUpdate(time, delta);
 
