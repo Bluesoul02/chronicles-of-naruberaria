@@ -60,12 +60,14 @@ class Game extends Phaser.Scene {
   mapSize = 6;
   bullets;
   enemies = [];
-  enemyMaxY = 800;
-  enemyMinY = 0;
+  enemyMaxY;
+  enemyMinY;
 
   music: Phaser.Loader.FileTypes.AudioFile;
 
   init() {
+    this.enemyMaxY = 600;
+    this.enemyMinY = 0;
   }
 
   preload() {
@@ -77,17 +79,20 @@ class Game extends Phaser.Scene {
   }
 
   create() {
+
     // music
     this.sound.play('music');
     this.sound.volume = 0.3;
     // this.music.addToCache();
     // this.music.on('loop', this);
     // this.music.setLoop(true);
+
     // map
     this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY,
       this.scale.width * this.mapSize, this.scale.height,
       'map');
     this.cursors = this.input.keyboard.createCursorKeys();
+
     // player
     this.player = this.physics.add.sprite(
       50, 400,
@@ -97,17 +102,19 @@ class Game extends Phaser.Scene {
     this.player.setDisplaySize(120, 100);
     this.player.enableBody(true, 50, 400, true, true);
     this.player.setCollideWorldBounds(true, 0, 0);
+
     // camera
     this.cameras.main.setSize(this.scale.width, this.scale.height);
     this.cameras.main.centerToSize();
     this.cameras.main.setBounds(0, 0, this.map.width - this.scale.width * (this.mapSize / 2), this.map.height);
     this.cameras.main.centerOn(this.player.x, this.player.y);
-    // bullets
-    this.bullets = new Bullets(this);
     // scenes
     this.scene.add('menu', Menu, false);
     this.scene.add('win', Win, false);
+    // création de l'arme
+    this.bullets = new Bullets(this);
 
+    // création des ennemis et des collisions avec le joueur
     for (let i = 0; i < 5; i++) {
       const enemy = this.physics.add.sprite(500 * (i + 1), 400, 'enemy');
       enemy.setSize(800, 250);
@@ -117,6 +124,7 @@ class Game extends Phaser.Scene {
       this.enemies.push(enemy);
     }
 
+    // déplacement des ennemis et collisions entre eux
     for (let i = 0; i < this.enemies.length; i++) {
       for (let j = i; j < this.enemies.length; j++) {
         this.physics.add.collider(this.enemies[i], this.enemies[j]);
@@ -151,21 +159,6 @@ class Game extends Phaser.Scene {
     if (this.cursors.space.isDown) {
       this.bullets.fireBullet(this.player.x + 55, this.player.y + 10);
     }
-
-    /*
-  for (let i = 0; i < this.enemies.length; i++) {
-
-    // move enemies
-    this.enemies[i].y += this.enemies[i].speed;
-
-    // reverse movement if reached the edges
-    if (this.enemies[i].y >= this.enemyMaxY && this.enemies[i].speed > 0) {
-      this.enemies[i].speed *= -1;
-    } else if (this.enemies[i].y <= this.enemyMinY && this.enemies[i].speed < 0) {
-      this.enemies[i].speed *= -1;
-    }
-  }
-    */
   }
 
   win() {
