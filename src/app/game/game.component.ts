@@ -217,7 +217,7 @@ class Win extends Phaser.Scene {
 
   init(data) {}
   preload() {
-    this.load.image('win', 'assets/win.jpg');
+    this.load.image('win', 'assets/win.png');
   }
   create(data)  {
     this.add.tileSprite(this.cameras.main.scrollX + this.scale.width / 2, this.cameras.main.y + this.scale.height / 2,
