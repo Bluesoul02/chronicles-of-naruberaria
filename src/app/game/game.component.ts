@@ -69,7 +69,7 @@ class Game extends Phaser.Scene {
 
     this.scale.displayScale.setFromObject(this.cameras.main.scaleManager.displayScale);
     this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY,
-      this.scale.width * 4, this.scale.height,
+      this.scale.width * 3, this.scale.height,
       'map');
     // this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -93,9 +93,9 @@ class Game extends Phaser.Scene {
   }
 
   update() {
-    console.log(this.scale.height);
-    this.cameras.main.setScroll(this.cameras.main.scrollX + 0.2);
-    // this.cameras.main.setPosition(this.cameras.main.x + 1, this.cameras.main.y);
+    this.cameras.main.setScroll(this.cameras.main.scrollX + this.scrollSpeed);
+    this.physics.world.setBounds(this.cameras.main.scrollX, this.cameras.main.y, this.scale.width, this.scale.height);
+
     this.player.setVelocityX(0);
     this.player.setVelocityY(0);
 
