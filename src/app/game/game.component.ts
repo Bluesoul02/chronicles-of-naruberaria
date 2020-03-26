@@ -85,10 +85,10 @@ class Game extends Phaser.Scene {
 
     // map
     this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY,
-      this.scale.width * this.mapSize, this.scale.height,
+      this.sys.canvas.width * this.mapSize, this.sys.canvas.height,
       'map');
-    this.cursors = this.input.keyboard.createCursorKeys();
 
+    this.cursors = this.input.keyboard.createCursorKeys();
     // player
     this.player = this.physics.add.sprite(
       50, 400,
@@ -136,6 +136,7 @@ class Game extends Phaser.Scene {
 
   update() {
     // win
+    console.log(this.time.now);
     if (this.win()) {
       this.scene.start('win');
       this.scene.setVisible(true, 'win');
@@ -206,7 +207,7 @@ class Game extends Phaser.Scene {
   }
 
   win() {
-    return this.time.now >= 240000;
+    return this.time.now >= 120000;
   }
 }
 
@@ -250,11 +251,11 @@ class Win extends Phaser.Scene {
 
   init(data) {}
   preload() {
-    this.load.image('win', 'assets/win.jpg');
+    this.load.image('win', 'assets/win.png');
   }
   create(data)  {
-    this.add.tileSprite(this.cameras.main.scrollX + this.scale.width / 2, this.cameras.main.y + this.scale.height / 2,
-      this.scale.width, this.scale.height, 'win');
+    this.add.image(this.scale.width / 2, this.scale.height / 1.5, 'win');
+    this.cameras.main.setZoom(0.75);
   }
   update(time, delta) {}
 
