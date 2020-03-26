@@ -1,13 +1,59 @@
 import {Component} from '@angular/core';
 import * as Phaser from 'phaser';
 
+class LaserGroup extends Phaser.Physics.Arcade.Group{
+  constructor(scene) {
+      // Call the super constructor, passing in a world and a scene
+      super(scene.physics.world, scene);
+
+      // Initialize the group
+      this.createMultiple({
+          classType: Laser, // This is the class we create just below
+          frameQuantity: 30, // Create 30 instances in the pool
+          active: false,
+          visible: false,
+          key: 'laser'
+      });
+  }
+
+  fireLaser(x, y) {
+    const laser = this.getFirstDead(false);
+    if (laser) {
+      laser.fire(x, y);
+    }
+  }
+
+}
+
+class Laser extends Phaser.Physics.Arcade.Sprite {
+  constructor(scene, x, y) {
+      super(scene, x, y, 'laser');
+  }
+
+  fire(x, y) {
+    this.body.reset(x, y);
+    this.setActive(true);
+    this.setVisible(true);
+    this.setVelocityX(500);
+  }
+
+  preUpdate(time, delta) {
+    super.preUpdate(time, delta);
+
+    if (this.y <= 0) {
+      this.setActive(false);
+      this.setVisible(false);
+    }
+  }
+  }
 
 class Game extends Phaser.Scene {
   player: Phaser.Physics.Arcade.Sprite;
+  fireButton;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   map: Phaser.GameObjects.TileSprite;
   scrollSpeed = 0.2;
-
+  laserGroup;
 
   init() {
   }
@@ -15,9 +61,11 @@ class Game extends Phaser.Scene {
   preload() {
     this.load.image('map', 'assets/map.png');
     this.load.image('ship', 'assets/ship.png');
+    this.load.image('laser', 'assets/shmup-bullet.png');
   }
 
   create() {
+
     this.scale.displayScale.setFromObject(this.cameras.main.scaleManager.displayScale);
     this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY,
       this.scale.width * 2, this.scale.height,
@@ -36,16 +84,16 @@ class Game extends Phaser.Scene {
     this.cameras.main.centerOn(this.player.x, this.player.y);
     this.game.scale.displayScale = this.cameras.main.scaleManager.displayScale;
     this.player.setCollideWorldBounds(true, 1, 1);
+
+    this.laserGroup = new LaserGroup(this);
+    this.fireButton = this.cursors.space;
   }
 
   update() {
     console.log(this.scale.height);
-    let x = 0;
     this.cameras.main.setScroll(this.cameras.main.scrollX + this.scrollSpeed);
-    this.physics.world.setBounds(this.cameras.main.scrollX, this.cameras.main.y, this.scale.width, this.scale.height, true, true, true, true);
     this.player.setVelocityX(0);
     this.player.setVelocityY(0);
-    x += this.scrollSpeed;
     if (this.cursors.up.isDown) {
       this.player.setVelocityY(-160);
     } else if (this.cursors.down.isDown) {
@@ -56,6 +104,14 @@ class Game extends Phaser.Scene {
     } else if (this.cursors.right.isDown) {
       this.player.setVelocityX(150);
     }
+
+    if(this.fireButton.isDown){
+      this.shootLaser();
+    }
+  }
+
+  shootLaser(){
+    this.laserGroup.fireLaser(this.player.x + 55, this.player.y + 10);
   }
 
   setAngle(angle: number) {
@@ -75,7 +131,7 @@ interface GameInstance extends Phaser.Types.Core.GameConfig {
 export class GameComponent {
   initialize = true;
   game: GameInstance = {
-    width: '95%',
+    width: '85%',
     height: '100%',
     scale: {
       mode: Phaser.Scale.FIT,
