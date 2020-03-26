@@ -120,14 +120,14 @@ class Game extends Phaser.Scene {
     this.player.setVelocityY(0);
 
     if (this.cursors.up.isDown) {
-      this.player.setVelocityY(-160);
+      this.player.setVelocityY(-300);
     } else if (this.cursors.down.isDown) {
-      this.player.setVelocityY(160);
+      this.player.setVelocityY(300);
     }
     if (this.cursors.left.isDown) {
-      this.player.setVelocityX(-160);
+      this.player.setVelocityX(-300);
     } else if (this.cursors.right.isDown) {
-      this.player.setVelocityX(160);
+      this.player.setVelocityX(300);
     }
 
     if(this.cursors.space.isDown){
@@ -181,14 +181,5 @@ export class GameComponent {
 
   initializeGame() {
     this.initialize = true;
-  }
-
-  changeAngle() {
-    const instance = this.getInstance();
-    instance.scene.scenes.forEach(scene => {
-      if (scene.sys.isActive() && scene instanceof Game) {
-        scene.setAngle(0);
-      }
-    });
   }
 }
