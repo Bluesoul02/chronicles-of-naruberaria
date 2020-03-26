@@ -90,10 +90,10 @@ class Game extends Phaser.Scene {
 
     // map
     this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY,
-      this.scale.width * this.mapSize, this.scale.height,
+      this.sys.canvas.width * this.mapSize, this.sys.canvas.height,
       'map');
-    this.cursors = this.input.keyboard.createCursorKeys();
 
+    this.cursors = this.input.keyboard.createCursorKeys();
     // player
     this.player = this.physics.add.sprite(
       50, 400,
@@ -222,6 +222,7 @@ class Win extends Phaser.Scene {
   }
   create(data)  {
     this.add.image(this.scale.width / 2, this.scale.height / 1.5, 'win');
+    this.cameras.main.setZoom(0.75);
   }
   update(time, delta) {}
 
