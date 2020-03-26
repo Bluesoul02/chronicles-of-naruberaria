@@ -14,38 +14,38 @@ class LaserGroup extends Phaser.Physics.Arcade.Group{
           visible: false,
           key: 'laser'
       })
-}
-
-fireLaser(x,y){
-  const laser = this.getFirstDead(false);
-  if(laser){
-    laser.fire(x,y);
   }
-}
+
+  fireLaser(x,y){
+    const laser = this.getFirstDead(false);
+    if(laser){
+      laser.fire(x,y);
+    }
+  }
 
 }
 
 class Laser extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
       super(scene, x, y, 'laser');
-}
+  }
 
-fire(x,y){
-  this.body.reset(x,y);
-  this.setActive(true);
-  this.setVisible(true);
-  this.setVelocityY(-900);
-}
+  fire(x,y){
+    this.body.reset(x,y);
+    this.setActive(true);
+    this.setVisible(true);
+    this.setVelocityX(500);
+  }
 
-preUpdate(time, delta) {
-  super.preUpdate(time, delta);
+  preUpdate(time, delta) {
+    super.preUpdate(time, delta);
 
-  if (this.y <= 0) {
+    if (this.y <= 0) {
       this.setActive(false);
       this.setVisible(false);
+    }
   }
-}
-}
+  }
 
 class Game extends Phaser.Scene {
   player: Phaser.Physics.Arcade.Sprite;
@@ -61,7 +61,7 @@ class Game extends Phaser.Scene {
   preload() {
     this.load.image('map', 'assets/map.png');
     this.load.image('ship', 'assets/ship.png');
-    this.load.image('bullet','assets/shmup-bullet.png')
+    this.load.image('laser','assets/shmup-bullet.png')
   }
 
   create() {
@@ -110,13 +110,13 @@ class Game extends Phaser.Scene {
       this.player.setVelocityX(160);
     }
 
-    if(this.fireButton.onDown){
+    if(this.fireButton.isDown){
       this.shootLaser();
     }
   }
 
   shootLaser(){
-    this.laserGroup.fireLaser(this.player.x, this.player.y - 20);
+    this.laserGroup.fireLaser(this.player.x + 55, this.player.y + 10);
   }
 
   setAngle(angle: number) {
