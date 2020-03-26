@@ -1,57 +1,59 @@
 import {Component} from '@angular/core';
 import * as Phaser from 'phaser';
 
-class LaserGroup extends Phaser.Physics.Arcade.Group{
-  constructor(scene) {
-      // Call the super constructor, passing in a world and a scene
-      super(scene.physics.world, scene);
 
-      // Initialize the group
-      this.createMultiple({
-          classType: Laser, // This is the class we create just below
-          frameQuantity: 30, // Create 30 instances in the pool
-          active: false,
-          visible: false,
-          key: 'laser'
-      })
+class Bullet extends Phaser.Physics.Arcade.Sprite{
+  constructor (scene, x, y){
+      super(scene, x, y, 'bullet');
   }
 
-  fireLaser(x,y){
-    const laser = this.getFirstDead(false);
-    if(laser){
-      laser.fire(x,y);
-    }
-  }
-}
+  fire (x, y){
+    this.body.reset(x, y);
 
-class Laser extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y) {
-      super(scene, x, y, 'laser');
-  }
-
-  fire(x,y){
-    this.body.reset(x,y);
     this.setActive(true);
     this.setVisible(true);
+
     this.setVelocityX(500);
   }
 
-  preUpdate(time, delta) {
+  preUpdate (time, delta){
     super.preUpdate(time, delta);
 
-    if (this.y <= 0) {
+    if (this.y <= -32){
       this.setActive(false);
       this.setVisible(false);
     }
   }
+}
+
+class Bullets extends Phaser.Physics.Arcade.Group{
+  constructor (scene){
+    super(scene.physics.world, scene);
+
+    this.createMultiple({
+        frameQuantity: 5,
+        key: 'bullet',
+        active: false,
+        visible: false,
+        classType: Bullet
+      });
   }
 
+  fireBullet (x, y){
+    let bullet = this.getFirstDead(true);
+
+    if (bullet){
+        bullet.fire(x, y);
+    }
+  }
+}
+
 class Game extends Phaser.Scene {
+
   player: Phaser.Physics.Arcade.Sprite;
-  fireButton;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   map: Phaser.GameObjects.TileSprite;
-  laserGroup;
+  bullets;
 
 
   init() {
@@ -60,7 +62,7 @@ class Game extends Phaser.Scene {
   preload() {
     this.load.image('map', 'assets/map.png');
     this.load.image('ship', 'assets/ship.png');
-    this.load.image('laser','assets/shmup-bullet.png')
+    this.load.image('bullet','assets/shmup-bullet.png')
   }
 
   create() {
@@ -87,8 +89,7 @@ class Game extends Phaser.Scene {
     // this.player.setCollideWorldBounds(true, 1, 1);
     // this.cameras.main.startFollow(this.player);
 
-    this.laserGroup = new LaserGroup(this);
-    this.fireButton = this.cursors.space;
+    this.bullets= new Bullets(this);
   }
 
   update() {
@@ -109,13 +110,9 @@ class Game extends Phaser.Scene {
       this.player.setVelocityX(160);
     }
 
-    if(this.fireButton.isDown){
-      this.shootLaser();
+    if(this.cursors.space.isDown){
+      this.bullets.fireBullet(this.player.x+55, this.player.y+10);
     }
-  }
-
-  shootLaser(){
-    this.laserGroup.fireLaser(this.player.x + 55, this.player.y + 10);
   }
 
   setAngle(angle: number) {
