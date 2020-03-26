@@ -68,7 +68,7 @@ class Game extends Phaser.Scene {
 
     this.scale.displayScale.setFromObject(this.cameras.main.scaleManager.displayScale);
     this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY,
-      this.scale.width * 4, 320,
+      this.scale.width * 4, this.scale.height,
       'map');
     // this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'map');
     this.cursors = this.input.keyboard.createCursorKeys();
