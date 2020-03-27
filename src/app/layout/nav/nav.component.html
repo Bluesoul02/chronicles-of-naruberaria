@@ -5,12 +5,16 @@
       <a mat-button routerLink="/game"><mat-icon>videogame_asset</mat-icon> Jeu</a>
       <span class="flex"> </span>
       <a mat-button [mat-menu-trigger-for]="menu" ><mat-icon>account_circle</mat-icon> Mon compte </a>
+
+
       <mat-menu x-position="before" #menu="matMenu">
         <button mat-menu-item [routerLink]="['players', currentUser.id] ">
           {{currentUser.name}}
         </button>
         <button mat-menu-item routerLink="/login" (click)="logout()">Déconnexion</button>
       </mat-menu>
+
+
     </div>
     <ng-template #noconnected>
       <a mat-button routerLink="/"><mat-icon>home</mat-icon> Accueil</a>
