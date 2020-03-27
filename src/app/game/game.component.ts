@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import * as Phaser from 'phaser';
 import RandomDataGenerator = Phaser.Math.RandomDataGenerator;
-// import { runInThisContext } from 'vm';
 
 class Bullet extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
@@ -59,6 +58,8 @@ class Game extends Phaser.Scene {
   enemies: Array<Phaser.Physics.Arcade.Sprite>;
   enemyMaxY: number;
   enemyMinY: number;
+  score: number;
+  scoreText;
 
   music: Phaser.Loader.FileTypes.AudioFile;
 
@@ -74,6 +75,7 @@ class Game extends Phaser.Scene {
     this.load.image('bullet', 'assets/shmup-bullet.png');
     this.load.image('enemy', 'assets/enemy.png');
     this.load.audio('music', 'assets/music.mp3');
+    this.load.audio('crash','assets/music.mp3')
   }
 
   create() {
@@ -96,8 +98,8 @@ class Game extends Phaser.Scene {
       50, 400,
       'ship'
     );
-    this.player.setSize(800, 250);
-    this.player.setDisplaySize(120, 100);
+    this.player.setSize(700, 200);
+    this.player.setDisplaySize(180, 160);
     this.player.enableBody(true, 50, 400, true, true);
     this.player.setCollideWorldBounds(true, 0, 0);
 
@@ -136,6 +138,9 @@ class Game extends Phaser.Scene {
       }
     }
 
+    this.score = 0;
+    this.scoreText = this.add.text(this.scale.width/2, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' }).setOrigin(0.5, 0);    
+
     this.cameras.main.resetFX();
   }
 
@@ -143,8 +148,8 @@ class Game extends Phaser.Scene {
 
     // win
     if (this.win()) {
-      this.scene.start('win');
-      this.scene.setVisible(true, 'win');
+      this.scene.setVisible(true, "win");
+      this.score+=50;
     }
 
     // scrolling
@@ -209,13 +214,16 @@ class Game extends Phaser.Scene {
           // destruction du vaisseau touché et de la bullet
           this.enemies.slice(j);
           enemy.destroy();
+          // TO DO : REELEMENT ENLEVER UN ENNEMI
           this.bullets.remove(bullet);
           bullet.destroy();
-          console.log('kill réussi');
+          this.score += 1;
           break;
         }
       }
     }
+    this.scoreText.destroy();
+    this.scoreText = this.add.text(this.player.x, this.player.y+15, 'Score :'+this.score, { fontSize: '20px', fill: '#fff' });
   }
 
   win() {
@@ -225,19 +233,22 @@ class Game extends Phaser.Scene {
 
   gameOver(){
 
+    this.sound.stopAll();
+
     // secouer la caméra pour un effet accident
     this.cameras.main.shake(500);
 
     this.time.delayedCall(250, function() {
-      this.cameras.main.fade(250);
+      this.cameras.main.fade(1000);
     }, [], this);
 
     // recommence une partie automatiquement
-    this.time.delayedCall(500, function() {
+    this.time.delayedCall(1000, function() {
       this.scene.remove('menu');
       this.scene.remove('win');
       this.scene.restart();
     }, [], this);
+
   }
 }
 
@@ -281,7 +292,7 @@ class Win extends Phaser.Scene {
 
   init(data) {}
   preload() {
-    this.load.image('win', 'assets/win.jpg');
+    this.load.image('win', 'assets/win.png');
   }
   create(data)  {
     this.add.tileSprite(this.cameras.main.scrollX + this.scale.width / 2, this.cameras.main.y + this.scale.height / 2,
