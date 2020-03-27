@@ -11,7 +11,7 @@ import {FileInput} from 'ngx-material-file-input';
 })
 export class PlayersService {
   private readonly apiUrl = environment.apiUrl;
-  private playerUrl = this.apiUrl + 'player';
+  private playerUrl = this.apiUrl + 'players';
 
   constructor(private http: HttpClient) {
   }

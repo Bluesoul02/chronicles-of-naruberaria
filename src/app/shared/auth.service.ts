@@ -10,7 +10,7 @@ const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
     'Cache-Control': 'no-cache',
-    'Accept': 'application/json',
+    Accept: 'application/json',
   })
 };
 

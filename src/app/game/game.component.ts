@@ -196,14 +196,14 @@ class Game extends Phaser.Scene {
       let bullet = this.bullets.getChildren()[i];
 
       // vérification de si la bullet est enore à une distance raisonnable du joueur
-      if(bullet.x >= this.scale.width+this.cameras.main.scrollX){
+      if (bullet.x >= this.scale.width + this.cameras.main.scrollX) {
         // destruction de la bullet si trop éloignée du joueur
         bullet.destroy();
         this.bullets.remove(bullet);
         continue;
       }
-      for(let j = 0;j<this.enemies.length;j++){
-        let enemy = this.enemies[j];
+      for (let j = 0; j < this.enemies.length; j++) {
+        const enemy = this.enemies[j];
         // vérification de la collision entre bullet et ennemi
         if (Phaser.Geom.Intersects.RectangleToRectangle(bullet.getBounds(), this.enemies[j].getBounds())) {
           // destruction du vaisseau touché et de la bullet
