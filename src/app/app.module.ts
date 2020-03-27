@@ -16,7 +16,7 @@ import {AuthService} from './shared/auth.service';
 import {HttpErrorInterceptorService} from './shared/http-error-interceptor.service';
 import {TokenInterceptorService} from './shared/token-interceptor.service';
 import {routes} from './app-routing.module';
-import {PartiesModule} from "./parties/parties.module";
+import {PartiesModule} from './parties/parties.module';
 
 @NgModule({
   declarations: [
