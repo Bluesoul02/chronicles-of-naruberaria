@@ -22,7 +22,8 @@ export class ListPlayersComponent implements OnInit {
       this.thePlayers = players;
       console.log(players);
       this.loading = false;
-    });  }
+    });
+  }
 
   selectedRow(player: Player) {
     if (this.isSelected(player)) {
