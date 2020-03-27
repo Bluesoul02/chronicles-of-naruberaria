@@ -17,6 +17,7 @@ export class ListPlayersComponent implements OnInit {
   constructor(private router: Router, private service: PlayersService) { }
 
   ngOnInit() {
+    console.log();
     this.loading = true;
     this.service.getPlayers().subscribe(players => {
       this.thePlayers = players;
