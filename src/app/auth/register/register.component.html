@@ -7,11 +7,7 @@
     <form fxLayoutAlign="stretch" fxLayout="column" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <mat-card-content fxLayout="row row-wrap" fxLayoutGap="10px" fxLayoutAlign="space-around center">
         <mat-form-field fxFlex="45">
-          <input matInput formControlName="nom" placeholder="Nom">
-        </mat-form-field>
-
-        <mat-form-field fxFlex="45">
-          <input matInput formControlName="prenom" placeholder="Prénom">
+          <input matInput formControlName="name" placeholder="Nom">
         </mat-form-field>
 
         <mat-form-field fxFlex="100">

@@ -1,0 +1,36 @@
+<div fxFlexFill fxLayoutAlign="center center" *ngIf="loading">
+  <mat-card>
+    <mat-card-content>
+      <mat-progress-spinner
+        class="example-margin"
+        [color]="'primary'"
+        mode="indeterminate"
+        diameter="100">
+      </mat-progress-spinner>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="space-around center" *ngIf="player">
+  <mat-card fxFlex="80">
+    <mat-card-header>
+      <mat-card-title>
+        {{player.name}}
+      </mat-card-title>
+      <mat-card-subtitle>{{player.bestScore }} {{player.totalPlayTime }} </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div fxLayoutAlign="center center">
+        <img mat-card-image [src]="player.avatar" class="img-avatar">
+      </div>
+    </mat-card-content>
+    <mat-card-actions fxLayout="row" fxLayoutAlign="center space-around">
+      <button mat-raised-button (click)="editPlayer()">
+        <mat-icon>edit</mat-icon>
+      </button>
+<!--      <button mat-raised-button>
+        <mat-icon>delete</mat-icon>
+      </button>-->
+    </mat-card-actions>
+  </mat-card>
+</div>

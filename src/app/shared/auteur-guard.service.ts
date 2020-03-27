@@ -15,7 +15,7 @@ export class AuteurGuardService implements CanActivate, CanActivateChild {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.authenticationService.currentUserValue;
-    if (currentUser.user.role.indexOf('joueur') >= 0) {
+    if (currentUser.user.role.indexOf('player') >= 0) {
       // logged in so return true
       return true;
     }

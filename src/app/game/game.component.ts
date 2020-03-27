@@ -112,7 +112,7 @@ class Game extends Phaser.Scene {
     // scenes
     // this.scene.add('menu', Menu, false);
     this.scene.add('win', Win, false);
-    
+
     // création de l'arme
     this.bullets = new Bullets(this);
 
@@ -173,7 +173,7 @@ class Game extends Phaser.Scene {
       this.player.setVelocityX(300);
     }
 
-    // pour tirer 
+    // pour tirer
     if (this.cursors.space.isDown) {
       this.bullets.fireBullet(this.player.x + 55, this.player.y + 10);
     }
@@ -241,7 +241,7 @@ class Game extends Phaser.Scene {
     this.time.delayedCall(250, function() {
       this.cameras.main.fade(1000);
     }, [], this);
- 
+
     // recommence une partie automatiquement
     this.time.delayedCall(1000, function() {
       this.scene.remove('menu');

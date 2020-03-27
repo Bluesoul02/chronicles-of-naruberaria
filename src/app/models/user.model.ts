@@ -7,20 +7,14 @@ export class User {
   tokenType: string;
   expiresIn: number;
 
-  constructor(id: number,
-              name: string,
-              email: string,
-              role: string[],
-  ) {
+  constructor(id: number, name: string, email: string, role: string[]) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.role = role;
   }
 
-  static parse(personne: any) {
-    return new User(personne.user.id, personne.user.name,
-      personne.user.email, personne.user.role
-    );
+  static parse(player: any) {
+    return new User(player.user.id, player.user.name, player.user.email, player.user.role);
   }
 }

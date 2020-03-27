@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {AuthService} from '../../shared/auth.service';
 import {first} from 'rxjs/operators';
-import {Personne} from '../../models/personne.model';
+import {Player} from '../../models/player.model';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
     this.createForm();
   }
 
@@ -56,11 +56,11 @@ export class LoginComponent implements OnInit {
 
 
     /*      (response) => {
-            const personne = response as Personne;
+            const player = response as Player;
 
             if (this.authService.currentUserValue) {
               console.log('OK LOGIN');
-              this.toastr.success(`Bienvenue ${personne.prenom} ${personne.nom} `, 'Connexion OK');
+              this.toastr.success(`Bienvenue ${player.name}`, 'Connexion OK');
               this.router.navigate([this.returnUrl]);
             } else {
               this.loginForm.reset({password: ''});

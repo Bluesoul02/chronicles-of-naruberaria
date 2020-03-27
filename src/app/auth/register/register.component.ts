@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Personne} from '../../models/personne.model';
+import {Player} from '../../models/player.model';
 import {User} from '../../models/user.model';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import {PersonneValidators} from '../../personnes/personne.validators';
+import {PlayerValidators} from '../../player/player.validators';
 import {FileInput, FileValidator} from 'ngx-material-file-input';
 import {AuthService} from '../../shared/auth.service';
 import {Router} from '@angular/router';
@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
   loading = false;
   error: any;
 
-  personne: Personne = new Personne(-1, '', '', '', false, '', '', new User(-1, '', '', []));
+  player: Player = new Player(-1, '', '', -1, '', new User(-1, '', '', []));
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -34,8 +34,7 @@ export class RegisterComponent implements OnInit {
 
   createForm() {
     this.registerForm = new FormGroup({
-      nom: new FormControl('', [Validators.required, Validators.minLength(4)]),
-      prenom: new FormControl('', [Validators.required, Validators.minLength(4)]),
+      name: new FormControl('', [Validators.required, Validators.minLength(8)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       pwd: new FormGroup({
           password: new FormControl(undefined, [Validators.required, Validators.minLength(4)]),
@@ -45,12 +44,8 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  get nom() {
-    return this.registerForm.get('nom');
-  }
-
-  get prenom() {
-    return this.registerForm.get('prenom');
+  get name() {
+    return this.registerForm.get('name');
   }
 
   get email() {
@@ -67,13 +62,12 @@ export class RegisterComponent implements OnInit {
 
 
   onSubmit() {
-    this.personne.nom = this.nom.value;
-    this.personne.prenom = this.prenom.value;
-    this.personne.user.email = this.email.value;
-    this.personne.user.name = `${this.personne.prenom} ${this.personne.nom}`;
+    this.player.name = this.name.value;
+    this.player.user.email = this.email.value;
+    this.player.user.name = `${this.player.name}`;
     const pwd = this.password.value;
 
-    this.authService.onRegister({personne: this.personne, pwd: this.password.value})
+    this.authService.onRegister({player: this.player, pwd: this.password.value})
       .subscribe(data => {
           this.router.navigate(['/']);
         },

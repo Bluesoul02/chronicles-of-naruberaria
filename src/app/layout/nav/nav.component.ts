@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Personne} from '../../models/personne.model';
+import {Player} from '../../models/player.model';
 import {Router} from '@angular/router';
 import {AuthService} from '../../shared/auth.service';
 
@@ -9,7 +9,7 @@ import {AuthService} from '../../shared/auth.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent {
-  currentUser: Personne;
+  currentUser: Player;
 
   constructor(
     private router: Router,
