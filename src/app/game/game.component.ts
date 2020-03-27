@@ -111,6 +111,7 @@ class Game extends Phaser.Scene {
 
     // scenes
     // this.scene.add('menu', Menu, false);
+    this.scene.add('win', Win, false);
 
     // création de l'arme
     this.bullets = new Bullets(this);
@@ -138,8 +139,7 @@ class Game extends Phaser.Scene {
     }
 
     this.score = 0;
-
-    this.scoreText = this.add.text(this.cameras.main.scrollX/2, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' }).setOrigin(0.5, 0);
+    this.scoreText = this.add.text(this.scale.width/2, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' }).setOrigin(0.5, 0);    
 
     this.cameras.main.resetFX();
   }
@@ -148,7 +148,8 @@ class Game extends Phaser.Scene {
 
     // win
     if (this.win()) {
-      this.scene.add('win', Win, true);
+      this.scene.setVisible(true, "win");
+      this.score+=50;
     }
 
     // scrolling
@@ -213,15 +214,16 @@ class Game extends Phaser.Scene {
           // destruction du vaisseau touché et de la bullet
           this.enemies.slice(j);
           enemy.destroy();
+          // TO DO : REELEMENT ENLEVER UN ENNEMI
           this.bullets.remove(bullet);
           bullet.destroy();
           this.score += 1;
-          this.scoreText.setText('Score : ' + this.score);
-          console.log('kill réussi');
           break;
         }
       }
     }
+    this.scoreText.destroy();
+    this.scoreText = this.add.text(this.player.x, this.player.y+15, 'Score :'+this.score, { fontSize: '20px', fill: '#fff' });
   }
 
   win() {
