@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import * as Phaser from 'phaser';
 import RandomDataGenerator = Phaser.Math.RandomDataGenerator;
-import { runInThisContext } from 'vm';
 
 class Bullet extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
@@ -59,6 +58,8 @@ class Game extends Phaser.Scene {
   enemies: Array<Phaser.Physics.Arcade.Sprite>;
   enemyMaxY: number;
   enemyMinY: number;
+  score: number;
+  scoreText;
 
   music: Phaser.Loader.FileTypes.AudioFile;
 
@@ -97,7 +98,7 @@ class Game extends Phaser.Scene {
       50, 400,
       'ship'
     );
-    this.player.setSize(800, 250);
+    this.player.setSize(700, 200);
     this.player.setDisplaySize(180, 160);
     this.player.enableBody(true, 50, 400, true, true);
     this.player.setCollideWorldBounds(true, 0, 0);
@@ -136,6 +137,10 @@ class Game extends Phaser.Scene {
         this.physics.add.collider(this.enemies[i], this.enemies[j]);
       }
     }
+
+    this.score = 0;
+
+    this.scoreText = this.add.text(this.cameras.main.scrollX/2, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' }).setOrigin(0.5, 0);
 
     this.cameras.main.resetFX();
   }
@@ -212,6 +217,8 @@ class Game extends Phaser.Scene {
           enemy.destroy();
           this.bullets.remove(bullet);
           bullet.destroy();
+          this.score += 1;
+          this.scoreText.setText('Score : ' + this.score);
           console.log('kill réussi');
           break;
         }
@@ -285,7 +292,7 @@ class Win extends Phaser.Scene {
 
   init(data) {}
   preload() {
-    this.load.image('win', 'assets/win.jpg');
+    this.load.image('win', 'assets/win.png');
   }
   create(data)  {
     this.add.tileSprite(this.cameras.main.scrollX + this.scale.width / 2, this.cameras.main.y + this.scale.height / 2,
