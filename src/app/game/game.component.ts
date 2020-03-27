@@ -111,7 +111,6 @@ class Game extends Phaser.Scene {
 
     // scenes
     // this.scene.add('menu', Menu, false);
-    this.scene.add('win', Win, false);
 
     // création de l'arme
     this.bullets = new Bullets(this);
@@ -149,8 +148,7 @@ class Game extends Phaser.Scene {
 
     // win
     if (this.win()) {
-      this.scene.start('win');
-      this.scene.setVisible(true, 'win');
+      this.scene.add('win', Win, true);
     }
 
     // scrolling
