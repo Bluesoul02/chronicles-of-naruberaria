@@ -20,14 +20,14 @@ export class EditPlayerComponent implements OnInit {
   ngOnInit(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.loading = true;
-    this.service.getPlayer(id).subscribe(legume => {
-      this.player = legume;
+    this.service.getPlayer(id).subscribe(player => {
+      this.player = player;
       this.loading = false;
     });
   }
 
   update($event: {player: Player, avatar: FileInput, pwd: string}) {
-    this.service.updatePlayer($event.player, $event.avatar, $event.pwd).subscribe(legume => {
+    this.service.updatePlayer($event.player, $event.avatar, $event.pwd).subscribe(player => {
       this.router.navigate(['./player', this.player.id]);
     });
   }

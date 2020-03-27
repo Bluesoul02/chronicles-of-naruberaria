@@ -16,6 +16,7 @@ import {AuthService} from './shared/auth.service';
 import {HttpErrorInterceptorService} from './shared/http-error-interceptor.service';
 import {TokenInterceptorService} from './shared/token-interceptor.service';
 import {routes} from './app-routing.module';
+import {PartiesModule} from "./parties/parties.module";
 
 @NgModule({
   declarations: [
@@ -24,11 +25,18 @@ import {routes} from './app-routing.module';
     GameComponent,
     PageNotFoundComponent,
   ],
-  imports: [BrowserModule, BrowserAnimationsModule,
-    RouterModule.forRoot(routes), MatMenuModule,
-    HttpClientModule, AngularMaterialModule,
-    HomeModule, AuthModule,
-    PlayersModule],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    RouterModule.forRoot(routes),
+    MatMenuModule,
+    HttpClientModule,
+    AngularMaterialModule,
+    HomeModule,
+    AuthModule,
+    PlayersModule,
+    PartiesModule
+  ],
   providers: [AuthService,
     {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true},
