@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {PartiesComponent} from './parties/parties.component';
 import {DetailsPartieComponent} from './details-partie/details-partie.component';
-import {ListPartiesComponent} from './list-taches/list-parties.component';
+import {ListPartiesComponent} from './list-parties/list-parties.component';
 import {PartiesDashboardComponent} from './parties-dashboard/parties-dashboard.component';
 
 
