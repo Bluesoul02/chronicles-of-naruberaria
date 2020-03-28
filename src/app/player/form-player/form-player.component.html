@@ -15,16 +15,20 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="100">
-          <textarea matInput formControlName="bestScore" placeholder="Meilleur score"></textarea>
+          <textarea matInput formControlName="bio" placeholder="Présentation"></textarea>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="100">
+          <input matInput formControlName="bestScore" placeholder="Meilleur score">
         </mat-form-field>
 
         <div formGroupName="pwd" fxFlex="100">
           <mat-form-field fxFlex="50">
-            <input matInput type="password" placeholder="Password" formControlName="password">
+            <input matInput type="password" placeholder="Mot de passe" formControlName="password">
           </mat-form-field>
 
           <mat-form-field fxFlex="50">
-            <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword">
+            <input matInput type="password" placeholder="Confirmer le mot de passe" formControlName="confirmPassword">
           </mat-form-field>
           <div *ngIf="(password.invalid || password.value != confirmPassword.value) && (confirmPassword.touched)"
                class="mat-error" fxFlex="100">
@@ -54,7 +58,7 @@
         </div>
       </mat-card-content>
 
-      <button [disabled]="!editForm.valid" mat-stroked-button color="accent" class="btn-block">Valider</button>
+      <button type="submit" [disabled]="!editForm.valid" mat-stroked-button color="accent" class="btn-block">Valider</button>
     </form>
     <!--
         <p>image {{image.value && image.value.filenames || {} | json}} | {{image.status}}</p>

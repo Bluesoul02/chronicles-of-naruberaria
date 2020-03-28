@@ -12,7 +12,7 @@ export class ListPlayersComponent implements OnInit {
   loading = false;
   thePlayers: Player[];
   selectedPlayer: Player;
-  displayedColumns: string[] = ['position', 'name', 'totalPlayTime', 'bestScore'];
+  displayedColumns: string[] = ['position', 'name', 'bio', 'totalPlayTime', 'bestScore'];
 
   constructor(private router: Router, private service: PlayersService) { }
 

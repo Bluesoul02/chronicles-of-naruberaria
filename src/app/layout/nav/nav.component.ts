@@ -9,13 +9,13 @@ import {AuthService} from '../../shared/auth.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent {
-  currentUser: Player;
+  currentPlayer: Player;
 
   constructor(
     private router: Router,
     private authenticationService: AuthService
   ) {
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.authenticationService.currentPlayer.subscribe(x => this.currentPlayer = x);
   }
 
   logout() {

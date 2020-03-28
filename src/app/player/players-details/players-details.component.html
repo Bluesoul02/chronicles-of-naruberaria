@@ -15,9 +15,11 @@
   <mat-card fxFlex="80">
     <mat-card-header>
       <mat-card-title>
-        {{player.name}}
+        <p>Profil de {{player.name}} </p>
       </mat-card-title>
-      <mat-card-subtitle>{{player.bestScore }} {{player.totalPlayTime }} </mat-card-subtitle>
+      <mat-card-subtitle><p> Présentation : {{player.bio }}</p></mat-card-subtitle>
+      <mat-card-subtitle><p> Meilleur score : {{player.bestScore }}</p></mat-card-subtitle>
+      <mat-card-subtitle><p> Temps de jeu : {{player.totalPlayTime }}</p></mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <div fxLayoutAlign="center center">

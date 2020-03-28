@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
   loading = false;
   error: any;
 
-  player: Player = new Player(-1, '', '', -1, '', new User(-1, '', '', ['player']));
+  player: Player = new Player(-1, '', '', -1, '', '', new User(-1, '', '', ['player']));
 
   constructor(private authService: AuthService, private router: Router) {
   }
