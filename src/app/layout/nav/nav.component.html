@@ -2,10 +2,8 @@
   <a mat-button routerLink="/"><h1>Chronicles of naruberaria</h1></a>
   <a mat-button routerLink="/home"><mat-icon>home</mat-icon> Accueil</a>
   <a mat-button routerLink="/game"><mat-icon>videogame_asset</mat-icon> Jeu</a>
-  <div *ngIf="currentPlayer; else noconnected">
-
+  <div *ngIf="currentPlayer">
     <a mat-button [routerLink]="['players', currentPlayer.id]"><mat-icon>account_circle</mat-icon> profil</a>
-
   </div>
 
   <span class="flex"> </span>
