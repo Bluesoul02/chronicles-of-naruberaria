@@ -75,7 +75,7 @@ class Game extends Phaser.Scene {
     this.load.image('bullet', 'assets/shmup-bullet.png');
     this.load.image('enemy', 'assets/enemy.png');
     this.load.audio('music', 'assets/music.mp3');
-    this.load.audio('crash','assets/music.mp3')
+    this.load.audio('crash', 'assets/music.mp3');
   }
 
   create() {
@@ -128,9 +128,9 @@ class Game extends Phaser.Scene {
     // démarrage des moteurs des ennemis et collisions des ennemis entre eux
     for (let i = 0; i < this.enemies.length; i++) {
       const random = new RandomDataGenerator();
-      if(random.integerInRange(1,2)==1){
+      if (random.integerInRange(1, 2) === 1) {
         this.enemies[i].setVelocityY(300);
-      }else{
+      } else {
         this.enemies[i].setVelocityY(-300);
       }
       for (let j = i; j < this.enemies.length; j++) {
@@ -139,7 +139,7 @@ class Game extends Phaser.Scene {
     }
 
     this.score = 0;
-    this.scoreText = this.add.text(this.scale.width/2, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' }).setOrigin(0.5, 0);    
+    this.scoreText = this.add.text(this.scale.width / 2, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' }).setOrigin(0.5, 0);
 
     this.cameras.main.resetFX();
   }
@@ -148,8 +148,8 @@ class Game extends Phaser.Scene {
 
     // win
     if (this.win()) {
-      this.scene.setVisible(true, "win");
-      this.score+=50;
+      this.scene.setVisible(true, 'win');
+      this.score += 50;
     }
 
     // scrolling
@@ -177,12 +177,12 @@ class Game extends Phaser.Scene {
       this.bullets.fireBullet(this.player.x + 55, this.player.y + 10);
     }
 
-    for (let i = 0; i <this.enemies.length; i++) {
+    for (let i = 0; i < this.enemies.length; i++) {
 
-      let enemy = this.enemies[i];
+      const enemy = this.enemies[i];
 
       // vérification collision entre joueur et ennemi
-      if (Phaser.Geom.Intersects.RectangleToRectangle(this.player.getBounds(), enemy.getBounds())){
+      if (Phaser.Geom.Intersects.RectangleToRectangle(this.player.getBounds(), enemy.getBounds())) {
         // si oui alors game over
         this.gameOver();
         break;
@@ -196,19 +196,18 @@ class Game extends Phaser.Scene {
       }
     }
 
-
-    for(let i = 0;i<this.bullets.getChildren().length;i++){
-      let bullet = this.bullets.getChildren()[i];
+    for (let i = 0; i < this.bullets.getChildren().length; i++) {
+      const bullet = this.bullets.getChildren()[i];
 
       // vérification de si la bullet est enore à une distance raisonnable du joueur
-      if(bullet.x >= this.scale.width+this.cameras.main.scrollX){
+      if (bullet.x >= this.scale.width + this.cameras.main.scrollX) {
         // destruction de la bullet si trop éloignée du joueur
         bullet.destroy();
         this.bullets.remove(bullet);
         continue;
       }
-      for(let j = 0;j<this.enemies.length;j++){
-        let enemy = this.enemies[j];
+      for (let j = 0; j < this.enemies.length; j++) {
+        const enemy = this.enemies[j];
         // vérification de la collision entre bullet et ennemi
         if (Phaser.Geom.Intersects.RectangleToRectangle(bullet.getBounds(), this.enemies[j].getBounds())) {
           // destruction du vaisseau touché et de la bullet
@@ -224,15 +223,15 @@ class Game extends Phaser.Scene {
       }
     }
     this.scoreText.destroy();
-    this.scoreText = this.add.text(this.player.x, this.player.y+15, 'Score :'+this.score, { fontSize: '20px', fill: '#fff' });
+    this.scoreText = this.add.text(this.player.x, this.player.y + 15, 'Score :' + this.score, { fontSize: '20px', fill: '#fff' });
   }
 
   win() {
-      return this.player.x>=3300;
+      return this.player.x >= 3300;
     // return this.time.now >= 5000;
   }
 
-  gameOver(){
+  gameOver() {
 
     this.sound.stopAll();
 

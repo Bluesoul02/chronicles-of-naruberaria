@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
   loading = false;
   error: any;
 
-  player: Player = new Player(-1, '', '', -1, '', new User(-1, '', '', []));
+  player: Player = new Player(-1, '', '', -1, '', '', new User(-1, '', '', ['player']));
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -66,7 +66,6 @@ export class RegisterComponent implements OnInit {
     this.player.user.email = this.email.value;
     this.player.user.name = `${this.player.name}`;
     const pwd = this.password.value;
-
     this.authService.onRegister({player: this.player, pwd: this.password.value})
       .subscribe(data => {
           this.router.navigate(['/']);

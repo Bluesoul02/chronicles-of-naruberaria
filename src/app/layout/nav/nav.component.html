@@ -1,22 +1,25 @@
 <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between">
   <a mat-button routerLink="/"><h1>Chronicles of naruberaria</h1></a>
-    <div *ngIf="currentUser; else noconnected">
-      <a mat-button routerLink="/home"><mat-icon>home</mat-icon> Accueil</a>
-      <a mat-button routerLink="/game"><mat-icon>videogame_asset</mat-icon> Jeu</a>
-      <span class="flex"> </span>
-      <a mat-button [mat-menu-trigger-for]="menu" ><mat-icon>account_circle</mat-icon> Mon compte </a>
-      <mat-menu x-position="before" #menu="matMenu">
-        <button mat-menu-item [routerLink]="['/profil', currentUser.id] ">
-          {{currentUser.name}}
-        </button>
-        <button mat-menu-item routerLink="/login" (click)="logout()">Déconnexion</button>
-      </mat-menu>
-    </div>
-    <ng-template #noconnected>
-      <a mat-button routerLink="/"><mat-icon>home</mat-icon> Accueil</a>
-      <a mat-button routerLink="/game"><mat-icon>videogame_asset</mat-icon> Jeu</a>
-      <span class="flex"> </span>
-      <a mat-button routerLink="/login">Connexion</a>
-      <a mat-button routerLink="/register">Enregistrement</a>
-    </ng-template>
+  <a mat-button routerLink="/home"><mat-icon>home</mat-icon> Accueil</a>
+  <a mat-button routerLink="/game"><mat-icon>videogame_asset</mat-icon> Jeu</a>
+  <div *ngIf="currentPlayer">
+    <a mat-button [routerLink]="['players', currentPlayer.id]"><mat-icon>account_circle</mat-icon> profil</a>
+  </div>
+
+  <span class="flex"> </span>
+  <div *ngIf="currentPlayer; else noconnected">
+    <a mat-button [mat-menu-trigger-for]="menu">
+      {{currentPlayer.name}} <mat-icon>more_vert</mat-icon>
+    </a>
+    <mat-menu x-position="before" #menu="matMenu">
+      <button mat-menu-item [routerLink]="['players', currentPlayer.id]">
+        profil
+      </button>
+      <button mat-menu-item routerLink="/login" (click)="logout()">Déconnexion</button>
+    </mat-menu>
+  </div>
+  <ng-template #noconnected>
+    <a mat-button routerLink="/login">Connexion</a>
+    <a mat-button routerLink="/register">Enregistrement</a>
+  </ng-template>
 </mat-toolbar>

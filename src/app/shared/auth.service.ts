@@ -10,7 +10,7 @@ const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
     'Cache-Control': 'no-cache',
-    'Accept': 'application/json',
+    Accept: 'application/json',
   })
 };
 
@@ -22,16 +22,16 @@ export class AuthService {
   private readonly apiUrl = environment.apiUrl;
   private registerUrl = this.apiUrl + 'register';
   private loginUrl = this.apiUrl + 'login';
-  private currentUserSubject: BehaviorSubject<Player>;
-  public currentUser: Observable<Player>;
+  private currentPlayerSubject: BehaviorSubject<Player>;
+  public currentPlayer: Observable<Player>;
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<Player>(JSON.parse(localStorage.getItem('currentUser')));
-    this.currentUser = this.currentUserSubject.asObservable();
+    this.currentPlayerSubject = new BehaviorSubject<Player>(JSON.parse(localStorage.getItem('currentPlayer')));
+    this.currentPlayer = this.currentPlayerSubject.asObservable();
   }
 
-  public get currentUserValue(): Player {
-    return this.currentUserSubject.value;
+  public get currentPlayerValue(): Player {
+    return this.currentPlayerSubject.value;
   }
 
   onLogin(user: any): Observable<{} | Player> {
@@ -51,14 +51,14 @@ export class AuthService {
 
   storeToken(data: any, player: Player) {
     player.user.accessToken = data.data.token;
-    localStorage.setItem('currentUser', JSON.stringify(player));
+    localStorage.setItem('currentPlayer', JSON.stringify(player));
     console.log('Joueur : ', player);
-    this.currentUserSubject.next(player);
+    this.currentPlayerSubject.next(player);
   }
 
   logout() {
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
+    localStorage.removeItem('currentPlayer');
+    this.currentPlayerSubject.next(null);
   }
 
   onRegister(valeur: { player: Player, pwd: string }) {

@@ -11,7 +11,7 @@ import {FileInput} from 'ngx-material-file-input';
 })
 export class PlayersService {
   private readonly apiUrl = environment.apiUrl;
-  private playerUrl = this.apiUrl + 'player';
+  private playerUrl = this.apiUrl + 'players';
 
   constructor(private http: HttpClient) {
   }
@@ -42,6 +42,7 @@ export class PlayersService {
     const url = `${this.playerUrl}/${player.id} `;
     const formData: FormData = new FormData();
     formData.append('name', player.name);
+    formData.append('bio', player.bio);
     formData.append('bestScore', player.totalPlayTime);
     formData.append('email', player.user.email);
     if (pwd) {

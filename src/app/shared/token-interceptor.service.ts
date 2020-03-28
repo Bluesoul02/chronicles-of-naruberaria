@@ -11,9 +11,9 @@ export class TokenInterceptorService  implements HttpInterceptor {
   constructor(private authenticationService: AuthService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const currentUser = this.authenticationService.currentUserValue;
-    if (currentUser && currentUser.user.accessToken) {
-      req = this.addToken(req, currentUser.user.accessToken);
+    const currentPlayer = this.authenticationService.currentPlayerValue;
+    if (currentPlayer && currentPlayer.user.accessToken) {
+      req = this.addToken(req, currentPlayer.user.accessToken);
     }
 
     return next.handle(req);

@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
     /*      (response) => {
             const player = response as Player;
 
-            if (this.authService.currentUserValue) {
+            if (this.authService.currentPlayerValue) {
               console.log('OK LOGIN');
               this.toastr.success(`Bienvenue ${player.name}`, 'Connexion OK');
               this.router.navigate([this.returnUrl]);
