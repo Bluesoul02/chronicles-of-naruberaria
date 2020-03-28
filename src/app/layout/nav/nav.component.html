@@ -3,7 +3,7 @@
   <a mat-button routerLink="/home"><mat-icon>home</mat-icon> Accueil</a>
   <a mat-button routerLink="/game"><mat-icon>videogame_asset</mat-icon> Jeu</a>
   <div *ngIf="currentPlayer">
-    <a mat-button [routerLink]="['players', currentPlayer.id]"><mat-icon>account_circle</mat-icon> profil</a>
+    <a mat-button [routerLink]="['player', 'liste']"><mat-icon>account_circle</mat-icon> Joueurs</a>
   </div>
 
   <span class="flex"> </span>
@@ -13,7 +13,7 @@
     </a>
     <mat-menu x-position="before" #menu="matMenu">
       <button mat-menu-item [routerLink]="['players', currentPlayer.id]">
-        profil
+        Mon profil
       </button>
       <button mat-menu-item routerLink="/login" (click)="logout()">Déconnexion</button>
     </mat-menu>
