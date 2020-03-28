@@ -82,7 +82,7 @@ class Game extends Phaser.Scene {
 
     // music
     this.sound.play('music');
-    this.sound.volume = 0.3;
+    this.sound.volume = 0.2;
     // this.music.addToCache();
     // this.music.on('loop', this);
     // this.music.setLoop(true);
@@ -215,6 +215,7 @@ class Game extends Phaser.Scene {
           this.enemies.slice(j);
           enemy.destroy();
           // TO DO : REELEMENT ENLEVER UN ENNEMI
+          // 
           this.bullets.remove(bullet);
           bullet.destroy();
           this.score += 1;
