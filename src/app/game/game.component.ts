@@ -65,7 +65,7 @@ class Game extends Phaser.Scene {
 
   init() {
     this.enemyMaxY = 850;
-    this.enemyMinY = 100;
+    this.enemyMinY = 120;
     this.enemies = new Array();
   }
 
@@ -212,9 +212,8 @@ class Game extends Phaser.Scene {
         // vérification de la collision entre bullet et ennemi
         if (Phaser.Geom.Intersects.RectangleToRectangle(bullet.getBounds(), this.enemies[j].getBounds())) {
           // destruction du vaisseau touché et de la bullet
+          enemy.enableBody(true, 600 * (i + 1), 400, false, false);
           this.enemies.slice(j);
-          enemy.destroy();
-          // TO DO : REELEMENT ENLEVER UN ENNEMI
           this.bullets.remove(bullet);
           bullet.destroy();
           this.score += 1;
