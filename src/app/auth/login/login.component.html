@@ -22,7 +22,7 @@
             <div *ngIf="password?.errors.minlength">Le mot de passe doit être d'au moins 6 caractères</div>
           </div>
         </mat-form-field>
-        <button [disabled]="!loginForm.valid" mat-stroked-button mat-raised-button color="accent">Connexion</button>
+        <button [disabled]="!loginForm.valid" mat-stroked-button mat-raised-button color="primary">Connexion</button>
       </form>
       <mat-card *ngIf="error" class="mat-error">{{error}}</mat-card>
     </mat-card-content>
