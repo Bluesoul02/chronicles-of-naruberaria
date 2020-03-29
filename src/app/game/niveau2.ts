@@ -1,6 +1,8 @@
 import RandomDataGenerator = Phaser.Math.RandomDataGenerator;
+import { Bullets } from "./bullets";
+import { Enemies } from "./enemies";
 
-export class Game extends Phaser.Scene {
+export class Niveau2 extends Phaser.Scene {
 
     player: Phaser.Physics.Arcade.Sprite;
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -17,7 +19,7 @@ export class Game extends Phaser.Scene {
     music: Phaser.Loader.FileTypes.AudioFile;
   
     constructor(){
-      super('game');
+      super('niveau2');
     }
 
     init() {
@@ -27,7 +29,7 @@ export class Game extends Phaser.Scene {
     }
   
     preload() {
-      this.load.image('map', 'assets/map.png');
+      this.load.image('map', 'assets/map2.png');
       this.load.image('ship', 'assets/ship.png');
       this.load.image('bullet', 'assets/shmup-bullet.png');
       this.load.image('enemy', 'assets/enemy.png');
@@ -75,20 +77,10 @@ export class Game extends Phaser.Scene {
         this.enemies.spawnEnemy(600 * (i + 1), 400);
       }
 
-      // création des ennemis et des collisions avec le joueur
-      /*
-      for (let i = 0; i < 5; i++) {
-        const enemy = this.physics.add.sprite(600 * (i + 1), 400, 'enemy');
-        enemy.setSize(800, 250);
-        enemy.setDisplaySize(120, 100);
-        enemy.enableBody(true, 500 * (i + 1), 400, true, true);
-        this.enemies.push(enemy);
-      }
-      */
 
       // collisions des ennemis entre eux
       for (let i = 0; i < this.enemies.getChildren().length; i++) {
-        for (let j = i; j < this.enemies.length; j++) {
+        for (let j = i; j < this.enemies.getChildren().length; j++) {
           this.physics.add.collider(this.enemies.getChildren()[i], this.enemies.getChildren()[j]);
         }
       }
@@ -203,91 +195,4 @@ export class Game extends Phaser.Scene {
       }, [], this);
   
     }
-  }
-
-  class Bullet extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y) {
-        super(scene, x, y, 'bullet');
-    }
-  
-    fire(x, y) {
-      this.body.reset(x, y);
-  
-      this.setActive(true);
-      this.setVisible(true);
-  
-      this.setVelocityX(500);
-    }
-  
-    preUpdate(time, delta) {
-      super.preUpdate(time, delta);
-    }
-  }
-  
-  class Bullets extends Phaser.Physics.Arcade.Group {
-    constructor(scene) {
-      super(scene.physics.world, scene);
-  
-      this.createMultiple({
-          frameQuantity: 5,
-          key: 'bullet',
-          active: false,
-          visible: false,
-          classType: Bullet
-        });
-    }
-  
-    fireBullet(x, y) {
-      const bullet = this.getFirstDead(true);
-  
-      if (bullet) {
-          bullet.fire(x, y);
-      }
-    }
-  }
-
-  class Enemy extends  Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y) {
-        super(scene, x, y, 'enemy');
-    }
-
-    spawn(x,y){
-        this.body.reset(x,y);
-
-
-        const random = new RandomDataGenerator();
-
-        if (random.integerInRange(1, 2) === 1) {
-            this.setVelocityY(300);
-        } else {
-            this.setVelocityY(-300);
-        }
-    }
-
-    preUpdate(time, delta) {
-        super.preUpdate(time, delta);
-    }
-  }
-
-  class Enemies extends Phaser.Physics.Arcade.Group {
-      constructor(scene){
-          super(scene.physics.world,scene);
-
-          this.createMultiple({
-              frameQuantity: 1,
-              key: 'enemy', 
-              active: true,
-              visible: true,
-              classType: Enemy
-          });
-      }
-
-      spawnEnemy(x, y){
-          const enemy = this.getFirstDead(true);
-          enemy.setSize(700,200);
-          enemy.setDisplaySize(180, 160);
-          if(enemy){
-              enemy.spawn(x,y);
-          }
-      }
   }
