@@ -5,8 +5,8 @@ export class Enemy extends  Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, 'enemy');
     }
 
-    spawn(x,y){
-        this.body.reset(x,y);
+    spawn(x, y) {
+        this.body.reset(x, y);
 
 
         const random = new RandomDataGenerator();
@@ -21,4 +21,4 @@ export class Enemy extends  Phaser.Physics.Arcade.Sprite {
     preUpdate(time, delta) {
         super.preUpdate(time, delta);
     }
-  }
+}

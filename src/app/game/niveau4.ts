@@ -1,7 +1,7 @@
 import RandomDataGenerator = Phaser.Math.RandomDataGenerator;
-import { Bullets } from "./bullets";
-import { Enemies } from "./enemies";
-import { Win } from "./win";
+import { Bullets } from './bullets';
+import { Enemies } from './enemies';
+import { Win } from './win';
 
 export class Niveau4 extends Phaser.Scene {
 
@@ -19,7 +19,7 @@ export class Niveau4 extends Phaser.Scene {
 
     music: Phaser.Loader.FileTypes.AudioFile;
 
-    constructor(){
+    constructor() {
       super('niveau4');
     }
 
@@ -36,7 +36,7 @@ export class Niveau4 extends Phaser.Scene {
       this.load.image('enemy', 'assets/enemy.png');
       this.load.audio('music', 'assets/music.mp3');
       this.load.audio('crash', 'assets/music.mp3');
-      this.scene.add('win',Win,false);
+      this.scene.add('win', Win, false);
     }
 
     create() {
@@ -99,7 +99,7 @@ export class Niveau4 extends Phaser.Scene {
         this.cameras.main.fade(1000);
         this.time.delayedCall(1500, function() {
             this.scene.start('win');
-            console.log("Victoire !");
+            console.log('Victoire !');
           }, [], this);
       }
 
@@ -197,4 +197,4 @@ export class Niveau4 extends Phaser.Scene {
         this.scene.restart();
       }, [], this);
     }
-  }
+}

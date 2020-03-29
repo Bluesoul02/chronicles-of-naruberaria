@@ -11,7 +11,7 @@ export class Win extends Phaser.Scene {
     }
 
     create(data)  {
-        let imageVictoire = this.add.sprite(this.cameras.main.centerX,this.cameras.main.centerY,'win');
+        const imageVictoire = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'win');
         imageVictoire.displayWidth = this.scale.width;
         imageVictoire.displayHeight = this.scale.height;
     }

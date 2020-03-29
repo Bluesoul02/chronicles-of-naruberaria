@@ -1,7 +1,7 @@
 import RandomDataGenerator = Phaser.Math.RandomDataGenerator;
-import { Bullets } from "./bullets";
-import { Enemies } from "./enemies";
-import { Niveau4 } from "./niveau4";
+import { Bullets } from './bullets';
+import { Enemies } from './enemies';
+import { Niveau4 } from './niveau4';
 
 export class Niveau3 extends Phaser.Scene {
 
@@ -19,7 +19,7 @@ export class Niveau3 extends Phaser.Scene {
 
     music: Phaser.Loader.FileTypes.AudioFile;
 
-    constructor(){
+    constructor() {
       super('niveau3');
     }
 
@@ -36,7 +36,7 @@ export class Niveau3 extends Phaser.Scene {
       this.load.image('enemy', 'assets/enemy.png');
       this.load.audio('music', 'assets/music.mp3');
       this.load.audio('crash', 'assets/music.mp3');
-      this.scene.add('niveau3',Niveau4,false);
+      this.scene.add('niveau3', Niveau4, false);
     }
 
     create() {
@@ -100,7 +100,7 @@ export class Niveau3 extends Phaser.Scene {
         this.cameras.main.fade(1000);
         this.time.delayedCall(1500, function() {
             this.scene.start('niveau4');
-            console.log("passagae au niveau 4");
+            console.log('passagae au niveau 4');
           }, [], this);
       }
 
@@ -198,4 +198,4 @@ export class Niveau3 extends Phaser.Scene {
         this.scene.restart();
       }, [], this);
     }
-  }
+}
