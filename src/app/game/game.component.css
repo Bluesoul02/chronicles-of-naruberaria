@@ -113,8 +113,12 @@ a:focus:before {
 }
 
 .bottom-button {
-  bottom: 50px;
   color: white;
+  background: #282c34;
+  border-color: #282c34;
+  position: center;
+  width: 75px;
+  height: 20px;
 }
 
 .ecran {
