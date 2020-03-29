@@ -2,7 +2,6 @@
   padding: 0px;
   margin: 0;
   text-align: center;
-  background: #f5f0ff;
 }
 
 .App-logo {
@@ -13,7 +12,6 @@
 }
 
 .App-header {
-  background-color: #F5F0FF;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -115,7 +113,6 @@ a:focus:before {
 }
 
 .bottom-button {
-  position: absolute;
   bottom: 50px;
   color: white;
 }

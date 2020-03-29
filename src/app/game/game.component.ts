@@ -110,7 +110,6 @@ class Game extends Phaser.Scene {
     this.cameras.main.centerOn(this.player.x, this.player.y);
 
     // scenes
-    // this.scene.add('menu', Menu, false);
     this.scene.add('win', Win, false);
 
     // création de l'arme
@@ -243,7 +242,6 @@ class Game extends Phaser.Scene {
 
     // recommence une partie automatiquement
     this.time.delayedCall(1000, function() {
-      this.scene.remove('menu');
       this.scene.remove('win');
       this.scene.restart();
     }, [], this);
@@ -261,7 +259,7 @@ interface GameInstance extends Phaser.Types.Core.GameConfig {
   styleUrls: ['./game.component.css']
 })
 export class GameComponent {
-  initialize = true;
+  initialize = false;
   game: GameInstance = {
     width: '85%',
     height: '100%',
@@ -298,25 +296,5 @@ class Win extends Phaser.Scene {
       this.scale.width, this.scale.height, 'win');
   }
   update(time, delta) {}
-
-}
-
-class Menu extends Phaser.Scene {
-
-  constructor(config) {
-    super(config);
-  }
-
-  init(data) {
-  }
-
-  preload() {
-  }
-
-  create(data) {
-  }
-
-  update(time, delta) {
-  }
 
 }
