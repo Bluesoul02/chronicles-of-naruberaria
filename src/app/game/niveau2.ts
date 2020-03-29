@@ -1,6 +1,7 @@
 import RandomDataGenerator = Phaser.Math.RandomDataGenerator;
 import { Bullets } from "./bullets";
 import { Enemies } from "./enemies";
+import { Niveau3 } from "./niveau3";
 
 export class Niveau2 extends Phaser.Scene {
 
@@ -35,6 +36,7 @@ export class Niveau2 extends Phaser.Scene {
       this.load.image('enemy', 'assets/enemy.png');
       this.load.audio('music', 'assets/music.mp3');
       this.load.audio('crash', 'assets/music.mp3');
+      this.scene.add('niveau3',Niveau3,false);
     }
 
     create() {
@@ -95,8 +97,11 @@ export class Niveau2 extends Phaser.Scene {
 
       // win
       if (this.win()) {
-        this.scene.sta(true, 'win');
-        this.score += 1500;
+        this.cameras.main.fade(1000);
+        this.time.delayedCall(1500, function() {
+            this.scene.start('niveau3');
+            console.log("passagae au niveau 2");
+          }, [], this);
       }
 
       // scrolling
@@ -173,8 +178,7 @@ export class Niveau2 extends Phaser.Scene {
     }
 
     win() {
-        return this.player.x >= 3300;
-      // return this.time.now >= 5000;
+        return this.player.x >= 3300 || this.time.now > 5000;
     }
 
     gameOver() {

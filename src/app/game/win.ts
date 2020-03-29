@@ -11,8 +11,9 @@ export class Win extends Phaser.Scene {
     }
 
     create(data)  {
-      this.add.tileSprite(this.cameras.main.scrollX + this.scale.width / 2, this.cameras.main.y + this.scale.height / 2,
-        this.scale.width, this.scale.height, 'win');
+        let imageVictoire = this.add.sprite(this.cameras.main.centerX,this.cameras.main.centerY,'win');
+        imageVictoire.displayWidth = this.scale.width;
+        imageVictoire.displayHeight = this.scale.height;
     }
 
     update(time, delta) {}
