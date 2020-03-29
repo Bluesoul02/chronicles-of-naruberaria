@@ -104,7 +104,7 @@ export class Game extends Phaser.Scene {
       // win
       if (this.win()) {
         this.scene.setVisible(true, 'win');
-        this.score += 50;
+        this.score += 1500;
       }
 
       // scrolling
@@ -171,7 +171,7 @@ export class Game extends Phaser.Scene {
             // TO DO : REELEMENT ENLEVER UN ENNEMI
             this.bullets.remove(bullet);
             bullet.destroy();
-            this.score += 1;
+            this.score += 500;
             break;
           }
         }

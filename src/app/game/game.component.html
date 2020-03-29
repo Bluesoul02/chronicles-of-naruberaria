@@ -4,7 +4,7 @@
       <script type="text/javascript" src="win.ts"></script>
       <script type="text/javascript" src="game.ts"></script>
       <ion-phaser [game]="game" [initialize]="initialize"></ion-phaser>
-        <div *ngIf="game != null">
+        <div *ngIf="!initialize">
           <div class="center">
             <div class="button">
               <a (click)="initializeGame()">Jouer</a>

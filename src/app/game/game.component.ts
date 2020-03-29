@@ -15,7 +15,7 @@ export class GameComponent {
   initialize = false;
   game: GameInstance = {
     width: '85%',
-    height: '100%',
+    height: '80%',
     scale: {
       mode: Phaser.Scale.ENVELOP,
       autoCenter: Phaser.Scale.CENTER_BOTH
