@@ -28,7 +28,7 @@ export class EditPlayerComponent implements OnInit {
 
   update($event: {player: Player, avatar: FileInput, pwd: string}) {
     this.service.updatePlayer($event.player, $event.avatar, $event.pwd).subscribe(player => {
-      this.router.navigate(['./player', this.player.id]);
+      this.router.navigate(['./players', this.player.id]);
     });
   }
 }
