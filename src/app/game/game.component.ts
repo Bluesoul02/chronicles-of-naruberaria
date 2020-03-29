@@ -149,7 +149,8 @@ class Game extends Phaser.Scene {
     if (this.win()) {
       this.scene.start('win');
       this.scene.setVisible(true, 'win');
-      this.score += 50;
+      this.score += 500;
+      this.scene.stop(this.scene.key);
     }
 
     // scrolling

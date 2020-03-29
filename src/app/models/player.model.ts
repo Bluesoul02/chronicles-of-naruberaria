@@ -9,7 +9,7 @@ export class Player {
   avatar?: string;
   user: User;
 
-  constructor(id: number, name: string, totalPlayTime: string, bestScore: number, bio: string, avatar: string, user: User) {
+  constructor(id: number, name: string, bestScore: number, totalPlayTime: string, bio: string, avatar: string, user: User) {
     this.id = id;
     this.name = name;
     this.totalPlayTime = totalPlayTime;
@@ -22,7 +22,7 @@ export class Player {
   static parse(player: any) {
     const user = User.parse(player);
     console.log('User : ', user);
-    return new Player(player.id, player.name, player.totalPlayTime, player.bestScore, player.bio, player.avatar, user);
+    return new Player(player.id, player.name, player.bestScore, player.totalPlayTime, player.bio, player.avatar, user);
   }
 }
 

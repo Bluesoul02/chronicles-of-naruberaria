@@ -43,7 +43,7 @@ export class PlayersService {
     const formData: FormData = new FormData();
     formData.append('name', player.name);
     formData.append('bio', player.bio);
-    formData.append('bestScore', player.totalPlayTime);
+    formData.append('bestScore', player.bestScore.toString());
     formData.append('email', player.user.email);
     if (pwd) {
       formData.append('password', pwd);
