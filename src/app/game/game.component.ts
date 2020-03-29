@@ -22,7 +22,7 @@ export class GameComponent {
     },
     physics: {default: 'arcade'},
     type: Phaser.AUTO,
-    scene: Menu,
+    // scene: Menu,
     instance: null
   };
 
