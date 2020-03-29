@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import * as Phaser from 'phaser';
-import { Menu } from './menu';
+import {Game} from './game';
 
 interface GameInstance extends Phaser.Types.Core.GameConfig {
   instance: Phaser.Game;
@@ -15,14 +15,14 @@ export class GameComponent {
   initialize = false;
   game: GameInstance = {
     width: '85%',
-    height: '100%',
+    height: '80%',
     scale: {
       mode: Phaser.Scale.ENVELOP,
       autoCenter: Phaser.Scale.CENTER_BOTH
     },
     physics: {default: 'arcade'},
     type: Phaser.AUTO,
-    scene: Menu,
+    scene: Game,
     instance: null
   };
 
