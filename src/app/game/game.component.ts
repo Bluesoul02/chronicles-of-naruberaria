@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import * as Phaser from 'phaser';
-import {Game} from './game';
+import { Niveau1 } from './niveau1';
 
 interface GameInstance extends Phaser.Types.Core.GameConfig {
   instance: Phaser.Game;
@@ -22,7 +22,7 @@ export class GameComponent {
     },
     physics: {default: 'arcade'},
     type: Phaser.AUTO,
-    scene: Game,
+    scene: Niveau1,
     instance: null
   };
 

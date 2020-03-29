@@ -29,7 +29,7 @@ export class Niveau2 extends Phaser.Scene {
     }
 
     preload() {
-      this.load.image('map', 'assets/map2.png');
+      this.load.image('map2', 'assets/map2.png');
       this.load.image('ship', 'assets/ship.png');
       this.load.image('bullet', 'assets/shmup-bullet.png');
       this.load.image('enemy', 'assets/enemy.png');
@@ -49,7 +49,7 @@ export class Niveau2 extends Phaser.Scene {
       // map
       this.map = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY,
         this.scale.width * this.mapSize, this.scale.height,
-        'map');
+        'map2');
       this.cursors = this.input.keyboard.createCursorKeys();
 
       // player
@@ -95,7 +95,7 @@ export class Niveau2 extends Phaser.Scene {
 
       // win
       if (this.win()) {
-        this.scene.setVisible(true, 'win');
+        this.scene.sta(true, 'win');
         this.score += 1500;
       }
 

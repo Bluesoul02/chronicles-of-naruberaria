@@ -97,6 +97,7 @@ export class Niveau1 extends Phaser.Scene {
         this.cameras.main.fade(1000);
         this.time.delayedCall(1000, function() {
             this.scene.start('niveau2');
+            console.log("passagae au niveau 2");
           }, [], this);
       }
   
@@ -174,8 +175,7 @@ export class Niveau1 extends Phaser.Scene {
     }
   
     win() {
-        return this.player.x >= 3300;
-      // return this.time.now >= 5000;
+        return this.player.x >= 3300 || this.time.now > 1000;
     }
   
     gameOver() {
