@@ -98,7 +98,7 @@ class Game extends Phaser.Scene {
       50, 400,
       'ship'
     );
-    this.player.setSize(700, 200);
+    this.player.setSize(900, 250);
     this.player.setDisplaySize(180, 160);
     this.player.enableBody(true, 50, 400, true, true);
     this.player.setCollideWorldBounds(true, 0, 0);
@@ -118,9 +118,9 @@ class Game extends Phaser.Scene {
     // création des ennemis et des collisions avec le joueur
     for (let i = 0; i < 5; i++) {
       const enemy = this.physics.add.sprite(600 * (i + 1), 400, 'enemy');
-      enemy.setSize(800, 250);
+      enemy.setSize(600, 0);
       enemy.setDisplaySize(120, 100);
-      enemy.enableBody(true, 500 * (i + 1), 400, true, true);
+      enemy.enableBody(true, 600 * (i + 1), 400, true, true);
       this.enemies.push(enemy);
     }
 
@@ -147,6 +147,7 @@ class Game extends Phaser.Scene {
 
     // win
     if (this.win()) {
+      this.scene.start('win');
       this.scene.setVisible(true, 'win');
       this.score += 50;
     }
@@ -292,8 +293,8 @@ class Win extends Phaser.Scene {
     this.load.image('win', 'assets/win.png');
   }
   create(data)  {
-    this.add.tileSprite(this.cameras.main.scrollX + this.scale.width / 2, this.cameras.main.y + this.scale.height / 2,
-      this.scale.width, this.scale.height, 'win');
+    this.add.tileSprite(this.cameras.main.x + this.scale.width / 2, this.cameras.main.y + this.scale.height / 1.8,
+      1920, 1080, 'win');
   }
   update(time, delta) {}
 
