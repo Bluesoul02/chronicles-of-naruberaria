@@ -130,5 +130,6 @@ export class FormPlayerComponent implements OnInit {
       avatar,
       pwd
     });
+    console.log(this.updatedPlayer);
   }
 }
