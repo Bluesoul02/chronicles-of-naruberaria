@@ -270,7 +270,7 @@ export class GameComponent {
     },
     physics: {default: 'arcade'},
     type: Phaser.AUTO,
-    scene: Game,
+    scene: Menu,
     instance: null
   };
 
@@ -280,6 +280,22 @@ export class GameComponent {
 
   initializeGame() {
     this.initialize = true;
+  }
+}
+
+class Menu extends Phaser.Scene{
+  constructor(config) {
+    super(config);
+  }
+
+  init(){}
+
+  preload(){
+    this.load.image('menu','assets/menu.png');
+  }
+
+  create(){
+    this.add.tileSprite(0,0,this.scale.width,this.scale.height,'menu');
   }
 }
 class Win extends Phaser.Scene {
@@ -292,10 +308,12 @@ class Win extends Phaser.Scene {
   preload() {
     this.load.image('win', 'assets/win.png');
   }
+
   create(data)  {
     this.add.tileSprite(this.cameras.main.scrollX + this.scale.width / 2, this.cameras.main.y + this.scale.height / 2,
       this.scale.width, this.scale.height, 'win');
   }
+
   update(time, delta) {}
 
 }
