@@ -33,7 +33,6 @@ export class FormPlayerComponent implements OnInit {
   createForm() {
     this.editForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(4)]),
-      bio: new FormControl('', [Validators.required, Validators.minLength(6)]),
       bestScore: new FormControl('', [Validators.required, Validators.minLength(4)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       pwd: new FormGroup({
@@ -107,7 +106,6 @@ export class FormPlayerComponent implements OnInit {
     this.editForm.patchValue({
       name: this.player.name,
       bestScore: this.player.bestScore,
-      bio: this.player.bio,
       email: this.player.user.email,
     });
   }
@@ -116,7 +114,6 @@ export class FormPlayerComponent implements OnInit {
     let pwd;
     let avatar: FileInput;
     this.player.name = this.name.value;
-    this.player.bio = this.bio.value;
     this.player.bestScore = this.bestScore.value;
     this.player.user.email = this.email.value;
     if (this.password.value) {

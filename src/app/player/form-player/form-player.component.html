@@ -15,7 +15,7 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="100">
-          <textarea matInput formControlName="bio" placeholder="Présentation"></textarea>
+          <textarea matInput placeholder="Présentation"></textarea>
         </mat-form-field>
 
         <mat-form-field fxFlex="100">
@@ -41,7 +41,7 @@
           </div>
         </div>
 
-        <div fxFlex="100">
+        <div fxFlex="80">
           <mat-form-field fxFlex="50">
             <ngx-mat-file-input formControlName="image" placeholder="Choisir un avatar" [accept]="accept" #avatar
                                 (change)="avatarLocal(avatar.value)"></ngx-mat-file-input>
@@ -58,7 +58,7 @@
         </div>
       </mat-card-content>
 
-      <button type="submit" [disabled]="!editForm.valid" mat-stroked-button color="accent" class="btn-block">Valider</button>
+      <button type="submit" [disabled]="!editForm.valid" mat-stroked-button color="primary" class="btn-block">Valider</button>
     </form>
     <!--
         <p>image {{image.value && image.value.filenames || {} | json}} | {{image.status}}</p>
