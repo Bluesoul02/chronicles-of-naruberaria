@@ -28,10 +28,10 @@ export class Niveau1 extends Phaser.Scene {
     }
 
     preload() {
-      this.load.image('map', 'assets/tk.gif');
+      this.load.image('map', 'assets/lvl1/map.png');
       this.load.image('ship', 'assets/ship.png');
       this.load.image('bullet', 'assets/shmup-bullet.png');
-      this.load.image('enemy', 'assets/enemy.png');
+      this.load.image('enemy', 'assets/lvl1/enemy.png');
       this.load.audio('music', 'assets/music.mp3');
       this.load.audio('crash', 'assets/music.mp3');
       this.scene.add('niveau2', Niveau2, false);

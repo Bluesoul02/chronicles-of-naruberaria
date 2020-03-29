@@ -30,10 +30,10 @@ export class Niveau3 extends Phaser.Scene {
     }
 
     preload() {
-      this.load.image('map3', 'assets/map3.png');
       this.load.image('ship', 'assets/ship.png');
+      this.load.image('map3', 'assets/lvl3/map.png');
       this.load.image('bullet', 'assets/shmup-bullet.png');
-      this.load.image('enemy', 'assets/enemy.png');
+      this.load.image('enemy3', 'assets/lvl3/enemy.png');
       this.load.audio('music', 'assets/music.mp3');
       this.load.audio('crash', 'assets/music.mp3');
       this.scene.add('niveau3', Niveau4, false);

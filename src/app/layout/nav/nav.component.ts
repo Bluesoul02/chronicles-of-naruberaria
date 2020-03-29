@@ -20,7 +20,7 @@ export class NavComponent {
 
   logout() {
     this.authenticationService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
 }
