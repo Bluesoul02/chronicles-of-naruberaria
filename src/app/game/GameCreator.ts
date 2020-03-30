@@ -32,7 +32,7 @@ export class GameCreator extends Phaser.Scene {
     scene.load.audio('crash', urlCrash);
   }
 
-  static gameOver(scene) {
+  static gameOver(scene, nextLevel) {
 
     scene.sound.stopAll();
 
@@ -45,6 +45,8 @@ export class GameCreator extends Phaser.Scene {
 
     // recommence une partie automatiquement
     scene.time.delayedCall(1000, () => {
+      scene.scene.remove('win');
+      scene.scene.remove(nextLevel);
       scene.scene.restart();
     }, [], scene);
   }
@@ -131,7 +133,7 @@ export class GameCreator extends Phaser.Scene {
       // vérification collision entre joueur et ennemi
       if (Phaser.Geom.Intersects.RectangleToRectangle(scene.player.getBounds(), enemy.getBounds())) {
         // si oui alors game over
-        this.gameOver(scene);
+        this.gameOver(scene, nextLevel);
         break;
       }
 
