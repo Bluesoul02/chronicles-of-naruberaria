@@ -12,7 +12,7 @@ table {
 }
 
 /*
-  This is a work around for checkbox bug in material row
+  scene is a work around for checkbox bug in material row
   https://github.com/angular/material2/issues/8600
 */
 mat-cell.mat-cell, mat-header-cell.mat-header-cell {
