@@ -25,8 +25,7 @@ export class Niveau2 extends Phaser.Scene {
   }
 
   preload() {
-    GameCreator.preload(this, 'assets/lvl2/map.png', 'map2', 'assets/ship.png',
-      'assets/shmup-bullet.png', 'assets/lvl2/enemy.png', 'enemy2',
+    GameCreator.preload(this, 'assets/lvl2/map.png', 'map2', 'assets/lvl2/enemy.png', 'enemy2',
       'assets/music.mp3', 'assets/music.mp3', 'niveau3', Niveau3);
   }
 

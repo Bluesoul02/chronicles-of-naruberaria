@@ -25,10 +25,10 @@ export class GameCreator extends Phaser.Scene {
     scene.enemyMinY = 100;
   }
 
-  static preload(scene, urlMap, mapkey, urlShip, urlBullet, urlEnemy, enemykey, urlMusic, urlCrash, nextLevelkey, nextLevel) {
+  static preload(scene, urlMap, mapkey, urlEnemy, enemykey, urlMusic, urlCrash, nextLevelkey, nextLevel) {
     scene.load.image(mapkey, urlMap);
-    scene.load.image('ship', urlShip);
-    scene.load.image('bullet', urlBullet);
+    scene.load.image('ship', 'assets/ship.png');
+    scene.load.image('bullet', 'assets/shmup-bullet.png');
     scene.load.image(enemykey, urlEnemy);
     scene.load.audio('music', urlMusic);
     scene.load.audio('crash', urlCrash);
