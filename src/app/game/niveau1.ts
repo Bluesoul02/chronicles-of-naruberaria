@@ -72,7 +72,7 @@ export class Niveau1 extends Phaser.Scene {
       this.bullets = new Bullets(this);
 
       // création des ennemis
-      this.enemies = new Enemies(this);
+      this.enemies = new Enemies(this, 'enemy');
       for (let i = 0; i < 5; i++) {
         this.enemies.spawnEnemy(600 * (i + 1), 400);
       }
@@ -174,7 +174,7 @@ export class Niveau1 extends Phaser.Scene {
     }
 
     win() {
-        return this.player.x >= 3300 || this.time.now > 5000;
+        return this.player.x >= 3300;
     }
 
     gameOver() {

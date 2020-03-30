@@ -3,9 +3,9 @@ import {Enemies} from './enemies';
 
 export class GameCreator extends Phaser.Scene {
 
-  static createEnemies(scene) {
+  static createEnemies(scene, textureKey) {
     // création des ennemis
-    scene.enemies = new Enemies(scene);
+    scene.enemies = new Enemies(scene, textureKey);
     for (let i = 0; i < 5; i++) {
       scene.enemies.spawnEnemy(600 * (i + 1), 400);
     }

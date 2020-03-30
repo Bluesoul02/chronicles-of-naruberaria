@@ -33,16 +33,16 @@ export class Niveau2 extends Phaser.Scene {
       this.load.image('ship', 'assets/ship.png');
       this.load.image('bullet', 'assets/shmup-bullet.png');
       this.load.image('enemy2', 'assets/lvl2/enemy.png');
-      this.load.audio('music', 'assets/music.mp3');
-      this.load.audio('crash', 'assets/music.mp3');
+      // this.load.audio('music', 'assets/music.mp3');
+      // this.load.audio('crash', 'assets/music.mp3');
       this.scene.add('niveau3', Niveau3, false);
     }
 
     create() {
 
       // music
-      this.sound.play('music');
-      this.sound.volume = 0.2;
+      // this.sound.play('music');
+      // this.sound.volume = 0.2;
       // this.music.addToCache();
       // this.music.on('loop', this);
       // this.music.setLoop(true);
@@ -73,7 +73,7 @@ export class Niveau2 extends Phaser.Scene {
       this.bullets = new Bullets(this);
 
       // création des ennemis
-      this.enemies = new Enemies(this);
+      this.enemies = new Enemies(this, 'enemy2');
       for (let i = 0; i < 5; i++) {
         this.enemies.spawnEnemy(600 * (i + 1), 400);
       }
@@ -99,7 +99,6 @@ export class Niveau2 extends Phaser.Scene {
         this.cameras.main.fade(1000);
         this.time.delayedCall(1500, function() {
             this.scene.start('niveau3');
-            console.log('passagae au niveau 2');
           }, [], this);
       }
 
@@ -177,7 +176,7 @@ export class Niveau2 extends Phaser.Scene {
     }
 
     win() {
-        return this.player.x >= 3300 || this.time.now > 5000;
+        return this.player.x >= 3300;
     }
 
     gameOver() {

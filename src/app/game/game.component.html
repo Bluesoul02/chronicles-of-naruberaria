@@ -1,8 +1,7 @@
 <div class="ecran">
   <div class="App">
     <header class="App-header">
-      <script type="text/javascript" src="win.ts"></script>
-      <script type="text/javascript" src="game.ts"></script>
+
       <ion-phaser [game]="game" [initialize]="initialize"></ion-phaser>
         <div *ngIf="!initialize">
           <div class="center">
