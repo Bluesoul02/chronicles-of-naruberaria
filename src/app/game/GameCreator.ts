@@ -19,6 +19,9 @@ export class GameCreator extends Phaser.Scene {
     }
   }
 
+  static createObstacles(scene, textureKey) {
+  }
+
   static init(scene) {
     scene.enemyMaxY = 850;
     scene.enemyMinY = 100;
