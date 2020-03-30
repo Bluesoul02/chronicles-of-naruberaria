@@ -1,6 +1,5 @@
 import {Bullets} from './bullets';
 import {Enemies} from './enemies';
-import {Niveau4} from "./niveau4";
 
 export class GameCreator extends Phaser.Scene {
   static globalScore = 0;
@@ -25,7 +24,7 @@ export class GameCreator extends Phaser.Scene {
     scene.enemyMinY = 100;
   }
 
-  static preload(scene, urlMap, mapkey, urlEnemy, enemykey, urlMusic, urlCrash, nextLevelkey, nextLevel) {
+  static preload(scene, urlMap, mapkey, urlEnemy: string, enemykey: string, urlMusic: string, urlCrash: string, nextLevelkey, nextLevel) {
     scene.load.image(mapkey, urlMap);
     scene.load.image('ship', 'assets/ship.png');
     scene.load.image('bullet', 'assets/shmup-bullet.png');
@@ -35,7 +34,7 @@ export class GameCreator extends Phaser.Scene {
     scene.scene.add(nextLevelkey, nextLevel, false);
   }
 
-  static gameOver(scene, nextLevel) {
+  static gameOver(scene: Phaser.Scene, nextLevel: string) {
 
     scene.sound.stopAll();
 
