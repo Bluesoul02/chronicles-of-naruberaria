@@ -91,7 +91,7 @@ export class GameCreator extends Phaser.Scene {
   static update(scene, nextLevel) {
 
     // win
-    if (scene.win()) {
+    if (this.win(scene)) {
       scene.cameras.main.fade(1000);
       scene.time.delayedCall(1000, () => {
         scene.scene.start(nextLevel);
@@ -131,7 +131,7 @@ export class GameCreator extends Phaser.Scene {
       // vérification collision entre joueur et ennemi
       if (Phaser.Geom.Intersects.RectangleToRectangle(scene.player.getBounds(), enemy.getBounds())) {
         // si oui alors game over
-        scene.gameOver();
+        this.gameOver(scene);
         break;
       }
 
