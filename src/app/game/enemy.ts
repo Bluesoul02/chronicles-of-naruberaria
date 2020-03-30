@@ -1,8 +1,8 @@
 import RandomDataGenerator = Phaser.Math.RandomDataGenerator;
 
 export class Enemy extends  Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y) {
-        super(scene, x, y, 'enemy');
+    constructor(scene, x, y,texture) {
+        super(scene, x, y,texture);
     }
 
     spawn(x, y) {
