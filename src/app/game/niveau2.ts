@@ -25,13 +25,14 @@ export class Niveau2 extends Phaser.Scene {
   }
 
   preload() {
-    GameCreator.preload(this, 'assets/lvl2/map.png', 'map2', 'assets/lvl2/enemy.png', 'enemy2', 'assets/lvl2/obstacle.png', 'assets/lvl2/obstacle.png',
+    GameCreator.preload(this, 'assets/lvl2/map.png', 'map2', 'assets/lvl2/enemy.png', 'enemy2','obstacleMine', 'assets/lvl2/obstacle.png','obstacleMine2', 'assets/lvl2/obstacle.png',
       'assets/music.mp3', 'niveau3', Niveau3);
   }
 
   create() {
     GameCreator.create(this, 'map2');
     GameCreator.createEnemies(this, 'enemy2');
+    GameCreator.generateObstacle(this, 'obstacleMine', 'obstacleMine2');
   }
 
   update() {

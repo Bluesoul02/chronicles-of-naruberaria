@@ -26,7 +26,7 @@ export class Niveau4 extends Phaser.Scene {
   }
 
   preload() {
-    GameCreator.preload(this, 'assets/lvl4/map.png', 'map4', 'assets/lvl4/enemy.png', 'enemy4', 'assets/lvl2/obstacle.png', 'assets/lvl2/obstacle.png',
+    GameCreator.preload(this, 'assets/lvl4/map.png', 'map4', 'assets/lvl4/enemy.png', 'enemy4', 'obstacle4.1','assets/lvl2/obstacle.png','obstacle4.2', 'assets/lvl2/obstacle.png',
       'assets/music.mp3', 'win', Win);
   }
 

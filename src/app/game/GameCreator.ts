@@ -22,15 +22,18 @@ export class GameCreator extends Phaser.Scene {
 
   static generateObstacle(scene, obstacle1, obstacle2){
     const random = new RandomDataGenerator();
-    for(let i = 1; i<10; i++){
-      let obstacle;
+    scene.obstacles = scene.physics.add.staticGroup();
+    let obstacle;
+    for(let i = 1;i<10;i++){
       if(random.integerInRange(1,2)==1){
-        obstacle = scene.physics.add.sprite(900*(i/2),200*(i/2),obstacle1);
+        obstacle = scene.obstacles.create(900*(i/2), scene.scale.height*random.realInRange(0,1), obstacle1).setScale(0.7).refreshBody();
       }else{
-        obstacle = scene.physics.add.sprite(900*(i/2),200*(i/2),obstacle2);
+        obstacle = scene.obstacles.create(900*(i/2), scene.scale.height*random.realInRange(0,1), obstacle2).setScale(0.7).refreshBody();
       }
-      scene.physics.add.collider(obstacle,scene.player);
-    }
+      obstacle.setSize(100,100);
+      console.log(obstacle.width+" "+obstacle.height);
+    } 
+    scene.physics.add.collider(scene.player,scene.obstacles);
   }
 
   static init(scene) {
@@ -38,13 +41,13 @@ export class GameCreator extends Phaser.Scene {
     scene.enemyMinY = 100;
   }
 
-  static preload(scene, urlMap, mapkey, urlEnemy, enemykey, urlObstacle1, urlObstacle2, urlMusic, nextLevelkey, nextLevel) {
+  static preload(scene, urlMap, mapkey, urlEnemy, enemykey, keyObstacle1, urlObstacle1, keyObstacle2, urlObstacle2, urlMusic, nextLevelkey, nextLevel) {
     scene.load.image(mapkey, urlMap);
     scene.load.image('ship', 'assets/ship.png');
     scene.load.image('bullet', 'assets/shmup-bullet.png');
     scene.load.image(enemykey, urlEnemy);
-    scene.load.image('obstacle1',urlObstacle1);
-    scene.load.image('obstacle2',urlObstacle2);
+    scene.load.image(keyObstacle1, urlObstacle1);
+    scene.load.image(keyObstacle2, urlObstacle2);
     scene.load.audio('music', urlMusic);
     scene.load.audio('crash', 'assets/crash.mp3');
     scene.scene.add(nextLevelkey, nextLevel, false);
@@ -62,7 +65,7 @@ export class GameCreator extends Phaser.Scene {
     }, [], scene);
 
     // recommence une partie automatiquement
-    scene.time.delayedCall(1000, () => {
+    scene.time.delayedCall(1500, () => {
       scene.scene.remove(nextLevel);
       scene.scene.restart();
     }, [], scene);
@@ -112,7 +115,7 @@ export class GameCreator extends Phaser.Scene {
     // win
     if (this.win(scene)) {
       scene.cameras.main.fade(1000);
-      scene.time.delayedCall(1000, () => {
+      scene.time.delayedCall(1500, () => {
         scene.sound.stopAll();
         GameCreator.globalScore += scene.score;
         scene.scene.start(nextLevel);
