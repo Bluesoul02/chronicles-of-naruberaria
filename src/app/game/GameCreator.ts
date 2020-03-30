@@ -94,7 +94,6 @@ export class GameCreator extends Phaser.Scene {
     if (this.win(scene)) {
       scene.cameras.main.fade(1000);
       scene.time.delayedCall(1000, () => {
-        nextLevel.score = scene.score;
         scene.scene.start(nextLevel);
         console.log('passage au', nextLevel);
       }, [], scene);
