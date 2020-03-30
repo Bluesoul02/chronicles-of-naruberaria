@@ -23,11 +23,11 @@ export class GameCreator extends Phaser.Scene {
     scene.enemyMinY = 100;
   }
 
-  static preload(scene, urlMap, urlShip, urlBullet, urlEnemy, urlMusic, urlCrash) {
-    scene.load.image('map', urlMap);
+  static preload(scene, urlMap, mapkey, urlShip, urlBullet, urlEnemy, enemykey, urlMusic, urlCrash) {
+    scene.load.image(mapkey, urlMap);
     scene.load.image('ship', urlShip);
     scene.load.image('bullet', urlBullet);
-    scene.load.image('enemy', urlEnemy);
+    scene.load.image(enemykey, urlEnemy);
     scene.load.audio('music', urlMusic);
     scene.load.audio('crash', urlCrash);
   }
@@ -49,7 +49,7 @@ export class GameCreator extends Phaser.Scene {
     }, [], scene);
   }
 
-  static create(scene) {
+  static create(scene, map) {
 
     // music
     scene.sound.play('music');
@@ -61,7 +61,7 @@ export class GameCreator extends Phaser.Scene {
     // map
     scene.map = scene.add.tileSprite(scene.cameras.main.centerX, scene.cameras.main.centerY,
       scene.scale.width * scene.mapSize, scene.scale.height,
-      'map');
+      map);
     scene.cursors = scene.input.keyboard.createCursorKeys();
 
     // player
@@ -173,6 +173,6 @@ export class GameCreator extends Phaser.Scene {
   }
 
   static win(scene) {
-    return scene.player.x >= 3300 || scene.time.now > 5000;
+    return scene.player.x >= 3300;
   }
 }
