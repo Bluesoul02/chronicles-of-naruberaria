@@ -6,7 +6,7 @@ export class Niveau1 extends Phaser.Scene {
     player: Phaser.Physics.Arcade.Sprite;
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     map: Phaser.GameObjects.TileSprite;
-    scrollSpeed = 2;
+    scrollSpeed = 4;
     mapSize = 6;
     bullets;
     enemies;

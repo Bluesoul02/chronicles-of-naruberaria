@@ -2,7 +2,7 @@ import { Enemy } from './enemy';
 
 export class Enemies extends Phaser.Physics.Arcade.Group {
     texture;
-    constructor(scene, texture:string) {
+    constructor(scene, texture: string) {
         super(scene.physics.world, scene);
 
         this.createMultiple({
@@ -17,7 +17,7 @@ export class Enemies extends Phaser.Physics.Arcade.Group {
     }
 
     spawnEnemy(x, y) {
-        const enemy = this.getFirstDead(true, x, y,this.texture);
+        const enemy = this.getFirstDead(true, x, y, this.texture);
         enemy.setSize(700, 200);
         enemy.setDisplaySize(180, 160);
         if (enemy) {
