@@ -9,7 +9,7 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
       this.setActive(true);
       this.setVisible(true);
 
-      this.setVelocityX(500);
+      this.setVelocityX(800);
     }
 
     preUpdate(time, delta) {

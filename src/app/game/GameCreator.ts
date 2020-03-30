@@ -112,14 +112,14 @@ export class GameCreator extends Phaser.Scene {
     scene.player.setVelocityY(0);
 
     if (scene.cursors.up.isDown) {
-      scene.player.setVelocityY(-600);
+      scene.player.setVelocityY(-500);
     } else if (scene.cursors.down.isDown) {
-      scene.player.setVelocityY(600);
+      scene.player.setVelocityY(500);
     }
     if (scene.cursors.left.isDown) {
-      scene.player.setVelocityX(-600);
+      scene.player.setVelocityX(-500);
     } else if (scene.cursors.right.isDown) {
-      scene.player.setVelocityX(600);
+      scene.player.setVelocityX(500);
     }
 
     // pour tirer
