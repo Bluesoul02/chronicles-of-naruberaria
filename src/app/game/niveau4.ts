@@ -1,9 +1,5 @@
-import RandomDataGenerator = Phaser.Math.RandomDataGenerator;
-import { Bullets } from './bullets';
-import { Enemies } from './enemies';
 import { Win } from './win';
-import {GameCreator} from "./GameCreator";
-import {Niveau2} from "./niveau2";
+import {GameCreator} from './GameCreator';
 
 export class Niveau4 extends Phaser.Scene {
 
