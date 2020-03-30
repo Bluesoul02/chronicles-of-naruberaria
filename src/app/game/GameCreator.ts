@@ -2,6 +2,7 @@ import {Bullets} from './bullets';
 import {Enemies} from './enemies';
 
 export class GameCreator extends Phaser.Scene {
+  static globalScore = 0;
 
   static createEnemies(scene, textureKey) {
     // création des ennemis
@@ -45,7 +46,6 @@ export class GameCreator extends Phaser.Scene {
 
     // recommence une partie automatiquement
     scene.time.delayedCall(1000, () => {
-      scene.scene.remove('win');
       scene.scene.remove(nextLevel);
       scene.scene.restart();
     }, [], scene);
@@ -85,7 +85,7 @@ export class GameCreator extends Phaser.Scene {
     // création de l'arme
     scene.bullets = new Bullets(scene);
 
-    scene.score = 0;
+    scene.score = GameCreator.globalScore;
     scene.scoreText = scene.add.text(scene.scale.width / 2, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' }).setOrigin(0.5, 0);
     scene.cameras.main.resetFX();
   }
@@ -96,6 +96,7 @@ export class GameCreator extends Phaser.Scene {
     if (this.win(scene)) {
       scene.cameras.main.fade(1000);
       scene.time.delayedCall(1000, () => {
+        GameCreator.globalScore += scene.score;
         scene.scene.start(nextLevel);
         console.log('passage au', nextLevel);
       }, [], scene);
@@ -165,7 +166,7 @@ export class GameCreator extends Phaser.Scene {
           // TO DO : REELEMENT ENLEVER UN ENNEMI
           scene.bullets.remove(bullet);
           bullet.destroy();
-          scene.score += 1;
+          scene.score += 500;
           break;
         }
       }
