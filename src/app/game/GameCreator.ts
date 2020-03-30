@@ -1,7 +1,7 @@
 import {Bullets} from './bullets';
 import {Enemies} from './enemies';
 
-export class Gamecreator extends Phaser.Scene {
+export class GameCreator extends Phaser.Scene {
 
   static createEnemies(scene) {
     // création des ennemis
