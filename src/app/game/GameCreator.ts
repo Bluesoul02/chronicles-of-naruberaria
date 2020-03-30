@@ -141,9 +141,9 @@ export class GameCreator extends Phaser.Scene {
 
       // inverse la direction si atteinte des "bords" de sa ligne
       if (enemy.y >= scene.enemyMaxY) {
-        enemy.setVelocityY(-300);
+        enemy.setVelocityY(-500);
       } else if (enemy.y <= scene.enemyMinY) {
-        enemy.setVelocityY(300);
+        enemy.setVelocityY(500);
       }
     }
 
