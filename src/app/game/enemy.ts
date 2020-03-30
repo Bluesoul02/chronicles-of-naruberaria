@@ -7,8 +7,6 @@ export class Enemy extends  Phaser.Physics.Arcade.Sprite {
 
     spawn(x, y) {
         this.body.reset(x, y);
-
-
         const random = new RandomDataGenerator();
 
         if (random.integerInRange(1, 2) === 1) {
