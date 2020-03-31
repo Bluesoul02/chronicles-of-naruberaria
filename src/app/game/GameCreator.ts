@@ -193,7 +193,7 @@ export class GameCreator extends Phaser.Scene {
   }
 
   static win(scene) {
-    return scene.player.x >= 3300;
+    return scene.player.x >= 0;
   }
 
   static createWin(scene, winKey) {
@@ -219,8 +219,10 @@ export class GameCreator extends Phaser.Scene {
 
   static createWinToMenu(scene, winKey) {
     const imageVictoire = this.createWin(scene, winKey);
+    imageVictoire.on('pointerup', () => GameCreator.backToMenu(scene));
   }
 
-  backToMenu() {
+  static backToMenu(scene) {
+    location.reload();
   }
 }
