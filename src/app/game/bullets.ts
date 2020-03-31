@@ -10,7 +10,7 @@ export class Bullets extends Phaser.Physics.Arcade.Group {
           active: false,
           visible: false,
           classType: Bullet,
-          max: 10
+          max: 1
         });
     }
 
