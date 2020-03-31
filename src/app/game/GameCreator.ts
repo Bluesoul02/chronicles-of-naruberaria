@@ -196,8 +196,7 @@ export class GameCreator extends Phaser.Scene {
     return scene.player.x >= 3300;
   }
 
-  static createWinNextLevel(scene, nextLevel, nextLevelKey, winKey) {
-    scene.scene.add(nextLevelKey, nextLevel, false);
+  static createWin(scene, winKey) {
     const imageVictoire = scene.add.sprite(scene.cameras.main.centerX, scene.cameras.main.centerY, winKey);
     imageVictoire.displayWidth = scene.scale.width;
     imageVictoire.displayHeight = scene.scale.height;
@@ -205,7 +204,12 @@ export class GameCreator extends Phaser.Scene {
       scene.cameras.main.centerY + scene.cameras.main.centerY / 2,
       GameCreator.globalScore.toString());
     imageVictoire.setInteractive();
+    return imageVictoire;
+  }
 
+  static createWinNextLevel(scene, nextLevel, nextLevelKey, winKey) {
+    const imageVictoire = this.createWin(scene, winKey);
+    scene.scene.add(nextLevelKey, nextLevel, false);
     imageVictoire.on('pointerup', () => GameCreator.winFunction(scene, nextLevelKey));
   }
 
@@ -214,6 +218,7 @@ export class GameCreator extends Phaser.Scene {
   }
 
   static createWinToMenu(scene, winKey) {
+    const imageVictoire = this.createWin(scene, winKey);
   }
 
   backToMenu() {
