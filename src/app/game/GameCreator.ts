@@ -3,7 +3,7 @@ import {Enemies} from './enemies';
 import RandomDataGenerator = Phaser.Math.RandomDataGenerator;
 
 export class GameCreator extends Phaser.Scene {
-  static globalScore = 0;
+  static globalScore: number;
 
   static createEnemies(scene, textureKey) {
     // création des ennemis
@@ -20,20 +20,18 @@ export class GameCreator extends Phaser.Scene {
     }
   }
 
-  static generateObstacle(scene, obstacle1, obstacle2){
+  static generateObstacle(scene, obstacle1, obstacle2) {
     const random = new RandomDataGenerator();
-    scene.obstacles = scene.physics.add.staticGroup();
-    let obstacle;
-    for(let i = 1;i<10;i++){
-      if(random.integerInRange(1,2)==1){
-        obstacle = scene.obstacles.create(900*(i/2), scene.scale.height*random.realInRange(0,1), obstacle1).setScale(0.7).refreshBody();
-      }else{
-        obstacle = scene.obstacles.create(900*(i/2), scene.scale.height*random.realInRange(0,1), obstacle2).setScale(0.7).refreshBody();
+    for (let i = 1; i < 10; i++) {
+      let obstacle;
+      if (random.integerInRange(1, 2) === 1) {
+        obstacle = scene.physics.add.sprite(900 * (i / 2), 200 * (i / 2), obstacle1);
+      } else {
+        obstacle = scene.physics.add.sprite(900 * (i / 2), 200 * (i / 2), obstacle2);
       }
-      obstacle.setSize(100,100);
-      console.log(obstacle.width+" "+obstacle.height);
-    } 
-    scene.physics.add.collider(scene.player,scene.obstacles);
+      obstacle.setSize(obstacle.texture.width, obstacle.texture.height);
+      scene.physics.add.collider(obstacle, scene.player);
+    }
   }
 
   static init(scene) {
@@ -41,16 +39,16 @@ export class GameCreator extends Phaser.Scene {
     scene.enemyMinY = 100;
   }
 
-  static preload(scene, urlMap, mapkey, urlEnemy, enemykey, keyObstacle1, urlObstacle1, keyObstacle2, urlObstacle2, urlMusic, nextLevelkey, nextLevel) {
+  static preload(scene, urlMap, mapkey, urlEnemy, enemykey, urlObstacle1, urlObstacle2, urlMusic, winKey, win) {
     scene.load.image(mapkey, urlMap);
     scene.load.image('ship', 'assets/ship.png');
     scene.load.image('bullet', 'assets/shmup-bullet.png');
     scene.load.image(enemykey, urlEnemy);
-    scene.load.image(keyObstacle1, urlObstacle1);
-    scene.load.image(keyObstacle2, urlObstacle2);
+    scene.load.image('obstacle1', urlObstacle1);
+    scene.load.image('obstacle2', urlObstacle2);
     scene.load.audio('music', urlMusic);
     scene.load.audio('crash', 'assets/crash.mp3');
-    scene.scene.add(nextLevelkey, nextLevel, false);
+    scene.scene.add(winKey, win, false);
   }
 
   static gameOver(scene, nextLevel) {
@@ -75,7 +73,7 @@ export class GameCreator extends Phaser.Scene {
 
     // music
     scene.sound.play('music');
-    scene.sound.volume = 0.2;
+    scene.sound.volume = 0.15;
     // scene.music.addToCache();
     // scene.music.on('loop', scene);
     // scene.music.setLoop(true);
@@ -110,7 +108,7 @@ export class GameCreator extends Phaser.Scene {
     scene.cameras.main.resetFX();
   }
 
-  static update(scene, nextLevel) {
+  static update(scene, win) {
 
     // win
     if (this.win(scene)) {
@@ -118,8 +116,7 @@ export class GameCreator extends Phaser.Scene {
       scene.time.delayedCall(1500, () => {
         scene.sound.stopAll();
         GameCreator.globalScore += scene.score;
-        scene.scene.start(nextLevel);
-        console.log('passage au', nextLevel);
+        scene.scene.start(win);
       }, [], scene);
     }
 
@@ -155,7 +152,7 @@ export class GameCreator extends Phaser.Scene {
       // vérification collision entre joueur et ennemi
       if (Phaser.Geom.Intersects.RectangleToRectangle(scene.player.getBounds(), enemy.getBounds())) {
         // si oui alors game over
-        this.gameOver(scene, nextLevel);
+        this.gameOver(scene, win);
         break;
       }
 
@@ -198,5 +195,35 @@ export class GameCreator extends Phaser.Scene {
 
   static win(scene) {
     return scene.player.x >= 3300;
+  }
+
+  static createWin(scene, winKey) {
+    const imageVictoire = scene.add.sprite(scene.cameras.main.centerX, scene.cameras.main.centerY, winKey);
+    imageVictoire.displayWidth = scene.scale.width;
+    imageVictoire.displayHeight = scene.scale.height;
+    scene.add.text(scene.cameras.main.centerX + scene.cameras.main.centerX,
+      scene.cameras.main.centerY + scene.cameras.main.centerY / 2,
+      GameCreator.globalScore.toString());
+    imageVictoire.setInteractive();
+    return imageVictoire;
+  }
+
+  static createWinNextLevel(scene, nextLevel, nextLevelKey, winKey) {
+    const imageVictoire = this.createWin(scene, winKey);
+    scene.scene.add(nextLevelKey, nextLevel, false);
+    imageVictoire.on('pointerup', () => GameCreator.winFunction(scene, nextLevelKey));
+  }
+
+  static winFunction(scene, levelKey) {
+    scene.scene.start(levelKey);
+  }
+
+  static createWinToMenu(scene, winKey) {
+    const imageVictoire = this.createWin(scene, winKey);
+    imageVictoire.on('pointerup', () => GameCreator.backToMenu(scene));
+  }
+
+  static backToMenu(scene) {
+    location.reload();
   }
 }

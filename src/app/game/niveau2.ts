@@ -1,5 +1,5 @@
 import {GameCreator} from './GameCreator';
-import {Niveau3} from './niveau3';
+import {Win2} from './win2';
 
 export class Niveau2 extends Phaser.Scene {
 
@@ -25,8 +25,8 @@ export class Niveau2 extends Phaser.Scene {
   }
 
   preload() {
-    GameCreator.preload(this, 'assets/lvl2/map.png', 'map2', 'assets/lvl2/enemy.png', 'enemy2','obstacleMine', 'assets/lvl2/obstacle.png','obstacleMine2', 'assets/lvl2/obstacle.png',
-      'assets/music.mp3', 'niveau3', Niveau3);
+    GameCreator.preload(this, 'assets/lvl2/map.png', 'map2', 'assets/lvl2/enemy.png', 'enemy2', 'assets/lvl2/obstacle.png', 'assets/lvl2/obstacle.png',
+      'assets/music.mp3', 'win2', Win2);
   }
 
   create() {
@@ -36,6 +36,6 @@ export class Niveau2 extends Phaser.Scene {
   }
 
   update() {
-    GameCreator.update(this, 'niveau3');
+    GameCreator.update(this, 'win2');
   }
 }
