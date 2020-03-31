@@ -29,6 +29,7 @@ export class GameCreator extends Phaser.Scene {
       } else {
         obstacle = scene.physics.add.sprite(900 * (i / 2), 200 * (i / 2), obstacle2);
       }
+      obstacle.setSize(obstacle.texture.width, obstacle.texture.height);
       scene.physics.add.collider(obstacle, scene.player);
     }
   }
@@ -193,7 +194,7 @@ export class GameCreator extends Phaser.Scene {
   }
 
   static win(scene) {
-    return scene.player.x >= 0;
+    return scene.player.x >= 3300;
   }
 
   static createWin(scene, winKey) {
