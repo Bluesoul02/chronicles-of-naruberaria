@@ -26,9 +26,9 @@ export class GameCreator extends Phaser.Scene {
     for (let i = 1; i < 9; i++) {
       let obstacle;
       if (random.integerInRange(1, 2) === 1) {
-        obstacle = scene.obstacles.create(900 * (i / 2), scene.scale.height * random.realInRange(0,1), keyObstacle1);
+        obstacle = scene.obstacles.create(900 * (i / 2), scene.scale.height * random.realInRange(0, 1), keyObstacle1);
       } else {
-        obstacle = scene.obstacles.create(900 * (i / 2), scene.scale.height * random.realInRange(0,1), keyObstacle2);
+        obstacle = scene.obstacles.create(900 * (i / 2), scene.scale.height * random.realInRange(0, 1), keyObstacle2);
       }
       obstacle.setSize(obstacle.texture.width, obstacle.texture.height);
       scene.physics.add.collider(obstacle, scene.player);
@@ -47,7 +47,7 @@ export class GameCreator extends Phaser.Scene {
     scene.load.image(enemykey, urlEnemy);
     scene.load.image(keyObstacle1, urlObstacle1);
     scene.load.image(keyObstacle2, urlObstacle2);
-    scene.load.image('portail','assets/portail.png');
+    scene.load.image('portail', 'assets/portail.png');
     scene.load.audio('music', urlMusic);
     scene.load.audio('crash', 'assets/crash.mp3');
     scene.scene.add(winKey, win, false);
@@ -106,13 +106,13 @@ export class GameCreator extends Phaser.Scene {
     scene.bullets = new Bullets(scene);
 
     // portail de fin de niveau
-    scene.portail = scene.physics.add.sprite(4300, 400,'portail');
-    scene.portail.setSize(150,400);
+    scene.portail = scene.physics.add.sprite(4300, 400, 'portail');
+    scene.portail.setSize(150, 400);
     scene.portail.setDisplaySize(250, 400);
     scene.portail.enableBody(true, 4300, 400, true, true);
-    scene.portail.body.reset(4300,400);
+    scene.portail.body.reset(4300, 400);
 
-    // score du joueur 
+    // score du joueur
     scene.score = GameCreator.globalScore;
     scene.scoreText = scene.add.text(scene.scale.width / 2, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' }).setOrigin(0.5, 0);
 
@@ -170,7 +170,6 @@ export class GameCreator extends Phaser.Scene {
           scene.bullets.fireBullet(scene.player.getBounds().x + 180, scene.player.getBounds().y + 90);
           break;
       }
-      
     }
 
     for (let i = 0; i < scene.enemies.getChildren().length; i++) {
