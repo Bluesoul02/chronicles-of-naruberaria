@@ -14,6 +14,8 @@ export class Niveau1 extends Phaser.Scene {
     enemyMinY: number;
     score = 0;
     scoreText;
+    obstacles;
+    portail;
 
     music: Phaser.Loader.FileTypes.AudioFile;
 
@@ -36,7 +38,7 @@ export class Niveau1 extends Phaser.Scene {
       GameCreator.globalScore = 0;
       GameCreator.create(this, 'map1');
       GameCreator.createEnemies(this, 'enemy1');
-      GameCreator.generateObstacle(this, 'obstacle1', 'obstacle2');
+      GameCreator.generateObstacle(this);
     }
 
     update() {

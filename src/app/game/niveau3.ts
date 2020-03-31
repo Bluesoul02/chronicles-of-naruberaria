@@ -35,6 +35,7 @@ export class Niveau3 extends Phaser.Scene {
   create() {
     GameCreator.create(this, 'map3');
     GameCreator.createEnemies(this, 'enemy3');
+    GameCreator.generateObstacle(this);
   }
 
   update() {
