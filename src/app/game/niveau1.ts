@@ -17,6 +17,7 @@ export class Niveau1 extends Phaser.Scene {
     obstacles;
     portail;
     bonus: number;
+    bonuses;
 
     music: Phaser.Loader.FileTypes.AudioFile;
 
