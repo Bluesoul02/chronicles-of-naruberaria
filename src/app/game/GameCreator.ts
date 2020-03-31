@@ -1,6 +1,7 @@
 import {Bullets} from './bullets';
 import {Enemies} from './enemies';
 import RandomDataGenerator = Phaser.Math.RandomDataGenerator;
+import { Bonuses } from './bonuses';
 
 export class GameCreator extends Phaser.Scene {
   static globalScore: number;
@@ -48,6 +49,7 @@ export class GameCreator extends Phaser.Scene {
     scene.load.image(keyObstacle1, urlObstacle1);
     scene.load.image(keyObstacle2, urlObstacle2);
     scene.load.image('portail', 'assets/portail.png');
+    scene.load.image('bonus', 'assets/bonus.png');
     scene.load.audio('music', urlMusic);
     scene.load.audio('crash', 'assets/crash.mp3');
     scene.scene.add(winKey, win, false);
@@ -106,7 +108,7 @@ export class GameCreator extends Phaser.Scene {
     scene.bullets = new Bullets(scene);
 
     // portail de fin de niveau
-    scene.portail = scene.physics.add.sprite(4300, 400, 'portail');
+    scene.portail = scene.physics.add.sprite(scene.map.width - 300, 400, 'portail');
     scene.portail.setSize(150, 400);
     scene.portail.setDisplaySize(250, 400);
     scene.portail.enableBody(true, 4300, 400, true, true);
@@ -117,6 +119,7 @@ export class GameCreator extends Phaser.Scene {
     scene.scoreText = scene.add.text(scene.scale.width / 2, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' }).setOrigin(0.5, 0);
 
     // bonus de tir
+    scene.bonuses = new Bonuses(scene);
     scene.bonus = 0;
 
     scene.cameras.main.resetFX();
@@ -161,13 +164,13 @@ export class GameCreator extends Phaser.Scene {
           scene.bullets.fireBullet(scene.player.getBounds().x + 160, scene.player.getBounds().y + 90);
           break;
         case(1) :
-          scene.bullets.fireBullet(scene.player.getBounds().x + 180, scene.player.getBounds().y + 90);
+          scene.bullets.fireBullet(scene.player.getBounds().x + 180, scene.player.getBounds().y + 70);
           scene.bullets.fireBullet(scene.player.getBounds().x + 180, scene.player.getBounds().y + 90);
           break;
         case(2) :
-          scene.bullets.fireBullet(scene.player.getBounds().x + 180, scene.player.getBounds().y + 90);
-          scene.bullets.fireBullet(scene.player.getBounds().x + 180, scene.player.getBounds().y + 90);
-          scene.bullets.fireBullet(scene.player.getBounds().x + 180, scene.player.getBounds().y + 90);
+          scene.bullets.fireBullet(scene.player.getBounds().x + 185, scene.player.getBounds().y + 70);
+          scene.bullets.fireBullet(scene.player.getBounds().x + 185, scene.player.getBounds().y + 80);
+          scene.bullets.fireBullet(scene.player.getBounds().x + 185, scene.player.getBounds().y + 90);
           break;
       }
     }
@@ -207,18 +210,26 @@ export class GameCreator extends Phaser.Scene {
         // vérification de la collision entre bullet et ennemi
         if (Phaser.Geom.Intersects.RectangleToRectangle(bullet.getBounds(), enemy)) {
           // destruction du vaisseau touché et de la bullet
+          if (random.integerInRange(1, 5) === 1) {
+            scene.bonuses.spawnBonus(enemy.x, enemy.y);
+          }
           enemy.destroy();
           scene.enemies.remove(enemy);
           scene.bullets.remove(bullet);
           bullet.destroy();
           scene.score += 500;
-          if (scene.bonus < 2) {
-            scene.bonus += 1;
-          }
           break;
         }
       }
     }
+
+    scene.bonuses.getChildren().forEach(b => {
+      if (Phaser.Geom.Intersects.RectangleToRectangle(b.getBounds(), scene.player.getBounds())) {
+        scene.bonus += 1;
+        b.destroy();
+      }
+    });
+
     scene.scoreText.destroy();
     scene.scoreText = scene.add.text(scene.player.x, scene.player.y + 15, 'Score :' + scene.score, { fontSize: '20px', fill: '#fff' });
   }

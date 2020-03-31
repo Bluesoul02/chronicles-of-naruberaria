@@ -14,8 +14,9 @@ export class Niveau3 extends Phaser.Scene {
     enemyMinY: number;
     score: number;
     scoreText;
-
     music: Phaser.Loader.FileTypes.AudioFile;
+    bonus;
+    bonuses;
 
     constructor() {
       super('niveau3');
