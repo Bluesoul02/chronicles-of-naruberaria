@@ -23,12 +23,12 @@ export class GameCreator extends Phaser.Scene {
   static generateObstacle(scene) {
     const random = new RandomDataGenerator();
     scene.obstacles = scene.physics.add.staticGroup();
-    for (let i = 1; i < 10; i++) {
+    for (let i = 1; i < 9; i++) {
       let obstacle;
       if (random.integerInRange(1, 2) === 1) {
         obstacle = scene.obstacles.create(900 * (i / 2), scene.scale.height * random.realInRange(0,1), 'obstacle1');
       } else {
-        obstacle = scene.obstacles.create(900 * (i / 2), scene.scale.height * random.realInRange(0,1), 'obstacle1');
+        obstacle = scene.obstacles.create(900 * (i / 2), scene.scale.height * random.realInRange(0,1), 'obstacle2');
       }
       obstacle.setSize(obstacle.texture.width, obstacle.texture.height);
       scene.physics.add.collider(obstacle, scene.player);
@@ -106,7 +106,7 @@ export class GameCreator extends Phaser.Scene {
     scene.bullets = new Bullets(scene);
 
     // portail de fin de niveau
-    scene.portail = scene.add.sprite(3600, 400,'portail');
+    scene.portail = scene.add.sprite(4300, 400,'portail');
     scene.portail.setSize(150,400);
 
     scene.score = GameCreator.globalScore;
