@@ -3,7 +3,7 @@ import {Enemies} from './enemies';
 import RandomDataGenerator = Phaser.Math.RandomDataGenerator;
 
 export class GameCreator extends Phaser.Scene {
-  static globalScore = 0;
+  static globalScore: number;
 
   static createEnemies(scene, textureKey) {
     // création des ennemis

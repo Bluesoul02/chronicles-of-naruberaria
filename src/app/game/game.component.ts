@@ -33,4 +33,8 @@ export class GameComponent {
   initializeGame() {
     this.initialize = true;
   }
+
+  quitGame() {
+    this.initialize = false;
+  }
 }
