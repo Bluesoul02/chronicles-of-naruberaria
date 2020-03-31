@@ -108,7 +108,7 @@ export class GameCreator extends Phaser.Scene {
     scene.bullets = new Bullets(scene);
 
     // portail de fin de niveau
-    scene.portail = scene.physics.add.sprite(scene.map.width - 300, 400,'portail');
+    scene.portail = scene.physics.add.sprite(scene.scale.width*scene.mapSize - 300, 400,'portail');
     scene.portail.setSize(150,400);
     scene.portail.setDisplaySize(250, 400);
     scene.portail.enableBody(true, 4300, 400, true, true);
@@ -229,7 +229,7 @@ export class GameCreator extends Phaser.Scene {
         b.destroy();
       }
     });
-    
+
     scene.scoreText.destroy();
     scene.scoreText = scene.add.text(scene.player.x, scene.player.y + 15, 'Score :' + scene.score, { fontSize: '20px', fill: '#fff' });
   }
