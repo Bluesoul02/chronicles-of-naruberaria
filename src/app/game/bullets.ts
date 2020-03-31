@@ -5,11 +5,12 @@ export class Bullets extends Phaser.Physics.Arcade.Group {
       super(scene.physics.world, scene);
 
       this.createMultiple({
-          frameQuantity: 5,
-          key: 'bullet',
+          frameQuantity: 1,
+          key: 'bullet',          
           active: false,
           visible: false,
-          classType: Bullet
+          classType: Bullet,
+          max: 10
         });
     }
 

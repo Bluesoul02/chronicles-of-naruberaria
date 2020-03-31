@@ -20,15 +20,15 @@ export class GameCreator extends Phaser.Scene {
     }
   }
 
-  static generateObstacle(scene) {
+  static generateObstacle(scene, keyObstacle1, keyObstacle2) {
     const random = new RandomDataGenerator();
     scene.obstacles = scene.physics.add.staticGroup();
     for (let i = 1; i < 9; i++) {
       let obstacle;
       if (random.integerInRange(1, 2) === 1) {
-        obstacle = scene.obstacles.create(900 * (i / 2), scene.scale.height * random.realInRange(0,1), 'obstacle1');
+        obstacle = scene.obstacles.create(900 * (i / 2), scene.scale.height * random.realInRange(0,1), keyObstacle1);
       } else {
-        obstacle = scene.obstacles.create(900 * (i / 2), scene.scale.height * random.realInRange(0,1), 'obstacle2');
+        obstacle = scene.obstacles.create(900 * (i / 2), scene.scale.height * random.realInRange(0,1), keyObstacle2);
       }
       obstacle.setSize(obstacle.texture.width, obstacle.texture.height);
       scene.physics.add.collider(obstacle, scene.player);
@@ -40,13 +40,13 @@ export class GameCreator extends Phaser.Scene {
     scene.enemyMinY = 100;
   }
 
-  static preload(scene, urlMap, mapkey, urlEnemy, enemykey, urlObstacle1, urlObstacle2, urlMusic, winKey, win) {
+  static preload(scene, urlMap, mapkey, urlEnemy, enemykey, keyObstacle1, urlObstacle1, keyObstacle2, urlObstacle2, urlMusic, winKey, win) {
     scene.load.image(mapkey, urlMap);
     scene.load.image('ship', 'assets/ship.png');
     scene.load.image('bullet', 'assets/shmup-bullet.png');
     scene.load.image(enemykey, urlEnemy);
-    scene.load.image('obstacle1', urlObstacle1);
-    scene.load.image('obstacle2', urlObstacle2);
+    scene.load.image(keyObstacle1, urlObstacle1);
+    scene.load.image(keyObstacle2, urlObstacle2);
     scene.load.image('portail','assets/portail.png');
     scene.load.audio('music', urlMusic);
     scene.load.audio('crash', 'assets/crash.mp3');
@@ -115,7 +115,10 @@ export class GameCreator extends Phaser.Scene {
     // score du joueur 
     scene.score = GameCreator.globalScore;
     scene.scoreText = scene.add.text(scene.scale.width / 2, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' }).setOrigin(0.5, 0);
-    
+
+    // bonus de tir
+    scene.bonus = 0;
+
     scene.cameras.main.resetFX();
   }
 
@@ -153,7 +156,21 @@ export class GameCreator extends Phaser.Scene {
 
     // pour tirer
     if (scene.cursors.space.isDown) {
-      scene.bullets.fireBullet(scene.player.x + 55, scene.player.y + 10);
+      switch (scene.bonus) {
+        case (0) :
+          scene.bullets.fireBullet(scene.player.getBounds().x + 160, scene.player.getBounds().y + 90);
+          break;
+        case(1) :
+          scene.bullets.fireBullet(scene.player.getBounds().x + 160, scene.player.getBounds().y + 90);
+          scene.bullets.fireBullet(scene.player.getBounds().x + 160, scene.player.getBounds().y + 90);
+          break;
+        case(2) :
+          scene.bullets.fireBullet(scene.player.getBounds().x + 160, scene.player.getBounds().y + 90);
+          scene.bullets.fireBullet(scene.player.getBounds().x + 160, scene.player.getBounds().y + 90);
+          scene.bullets.fireBullet(scene.player.getBounds().x + 160, scene.player.getBounds().y + 90);
+          break;
+      }
+      
     }
 
     for (let i = 0; i < scene.enemies.getChildren().length; i++) {
@@ -177,6 +194,7 @@ export class GameCreator extends Phaser.Scene {
 
     for (let i = 0; i < scene.bullets.getChildren().length; i++) {
       const bullet = scene.bullets.getChildren()[i];
+      const random = new RandomDataGenerator();
 
       // vérification de si la bullet est enore à une distance raisonnable du joueur
       if (bullet.x >= scene.scale.width + scene.cameras.main.scrollX) {
@@ -192,10 +210,12 @@ export class GameCreator extends Phaser.Scene {
           // destruction du vaisseau touché et de la bullet
           enemy.destroy();
           scene.enemies.remove(enemy);
-          // TO DO : REELEMENT ENLEVER UN ENNEMI
           scene.bullets.remove(bullet);
           bullet.destroy();
           scene.score += 500;
+          if (scene.bonus < 2) {
+            scene.bonus += 1;
+          }
           break;
         }
       }
