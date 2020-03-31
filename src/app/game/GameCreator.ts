@@ -58,6 +58,7 @@ export class GameCreator extends Phaser.Scene {
   static gameOver(scene, nextLevel) {
 
     scene.sound.stopAll();
+    scene.portail.delete = true;
 
     // secouer la caméra pour un effet accident
     scene.cameras.main.shake(500);
@@ -132,7 +133,7 @@ export class GameCreator extends Phaser.Scene {
       scene.cameras.main.fade(1000);
       scene.time.delayedCall(1500, () => {
         scene.sound.stopAll();
-        GameCreator.globalScore += scene.score;
+        GameCreator.globalScore = scene.score;
         scene.scene.start(win);
       }, [], scene);
     }
