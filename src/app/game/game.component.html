@@ -1,18 +1,16 @@
 <div class="ecran">
-  <div class="App">
-    <header class="App-header">
-
-      <ion-phaser [game]="game" [initialize]="initialize"></ion-phaser>
-        <div *ngIf="!initialize">
-          <br><br><br><br><br><br>
-          <div class="center">
+  <div [class.background]="!initialize">
+    <ion-phaser [game]="game" [initialize]="initialize"></ion-phaser>
+      <div *ngIf="!initialize">
+        <br><br><br><br><br><br><br><br><br>
+        <div class="center">
             <div class="button">
               <a (click)="initializeGame()">Jouer</a>
             </div>
           </div>
-        </div>
-    </header>
+      </div>
   </div>
 </div>
+
 
 <router-outlet></router-outlet>
