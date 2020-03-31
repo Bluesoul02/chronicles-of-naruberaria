@@ -20,16 +20,16 @@ export class GameCreator extends Phaser.Scene {
     }
   }
 
-  static generateObstacle(scene, obstacle1, obstacle2){
+  static generateObstacle(scene, obstacle1, obstacle2) {
     const random = new RandomDataGenerator();
-    for(let i = 1; i<10; i++){
+    for (let i = 1; i < 10; i++) {
       let obstacle;
-      if(random.integerInRange(1,2)==1){
-        obstacle = scene.physics.add.sprite(900*(i/2),200*(i/2),obstacle1);
-      }else{
-        obstacle = scene.physics.add.sprite(900*(i/2),200*(i/2),obstacle2);
+      if (random.integerInRange(1, 2) === 1) {
+        obstacle = scene.physics.add.sprite(900 * (i / 2), 200 * (i / 2), obstacle1);
+      } else {
+        obstacle = scene.physics.add.sprite(900 * (i / 2), 200 * (i / 2), obstacle2);
       }
-      scene.physics.add.collider(obstacle,scene.player);
+      scene.physics.add.collider(obstacle, scene.player);
     }
   }
 
@@ -38,16 +38,16 @@ export class GameCreator extends Phaser.Scene {
     scene.enemyMinY = 100;
   }
 
-  static preload(scene, urlMap, mapkey, urlEnemy, enemykey, urlObstacle1, urlObstacle2, urlMusic, nextLevelkey, nextLevel) {
+  static preload(scene, urlMap, mapkey, urlEnemy, enemykey, urlObstacle1, urlObstacle2, urlMusic, winKey, win) {
     scene.load.image(mapkey, urlMap);
     scene.load.image('ship', 'assets/ship.png');
     scene.load.image('bullet', 'assets/shmup-bullet.png');
     scene.load.image(enemykey, urlEnemy);
-    scene.load.image('obstacle1',urlObstacle1);
-    scene.load.image('obstacle2',urlObstacle2);
+    scene.load.image('obstacle1', urlObstacle1);
+    scene.load.image('obstacle2', urlObstacle2);
     scene.load.audio('music', urlMusic);
     scene.load.audio('crash', 'assets/crash.mp3');
-    scene.scene.add(nextLevelkey, nextLevel, false);
+    scene.scene.add(winKey, win, false);
   }
 
   static gameOver(scene, nextLevel) {
@@ -107,7 +107,7 @@ export class GameCreator extends Phaser.Scene {
     scene.cameras.main.resetFX();
   }
 
-  static update(scene, nextLevel) {
+  static update(scene, win) {
 
     // win
     if (this.win(scene)) {
@@ -115,8 +115,7 @@ export class GameCreator extends Phaser.Scene {
       scene.time.delayedCall(1000, () => {
         scene.sound.stopAll();
         GameCreator.globalScore += scene.score;
-        scene.scene.start(nextLevel);
-        console.log('passage au', nextLevel);
+        scene.scene.start(win);
       }, [], scene);
     }
 
@@ -152,7 +151,7 @@ export class GameCreator extends Phaser.Scene {
       // vérification collision entre joueur et ennemi
       if (Phaser.Geom.Intersects.RectangleToRectangle(scene.player.getBounds(), enemy.getBounds())) {
         // si oui alors game over
-        this.gameOver(scene, nextLevel);
+        this.gameOver(scene, win);
         break;
       }
 
@@ -195,5 +194,15 @@ export class GameCreator extends Phaser.Scene {
 
   static win(scene) {
     return scene.player.x >= 3300;
+  }
+
+  static createWin(scene, nextLevel, nextLevelKey, winKey) {
+    scene.scene.add(nextLevelKey, nextLevel, false);
+    const imageVictoire = scene.add.sprite(scene.cameras.main.centerX, scene.cameras.main.centerY, winKey);
+    imageVictoire.displayWidth = scene.scale.width;
+    imageVictoire.displayHeight = scene.scale.height;
+    scene.add.text(scene.cameras.main.centerX + scene.cameras.main.centerX,
+      scene.cameras.main.centerY + scene.cameras.main.centerY / 2,
+      GameCreator.globalScore.toString());
   }
 }

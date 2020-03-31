@@ -1,5 +1,5 @@
-import { Niveau2 } from './niveau2';
 import {GameCreator} from './GameCreator';
+import {Win1} from './win1';
 
 export class Niveau1 extends Phaser.Scene {
 
@@ -29,7 +29,7 @@ export class Niveau1 extends Phaser.Scene {
       GameCreator.preload(this, 'assets/lvl1/map.png',
         'map1', 'assets/lvl1/enemy.png', 'enemy1',
         'assets/lvl1/obstacles3.png', 'assets/lvl1/obstacles4.png',
-        'assets/music.mp3', 'niveau2', Niveau2);
+        'assets/music.mp3', 'win1', Win1);
     }
 
     create() {
