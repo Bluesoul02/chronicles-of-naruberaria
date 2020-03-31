@@ -20,14 +20,15 @@ export class GameCreator extends Phaser.Scene {
     }
   }
 
-  static generateObstacle(scene, obstacle1, obstacle2) {
+  static generateObstacle(scene) {
     const random = new RandomDataGenerator();
+    scene.obstacles = scene.physics.add.staticGroup();
     for (let i = 1; i < 10; i++) {
       let obstacle;
       if (random.integerInRange(1, 2) === 1) {
-        obstacle = scene.physics.add.sprite(900 * (i / 2), 200 * (i / 2), obstacle1);
+        obstacle = scene.obstacles.create(900 * (i / 2), scene.scale.height * random.realInRange(0,1), 'obstacle1');
       } else {
-        obstacle = scene.physics.add.sprite(900 * (i / 2), 200 * (i / 2), obstacle2);
+        obstacle = scene.obstacles.create(900 * (i / 2), scene.scale.height * random.realInRange(0,1), 'obstacle1');
       }
       obstacle.setSize(obstacle.texture.width, obstacle.texture.height);
       scene.physics.add.collider(obstacle, scene.player);
@@ -46,6 +47,7 @@ export class GameCreator extends Phaser.Scene {
     scene.load.image(enemykey, urlEnemy);
     scene.load.image('obstacle1', urlObstacle1);
     scene.load.image('obstacle2', urlObstacle2);
+    scene.load.image('portail','assets/portail.png');
     scene.load.audio('music', urlMusic);
     scene.load.audio('crash', 'assets/crash.mp3');
     scene.scene.add(winKey, win, false);
@@ -102,6 +104,10 @@ export class GameCreator extends Phaser.Scene {
 
     // création de l'arme
     scene.bullets = new Bullets(scene);
+
+    // portail de fin de niveau
+    scene.portail = scene.add.sprite(3600, 400,'portail');
+    scene.portail.setSize(150,400);
 
     scene.score = GameCreator.globalScore;
     scene.scoreText = scene.add.text(scene.scale.width / 2, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' }).setOrigin(0.5, 0);
@@ -194,7 +200,7 @@ export class GameCreator extends Phaser.Scene {
   }
 
   static win(scene) {
-    return scene.player.x >= 3300;
+    return Phaser.Geom.Intersects.RectangleToRectangle(scene.player.getBounds(), scene.portail.getBounds());
   }
 
   static createWin(scene, winKey) {

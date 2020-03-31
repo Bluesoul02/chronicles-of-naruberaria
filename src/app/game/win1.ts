@@ -11,7 +11,6 @@ export class Win1 extends Phaser.Scene {
 
     preload() {
       this.load.image('win1', 'assets/lvl1/win.png');
-      console.log('menu');
     }
 
     create()  {
