@@ -165,9 +165,9 @@ export class GameCreator extends Phaser.Scene {
           scene.bullets.fireBullet(scene.player.getBounds().x + 180, scene.player.getBounds().y + 90);
           break;
         case(2) :
-          scene.bullets.fireBullet(scene.player.getBounds().x + 180, scene.player.getBounds().y + 90);
-          scene.bullets.fireBullet(scene.player.getBounds().x + 180, scene.player.getBounds().y + 90);
-          scene.bullets.fireBullet(scene.player.getBounds().x + 180, scene.player.getBounds().y + 90);
+          scene.bullets.fireBullet(scene.player.getBounds().x + 185, scene.player.getBounds().y + 70);
+          scene.bullets.fireBullet(scene.player.getBounds().x + 185, scene.player.getBounds().y + 80);
+          scene.bullets.fireBullet(scene.player.getBounds().x + 185, scene.player.getBounds().y + 90);
           break;
       }
       
