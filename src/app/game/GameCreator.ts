@@ -72,7 +72,7 @@ export class GameCreator extends Phaser.Scene {
 
     // music
     scene.sound.play('music');
-    scene.sound.volume = 0.2;
+    scene.sound.volume = 0.15;
     // scene.music.addToCache();
     // scene.music.on('loop', scene);
     // scene.music.setLoop(true);
@@ -196,7 +196,7 @@ export class GameCreator extends Phaser.Scene {
     return scene.player.x >= 3300;
   }
 
-  static createWin(scene, nextLevel, nextLevelKey, winKey) {
+  static createWinNextLevel(scene, nextLevel, nextLevelKey, winKey) {
     scene.scene.add(nextLevelKey, nextLevel, false);
     const imageVictoire = scene.add.sprite(scene.cameras.main.centerX, scene.cameras.main.centerY, winKey);
     imageVictoire.displayWidth = scene.scale.width;
@@ -204,5 +204,18 @@ export class GameCreator extends Phaser.Scene {
     scene.add.text(scene.cameras.main.centerX + scene.cameras.main.centerX,
       scene.cameras.main.centerY + scene.cameras.main.centerY / 2,
       GameCreator.globalScore.toString());
+    imageVictoire.setInteractive();
+
+    imageVictoire.on('pointerup', () => GameCreator.winFunction(scene, nextLevelKey));
+  }
+
+  static winFunction(scene, levelKey) {
+    scene.scene.start(levelKey);
+  }
+
+  static createWinToMenu(scene, winKey) {
+  }
+
+  backToMenu() {
   }
 }

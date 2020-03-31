@@ -15,7 +15,7 @@ export class Win4 extends Phaser.Scene {
   }
 
   create()  {
-    GameCreator.createWin(this, Niveau1, 'niveau1', 'win4');
+    GameCreator.createWinToMenu(this, 'win4');
   }
 
   update(time, delta) {}

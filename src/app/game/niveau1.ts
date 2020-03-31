@@ -40,6 +40,6 @@ export class Niveau1 extends Phaser.Scene {
     }
 
     update() {
-      GameCreator.update(this, 'niveau2');
+      GameCreator.update(this, 'win1');
     }
 }
