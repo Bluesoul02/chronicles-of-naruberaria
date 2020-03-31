@@ -18,7 +18,7 @@ export class Enemies extends Phaser.Physics.Arcade.Group {
 
     spawnEnemy(x, y) {
         const enemy = this.getFirstDead(true, x, y, this.texture);
-        enemy.setSize(700, 200);
+        enemy.setSize(this.texture.width, this.texture.height);
         enemy.setDisplaySize(180, 160);
         if (enemy) {
             enemy.spawn(x, y);
