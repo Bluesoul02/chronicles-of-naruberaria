@@ -31,11 +31,11 @@ export class Niveau4 extends Phaser.Scene {
     GameCreator.preload(this, 'assets/lvl4/map.jpg',
       'map4', 'assets/lvl4/enemy.png',
       'enemy4', 'obstacle4.1', 'assets/lvl4/obstacle.png', 'obstacle4.2', 'assets/lvl4/obstacle.png',
-      'assets/music.mp3', 'win4', Win4);
+      'music4', 'assets/lvl4/music4.mp3', 'win4', Win4);
   }
 
   create() {
-    GameCreator.create(this, 'map4');
+    GameCreator.create(this, 'map4','music4');
     GameCreator.createEnemies(this, 'enemy4');
     GameCreator.generateObstacle(this, 'obstacle4.1', 'obstacle4.2');
   }

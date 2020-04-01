@@ -41,7 +41,7 @@ export class GameCreator extends Phaser.Scene {
     scene.enemyMinY = 100;
   }
 
-  static preload(scene, urlMap, mapkey, urlEnemy, enemykey, keyObstacle1, urlObstacle1, keyObstacle2, urlObstacle2, urlMusic, winKey, win) {
+  static preload(scene, urlMap, mapkey, urlEnemy, enemykey, keyObstacle1, urlObstacle1, keyObstacle2, urlObstacle2, musicKey, urlMusic, winKey, win) {
     scene.load.image(mapkey, urlMap);
     scene.load.image('ship', 'assets/ship.png');
     scene.load.image('bullet', 'assets/shmup-bullet.png');
@@ -50,7 +50,7 @@ export class GameCreator extends Phaser.Scene {
     scene.load.image(keyObstacle2, urlObstacle2);
     scene.load.image('portail', 'assets/portail.png');
     scene.load.image('bonus', 'assets/bonus.png');
-    scene.load.audio('music', urlMusic);
+    scene.load.audio(musicKey, urlMusic);
     scene.load.audio('crash', 'assets/crash.mp3');
     scene.scene.add(winKey, win, false);
   }
@@ -74,10 +74,10 @@ export class GameCreator extends Phaser.Scene {
     }, [], scene);
   }
 
-  static create(scene, map) {
+  static create(scene, map, music) {
 
     // music
-    scene.sound.play('music');
+    scene.sound.play(music);
     scene.sound.volume = 0.15;
     // scene.music.addToCache();
     // scene.music.on('loop', scene);
