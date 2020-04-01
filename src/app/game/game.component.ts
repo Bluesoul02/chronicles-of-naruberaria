@@ -34,6 +34,5 @@ export class GameComponent {
       instance: null
     };
     this.initialize = true;
-    console.log('ugyfvghvg');
   }
 }
