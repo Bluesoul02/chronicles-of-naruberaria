@@ -237,6 +237,8 @@ export class GameCreator extends Phaser.Scene {
 
     scene.scoreText.destroy();
     scene.scoreText = scene.add.text(scene.player.x + 15, scene.player.y + 23, 'Score: ' + scene.score, { fontSize: '17px', fill: '#ff0000', fontFamily: 'Gameplay' });
+
+
   }
 
   static win(scene) {
