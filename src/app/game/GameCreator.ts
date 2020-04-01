@@ -230,7 +230,9 @@ export class GameCreator extends Phaser.Scene {
 
     scene.bonuses.getChildren().forEach(b => {
       if (Phaser.Geom.Intersects.RectangleToRectangle(b.getBounds(), scene.player.getBounds())) {
-        scene.bonus += 1;
+        if (scene.bonus < 2) {
+          scene.bonus += 1;
+        }
         b.destroy();
       }
     });
