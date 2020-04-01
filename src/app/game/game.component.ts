@@ -14,24 +14,25 @@ interface GameInstance extends Phaser.Types.Core.GameConfig {
 export class GameComponent {
 
   initialize = false;
-  game: GameInstance = {
-    width: '85%',
-    height: '80%',
-    scale: {
-      mode: Phaser.Scale.ENVELOP,
-      autoCenter: Phaser.Scale.CENTER_BOTH
-    },
-    physics: {default: 'arcade'},
-    type: Phaser.AUTO,
-    scene: Niveau1,
-    instance: null
-  };
+  game: GameInstance;
 
   getInstance() {
     return this.game.instance;
   }
 
   initializeGame() {
+    this.game = {
+      width: '85%',
+      height: '80%',
+      scale: {
+        mode: Phaser.Scale.ENVELOP,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+      },
+      physics: {default: 'arcade'},
+      type: Phaser.AUTO,
+      scene: Niveau1,
+      instance: null
+    };
     this.initialize = true;
   }
 }

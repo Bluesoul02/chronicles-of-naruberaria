@@ -117,7 +117,7 @@ export class GameCreator extends Phaser.Scene {
 
     // score du joueur
     scene.score = GameCreator.globalScore;
-    scene.scoreText = scene.add.text(scene.scale.width / 2, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' }).setOrigin(0.5, 0);
+    scene.scoreText = scene.add.text(scene.scale.width / 2, 16, 'Score: 0', { fontSize: '32px', fill: '#ff0000', fontFamily: 'Gameplay' }).setOrigin(0.5, 0);
 
     // bonus de tir
     scene.bonuses = new Bonuses(scene);
@@ -127,6 +127,10 @@ export class GameCreator extends Phaser.Scene {
   }
 
   static update(scene, win) {
+    // bloqué par un obstacle
+    if (scene.player.x < scene.cameras.main.scrollX) {
+      this.gameOver(scene, win);
+    }
 
     // win
     if (this.win(scene)) {
@@ -232,7 +236,7 @@ export class GameCreator extends Phaser.Scene {
     });
 
     scene.scoreText.destroy();
-    scene.scoreText = scene.add.text(scene.player.x, scene.player.y + 15, 'Score :' + scene.score, { fontSize: '20px', fill: '#fff' });
+    scene.scoreText = scene.add.text(scene.player.x + 15, scene.player.y + 23, 'Score: ' + scene.score, { fontSize: '17px', fill: '#ff0000', fontFamily: 'Gameplay' });
   }
 
   static win(scene) {
@@ -262,6 +266,8 @@ export class GameCreator extends Phaser.Scene {
 
   static createWinToMenu(scene, winKey) {
     const imageVictoire = this.createWin(scene, winKey);
+    scene.add.text(scene.scale.width / 2, 16, 'Score : ' + GameCreator.globalScore,
+      { fontSize: '40px', fill: '#603912', fontFamily: 'Gameplay' }).setOrigin(0.5, 0);
     imageVictoire.on('pointerup', () => GameCreator.backToMenu(scene));
   }
 
