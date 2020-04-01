@@ -127,6 +127,10 @@ export class GameCreator extends Phaser.Scene {
   }
 
   static update(scene, win) {
+    // bloqué par un obstacle
+    if (scene.player.x < scene.cameras.main.scrollX) {
+      this.gameOver(scene, win);
+    }
 
     // win
     if (this.win(scene)) {
