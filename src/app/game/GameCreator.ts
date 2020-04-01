@@ -109,11 +109,11 @@ export class GameCreator extends Phaser.Scene {
     scene.bullets = new Bullets(scene);
 
     // portail de fin de niveau
-    scene.portail = scene.physics.add.sprite(scene.player.x + 3300, scene.player.y, 'portail');
+    scene.portail = scene.physics.add.sprite(scene.player.x + 0, scene.player.y, 'portail');
     scene.portail.setSize(150, 400);
     scene.portail.setDisplaySize(250, 400);
-    scene.portail.enableBody(true, scene.player.x + 3300, scene.player.y, true, true);
-    scene.portail.body.reset(scene.player.x + 3300, scene.player.y);
+    scene.portail.enableBody(true, scene.player.x + 0, scene.player.y, true, true);
+    scene.portail.body.reset(scene.player.x + 0, scene.player.y);
 
     // score du joueur
     scene.score = GameCreator.globalScore;
@@ -237,6 +237,8 @@ export class GameCreator extends Phaser.Scene {
 
     scene.scoreText.destroy();
     scene.scoreText = scene.add.text(scene.player.x + 15, scene.player.y + 23, 'Score: ' + scene.score, { fontSize: '17px', fill: '#ff0000', fontFamily: 'Gameplay' });
+
+
   }
 
   static win(scene) {

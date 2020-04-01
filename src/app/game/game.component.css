@@ -1,3 +1,9 @@
+/* Font for SCORE */
+@font-face {
+  font-family: "Gameplay";
+  src: url("~/assets/Gameplay.ttf");
+}
+
 /* Ecran contenant le jeu */
 .ecran {
   margin: 50px;
